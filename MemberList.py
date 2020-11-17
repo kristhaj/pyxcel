@@ -65,7 +65,7 @@ def Compile_Relevant_Data(path, members_to_migrate):
     #order the list in the order that the data will be input into the migration file
     #input headers as single string separated with comma
     #subsequent headers may be input as ranges, and are inclusive on both sides
-    relevant_columns="F,G,J,K,H,I,P:T,L,M"
+    relevant_columns="F,G,J,K,H,I,O,P:T,L,M"
 
     #load the migration relevant data from input file, based upon relevant submited members
     df= pd.read_excel(path, usecols=relevant_columns)
@@ -79,7 +79,7 @@ def Write_Sheet(DataFrame, indices):
 
     print(migration_df)
 
-    with pd.ExcelWriter('files/Migration_List_Unsorted.xlsx', date_format='YYYY-MM-DD', datetime_format='YYYY-MM-DD') as writer:
+    with pd.ExcelWriter('pyxcel/files/Migration_List_Unsorted.xlsx', date_format='YYYY-MM-DD', datetime_format='YYYY-MM-DD') as writer:
         migration_df.to_excel(writer)
 
 def Main(path):
@@ -106,4 +106,4 @@ def Main(path):
 
 
 #replace arg with path to input file with google form data and existing IMS member data
-Main('files/medlemsdata.xlsx')
+Main("pyxcel/files/medlemsdata.xlsx")
