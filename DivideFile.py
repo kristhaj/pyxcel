@@ -49,8 +49,9 @@ def Make_Files(meta, path):
         df_filtered = df.loc[meta[id]]
         make_path = f'pyxcel/files/KA/Migration File_{id}_KA.xlsx'
         with pd.ExcelWriter(make_path, date_format='YYYY.MM.DD', datetime_format='YYYY.MM.DD') as writer:
-            df_filtered.to_excel(writer)
+            df_filtered.to_excel(writer, index=False)
     print('Done.')
+
 # Do the thing
 def Main():
     master_path = 'pyxcel/files/Migration File_KA_master.xlsx'
