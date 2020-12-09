@@ -23,6 +23,9 @@ def IdentifyAdmins(names, data, ql):
     callees = getCallees(names, 2, rel_clubs)
     #print degree of match
     getMatchRate(rel_clubs, callees, batchID)
+
+
+    
         
     pass
 
@@ -48,9 +51,9 @@ def getMatchRate(rel_clubs, callees, batchID):
     for match in matched:
         if match in missing:
             del(missing[missing.index(match)])
-    print(f'Clubs with potential admins: {len(matched)}\nClubs without match: {len(missing)}\nClubs not imported or not matched: {len(surplus)}\nPotential admin match rate: {round(len(matched)/needed_count, 3)}\n-----')
+    print(f'Clubs with potential admins: {len(matched)}\nClubs without match: {len(missing)}\nClubs not imported or not matched: {len(surplus)}\nPotential admin match rate: {round(len(matched)/needed_count, 3)}')
     #for m in missing:
-        #print(f'Club requiring manual input: {m}')
+        #print(f'-----\nClub requiring manual input: {m}')
     print('=====')
 
 
