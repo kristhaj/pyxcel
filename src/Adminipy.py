@@ -1,6 +1,7 @@
 # Cross reference call list with member data to identify administrator and relevant information.
 
 import pandas as pd
+from datetime import datetime
 
 # read files of callees and member data to cross reference
 # returns extrapolatet list of callee names and DataFrame of member data
@@ -59,45 +60,65 @@ def Write_Temp_Contacts(dictionary):
     with pd.ExcelWriter('pyxcel/files/admin/delvis_kontaktinformasjon3.xlsx') as writer:
             temp_df.to_excel(writer, index=False, header=False)
 
-#TODO: do lookup in df with built in method
+#TODO: do lookup in df with built in method  or
+# convert Dataframe to dict, in order to iterate through information headers as keys instead of subset of Dataframe
 def getMissingData(callees, indices, df, org):
     print(f'======\nGetting missing contact information...')
     for i in indices:
         identifier = None
         missing = []
         print(f'\nHandling {callees[i][0]}\n-----')
+        j = 0
         for info in callees[i]:
             #ignore club name
-            if callees[i].index(info) != 0:
+            if j != 0:
                 #assign identifier if not assigned
                 if type(info) != float and identifier == None:
-                    if callees[i].index(info) == 1:
+                    if j == 1:
                         identifier = ['Name', info]
-                    elif callees[i].index(info) == 2:
+                    elif j == 2:
                         identifier = ['Mobile', info]
-                    elif callees[i].index(info) == 3:
+                    elif j == 3:
                         identifier = ['Email', info]
                     print(f'Setting {identifier} as identifier.')
                 #identify which information if missing
                 else:
                     if type(info) == float:
-                        if callees[i].index(info) == 1:
+                        if j == 1:
                             missing.append('Name')
-                        elif callees[i].index(info) == 2:
+                        elif j == 2:
                             missing.append('Mobile')
-                        elif callees[i].index(info) == 3:
+                        elif j == 3:
                             missing.append('Email')
+            j += 1
         print(f'{missing} requires lookup in member registry.')
+        # Get current year to filter out children of callee with same contact information
+        current_year = datetime.now().year
         #look up missing information by matching identifier
         if identifier[0] == 'Name':
             for index in range(df.shape[0]):
-                comp_name = df.Firstname[index] + df.Lastname[index]
+                comp_name = df.Firstname[index]+ ' ' + df.Lastname[index]
                 if identifier[1].replace(' ', '').lower() == comp_name.replace(' ', '').lower():
                     callees[i].append(index)
+                    print(f'Found match at {index} for {identifier[1]} on {comp_name}.')
                     break
         elif identifier[0] == 'Mobile':
-            #for index in range(df.shape[0]):
-            pass
+            for index in range(df.shape[0]):
+                # Assume that by the time they are 18 potential children of callee have input their own contact information
+                if str(identifier[1]) == str(df.Mobile[index]) and current_year - int(df.Birthdate[index].split('.')[2]) > 18:
+                    callees[i].append(index)
+                    print(f'Found match at {index} for {identifier[1]} on {df.Mobile[index]}.')
+                    break
+        elif identifier[0] == 'Email':
+            for index in range(df.shape[0]):
+                # Assume that by the time they are 18 potential children of callee have input their own contact information
+                if identifier[1] == df.Email[index] and current_year - int(df.Birthdate[index].split('.')[2]) > 18:
+                    callees[i].append(index)
+                    print(f'Found match at {index} for {identifier[1]} on {df.Email[index]}.')
+                    break
+        
+        
+        
             
 
 
