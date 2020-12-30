@@ -35,10 +35,10 @@ def IdentifyAdmins(names, data, ql, org):
                 matched_indices.append(i)
     print(f'Identified admins at indices: {matched_indices} \n\n{len(matched_indices)} in total.')
 
-    admin_info = getAdminInfo(callees, matched_indices, data, org)
+    admin_info = getAdminInfo(callees, matched_indices, data, org, batchID)
     pass
 #Look up missing information based upon 
-def getAdminInfo(callees, matched_indices, df, org):
+def getAdminInfo(callees, matched_indices, df, org, batch):
     missing_data = []
     for k in matched_indices:
         for info in callees[k]:
@@ -48,28 +48,29 @@ def getAdminInfo(callees, matched_indices, df, org):
     print(f'{len(missing_data)} clubs have poor data quality.\n-----')
     
     #Fill in missing names and contact info
-    callees = getMissingData(callees, missing_data, df, org)
-
-    #Write_Temp_Contacts(callees)
+    callees = getMissingData(callees, list(callees.keys()), df, org)
+    #Write_Temp_Contacts(callees, batch)
+    
 
 #Write temporary contact information to file
-def Write_Temp_Contacts(dictionary):
+def Write_Temp_Contacts(dictionary, batch):
     data = {'Header': ['Klubbnavn', 'Kontaktperson', 'Mobil', 'Epost']}
     data.update(dictionary)
     temp_df = pd.DataFrame.from_dict(data, orient='index')
-    with pd.ExcelWriter('pyxcel/files/admin/delvis_kontaktinformasjon3.xlsx') as writer:
+    print(f'\n=====\nWriting completish list of contact information for {batch}...\n=====\n')
+    with pd.ExcelWriter(f'pyxcel/files/admin/kontaktinformasjon_{batch}.xlsx') as writer:
             temp_df.to_excel(writer, index=False, header=False)
 
 #TODO: do lookup in df with built in method  or
 # convert Dataframe to dict, in order to iterate through information headers as keys instead of subset of Dataframe
 def getMissingData(callees, indices, df, org):
     print(f'======\nGetting missing contact information...')
-    for i in indices:
+    for call_index in indices:
         identifier = None
         missing = []
-        print(f'\nHandling {callees[i][0]}\n-----')
+        print(f'\nHandling {callees[call_index][0]}\n-----')
         j = 0
-        for info in callees[i]:
+        for info in callees[call_index]:
             #ignore club name
             if j != 0:
                 #assign identifier if not assigned
@@ -91,7 +92,8 @@ def getMissingData(callees, indices, df, org):
                         elif j == 3:
                             missing.append('Email')
             j += 1
-        print(f'{missing} requires lookup in member registry.')
+        if missing != []:
+            print(f'{missing} requires lookup in member registry.')
         # Get current year to filter out children of callee with same contact information
         current_year = datetime.now().year
         #look up missing information by matching identifier
@@ -99,30 +101,31 @@ def getMissingData(callees, indices, df, org):
             for index in range(df.shape[0]):
                 comp_name = df.Firstname[index]+ ' ' + df.Lastname[index]
                 if identifier[1].replace(' ', '').lower() == comp_name.replace(' ', '').lower():
-                    callees[i].append(index)
+                    callees[call_index].append(index)
                     print(f'Found match at {index} for {identifier[1]} on {comp_name}.')
                     break
         elif identifier[0] == 'Mobile':
             for index in range(df.shape[0]):
                 # Assume that by the time they are 18 potential children of callee have input their own contact information
                 if str(identifier[1]) == str(df.Mobile[index]) and current_year - int(df.Birthdate[index].split('.')[2]) > 18:
-                    callees[i].append(index)
+                    callees[call_index].append(index)
                     print(f'Found match at {index} for {identifier[1]} on {df.Mobile[index]}.')
                     break
         elif identifier[0] == 'Email':
             for index in range(df.shape[0]):
                 # Assume that by the time they are 18 potential children of callee have input their own contact information
                 if identifier[1] == df.Email[index] and current_year - int(df.Birthdate[index].split('.')[2]) > 18:
-                    callees[i].append(index)
+                    callees[call_index].append(index)
                     print(f'Found match at {index} for {identifier[1]} on {df.Email[index]}.')
                     break
-        
-        
-        
-            
+        # actually get missing information where a match has been made
+        if missing != []:
+            print(f'{missing} requires lookup in member registry.')
+            for category in missing:
 
 
-    pass
+
+    return callees
 
 def getMatchRate(rel_clubs, callees, batchID):
     print('\n=====\nCalculating Match Rating....\n')
