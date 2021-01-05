@@ -65,6 +65,8 @@ def Write_Temp_Contacts(dictionary, batch):
 # convert Dataframe to dict, in order to iterate through information headers as keys instead of subset of Dataframe
 def getMissingData(callees, indices, df, org):
     print(f'======\nGetting missing contact information...')
+    failed = 0
+    success = 0
     for call_index in indices:
         identifier = None
         missing = []
@@ -106,6 +108,7 @@ def getMissingData(callees, indices, df, org):
                     callees[call_index].append(index)
                     print(f'Found match at {index} for {identifier[1]} on {comp_name}.')
                     matched = True
+                    success += 1
                     break
         elif identifier[0] == 'Mobile':
             for index in range(df.shape[0]):
@@ -114,6 +117,7 @@ def getMissingData(callees, indices, df, org):
                     callees[call_index].append(index)
                     print(f'Found match at {index} for {identifier[1]} on {df.Mobile[index]}.')
                     matched = True
+                    success += 1
                     break
         elif identifier[0] == 'Email':
             for index in range(df.shape[0]):
@@ -122,15 +126,17 @@ def getMissingData(callees, indices, df, org):
                     callees[call_index].append(index)
                     print(f'Found match at {index} for {identifier[1]} on {df.Email[index]}.')
                     matched = True
+                    success += 1
                     break
         if matched == False:
-            print(f'No match found for {identifier[1]} in member regisrty...')
+            print(f'No match found for {identifier[1]} in member registry...')
+            failed += 1
         # actually get missing information where a match has been made
         #if missing != []:
             #for category in missing:
 
 
-
+    print(f'===\nfailed lookup: {failed}\nsuccessful lookup: {success}\n===')
     return callees
 
 def getMatchRate(rel_clubs, callees, batchID):
@@ -142,10 +148,10 @@ def getMatchRate(rel_clubs, callees, batchID):
     for k in list(rel_clubs.keys()):
         missing.append(rel_clubs[k][0].replace(' ', '').lower())
     print(f'Clubs in need of admins: {len(missing)}')
-    needed_count = len(missing)
+    needed_failed = len(missing)
     for j in list(callees.keys()):
         surplus.append(callees[j][0].replace(' ', '').lower())
-    missing_count = len(missing)
+    missing_failed = len(missing)
     print(f'Potential Clubs in {batchID}: {len(surplus)}\n-----')
     for club in missing:
         if club in surplus:
@@ -155,7 +161,7 @@ def getMatchRate(rel_clubs, callees, batchID):
     for match in matched:
         if match in missing:
             del(missing[missing.index(match)])
-    print(f'Clubs with potential admins: {len(matched)}\nClubs without match: {len(missing)}\nClubs not imported or not matched: {len(surplus)}\nPotential admin match rate: {round(len(matched)/needed_count, 3)}\n------')
+    print(f'Clubs with potential admins: {len(matched)}\nClubs without match: {len(missing)}\nClubs not imported or not matched: {len(surplus)}\nPotential admin match rate: {round(len(matched)/needed_failed, 3)}\n------')
     for m in missing:
         print(f'Club requiring manual input: {m}')
     print('=====')
