@@ -96,13 +96,16 @@ def getMissingData(callees, indices, df, org):
             print(f'{missing} requires lookup in member registry.')
         # Get current year to filter out children of callee with same contact information
         current_year = datetime.now().year
+        matched = False
         #look up missing information by matching identifier
+        #TODO: multiple identifiers?
         if identifier[0] == 'Name':
             for index in range(df.shape[0]):
-                comp_name = df.Firstname[index]+ ' ' + df.Lastname[index]
+                comp_name = f'{df.Firstname[index]} {df.Lastname[index]}'
                 if identifier[1].replace(' ', '').lower() == comp_name.replace(' ', '').lower():
                     callees[call_index].append(index)
                     print(f'Found match at {index} for {identifier[1]} on {comp_name}.')
+                    matched = True
                     break
         elif identifier[0] == 'Mobile':
             for index in range(df.shape[0]):
@@ -110,6 +113,7 @@ def getMissingData(callees, indices, df, org):
                 if str(identifier[1]) == str(df.Mobile[index]) and current_year - int(df.Birthdate[index].split('.')[2]) > 18:
                     callees[call_index].append(index)
                     print(f'Found match at {index} for {identifier[1]} on {df.Mobile[index]}.')
+                    matched = True
                     break
         elif identifier[0] == 'Email':
             for index in range(df.shape[0]):
@@ -117,11 +121,13 @@ def getMissingData(callees, indices, df, org):
                 if identifier[1] == df.Email[index] and current_year - int(df.Birthdate[index].split('.')[2]) > 18:
                     callees[call_index].append(index)
                     print(f'Found match at {index} for {identifier[1]} on {df.Email[index]}.')
+                    matched = True
                     break
+        if matched == False:
+            print(f'No match found for {identifier[1]} in member regisrty...')
         # actually get missing information where a match has been made
-        if missing != []:
-            print(f'{missing} requires lookup in member registry.')
-            for category in missing:
+        #if missing != []:
+            #for category in missing:
 
 
 
@@ -204,11 +210,16 @@ def setAdmins(indices, path, destination):
 
 # Do the thing
 def Main():
-    call_path = 'pyxcel/files/admin/ringeliste.xlsx'
-    #set for each batch to process
-    member_data_path = 'pyxcel/files/admin/pulje2.xlsx'
-    qualifier_path = 'pyxcel/files/admin/migreringsoversikt.xlsx'
-    destination_path = 'pyxcel/files/admin/testo.xlsx'
+    # win rel path files*
+    # linux rel path pyxcel/files*
+    # prep: H==Kontaktperon, J==Epost, T==Kontaktperson2, U==Mobil2, V==Epost2
+    call_path = 'files/admin/ringeliste.xlsx'
+    # set for each batch to process
+    # prep: D==Firstname, E==Lastname
+    member_data_path = 'files/admin/pulje2.xlsx'
+    # prep: remove whitespace from A
+    qualifier_path = 'files/admin/migreringsoversikt.xlsx'
+    destination_path = 'files/admin/testo.xlsx'
 
     callees, data, ql, org = LoadDataFrames(call_path, member_data_path, qualifier_path)
 
