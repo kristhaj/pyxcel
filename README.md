@@ -9,14 +9,14 @@ Compile relevant data from a larger excel file, into a smaller, precise file
 - openpyxl
 
 # Functionality
-## Member List
+## Forms Handler
 Extract relevant information from a larger excel document, and collate into a new document
 
-## Divide File
+## Divider
 Make individual files from a larger master file, based on given indentifier.
 
-## Collate Data
-Collate data from multiple individual files into a single master file, with a given format
+## Migrator
+Collate data from multiple individual files into a single master file, with a given format, to prepare migration
 
 ## Aminipy
 Cross reference call list with member data to identify administrator and relevant information.
