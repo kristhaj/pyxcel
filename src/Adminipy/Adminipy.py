@@ -70,7 +70,7 @@ def getMissingData(callees, indices, df, org):
     for call_index in indices:
         identifier = None
         missing = []
-        print(f'\nHandling {callees[call_index][0]}\n-----')
+        #print(f'Handling {callees[call_index][0]}\n-----')
         j = 0
         for info in callees[call_index]:
             #ignore club name
@@ -83,7 +83,7 @@ def getMissingData(callees, indices, df, org):
                         identifier = ['Mobile', info]
                     elif j == 3:
                         identifier = ['Email', info]
-                    print(f'Setting {identifier} as identifier.')
+                    #print(f'Setting {identifier} as identifier.')
                 #identify which information if missing
                 else:
                     if type(info) == float:
@@ -94,8 +94,8 @@ def getMissingData(callees, indices, df, org):
                         elif j == 3:
                             missing.append('Email')
             j += 1
-        if missing != []:
-            print(f'{missing} requires lookup in member registry.')
+        #if missing != []:
+            #print(f'{missing} requires lookup in member registry.')
         # Get current year to filter out children of callee with same contact information
         current_year = datetime.now().year
         matched = False
@@ -106,7 +106,7 @@ def getMissingData(callees, indices, df, org):
                 comp_name = f'{df.Firstname[index]} {df.Lastname[index]}'
                 if identifier[1].replace(' ', '').lower() == comp_name.replace(' ', '').lower():
                     callees[call_index].append(index)
-                    print(f'Found match at {index} for {identifier[1]} on {comp_name}.')
+                   # print(f'Found match at {index} for {identifier[1]} on {comp_name}.')
                     matched = True
                     success += 1
                     break
@@ -115,7 +115,7 @@ def getMissingData(callees, indices, df, org):
                 # Assume that by the time they are 18 potential children of callee have input their own contact information
                 if str(identifier[1]) == str(df.Mobile[index]) and current_year - int(df.Birthdate[index].split('.')[2]) > 18:
                     callees[call_index].append(index)
-                    print(f'Found match at {index} for {identifier[1]} on {df.Mobile[index]}.')
+                    #print(f'Found match at {index} for {identifier[1]} on {df.Mobile[index]}.')
                     matched = True
                     success += 1
                     break
@@ -124,19 +124,19 @@ def getMissingData(callees, indices, df, org):
                 # Assume that by the time they are 18 potential children of callee have input their own contact information
                 if identifier[1] == df.Email[index] and current_year - int(df.Birthdate[index].split('.')[2]) > 18:
                     callees[call_index].append(index)
-                    print(f'Found match at {index} for {identifier[1]} on {df.Email[index]}.')
+                    #print(f'Found match at {index} for {identifier[1]} on {df.Email[index]}.')
                     matched = True
                     success += 1
                     break
         if matched == False:
-            print(f'No match found for {identifier[1]} in member registry...')
+            #print(f'No match found for {identifier[1]} in member registry...')
             failed += 1
         # actually get missing information where a match has been made
         #if missing != []:
             #for category in missing:
 
 
-    print(f'===\nfailed lookup: {failed}\nsuccessful lookup: {success}\n===')
+    print(f'---\nfailed lookup: {failed}\nsuccessful lookup: {success}\nrating: {round(success/(success+failed), 3)}\n---')
     return callees
 
 def getMatchRate(rel_clubs, callees, batchID):
