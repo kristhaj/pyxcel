@@ -7,5 +7,6 @@ class Write:
         data.update(dictionary)
         temp_df = pd.DataFrame.from_dict(data, orient='index')
         print(f'\n=====\nWriting completish list of contact information for {batch}...\n=====\n')
-        with pd.ExcelWriter(f'pyxcel/files/admin/kontaktinformasjon_{batch}.xlsx') as writer:
+        # appended comment to make pyLint ignore false positive problem
+        with pd.ExcelWriter(f'pyxcel/files/admin/kontaktinformasjon_{batch}.xlsx') as writer: # pylint: disable=abstract-class-instantiated
                 temp_df.to_excel(writer, index=False, header=False)
