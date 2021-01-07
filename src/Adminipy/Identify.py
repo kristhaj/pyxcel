@@ -32,7 +32,6 @@ class Identify:
         needed_failed = len(missing)
         for j in list(callees.keys()):
             surplus.append(callees[j][0].replace(' ', '').lower())
-        missing_failed = len(missing)
         print(f'Potential Clubs in {batchID}: {len(surplus)}\n-----')
         for club in missing:
             if club in surplus:
