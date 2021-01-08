@@ -1,5 +1,6 @@
 from datetime import datetime
 
+# TODO: finish DOB lookup
 class Lookup:
 
     #Look up missing information based upon 
@@ -55,7 +56,8 @@ class Lookup:
             current_year = datetime.now().year
             matched = False
             #look up missing information by matching identifier
-            #TODO: multiple identifiers?
+            #TODO: improve lookup in member data basis to improve hit rate
+            # Multiple identifiers? IR?
             if identifier[0] == 'Name':
                 for index in range(df.shape[0]):
                     comp_name = f'{df.Firstname[index]} {df.Lastname[index]}'

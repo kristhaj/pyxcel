@@ -29,6 +29,8 @@ class Adminipy:
         current_batch = Identify('Pulje 2')
         current_batch.IdentifyAdmins(df_call, df_ql)
 
+        # TODO: fix Lookup after ooping
+
 
 
 Adminipy().getAdmins()
