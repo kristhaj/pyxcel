@@ -1,13 +1,16 @@
 class Identify:
 
-    # Cross reference the list names with member data
+    def __init__(self, batch):
+        self.batch = batch
+
+    # Cross reference the dataframes for callees against imported clubs
     # returns indices of people identified as admins
-    def IdentifyAdmins(self, names, data, ql, org):
-        #Identifier in col A in ql
-        batchID = 'Pulje 2'
-        rel_clubs = self.getRelevantClubs(batchID, ql)
+    def IdentifyAdmins(self, df_call, df_ql):
+        #Identifier in col A in df_ql
+        batchID = self.batch
+        rel_clubs = self.getRelevantClubs(batchID, df_ql)
         #optimize callee dataframe, based upon given batch identifier
-        callees = self.getCallees(names, 2, rel_clubs)
+        callees = self.getCallees(df_call, 2, rel_clubs)
         #print degree of match
         self.getMatchRate(rel_clubs, callees, batchID)
 
@@ -19,6 +22,8 @@ class Identify:
                 if callees[i][0].replace(' ', '').lower() == rel_clubs[j][0].replace(' ', '').lower():
                     matched_indices.append(i)
         print(f'Identified admins at indices: {matched_indices} \n\n{len(matched_indices)} in total.')
+
+        return callees, rel_clubs, matched_indices, batchID
 
     def getMatchRate(self, rel_clubs, callees, batchID):
         print('\n=====\nCalculating Match Rating....\n')
@@ -72,14 +77,14 @@ class Identify:
         print('Done.')
         return callee_info
 
-    def getRelevantClubs(self, batchID, ql):
+    def getRelevantClubs(self, batchID, df_ql):
         index = 0
         rel_clubs = {}
         print(f'Getting clubs from: {batchID}...')
-        for val in ql.Pulje.values:
+        for val in df_ql.Pulje.values:
             if val == batchID:
-                rel_clubs[index] = [ql.Klubbnavn.values[index], ql.Bruker.values[index]]
-                #print(f'Identified {ql.Klubbnavn.values[index]} at index {index}.')
+                rel_clubs[index] = [df_ql.Klubbnavn.values[index], df_ql.Bruker.values[index]]
+                #print(f'Identified {df_ql.Klubbnavn.values[index]} at index {index}.')
             index += 1
         print('Done.')
 

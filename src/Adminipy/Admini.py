@@ -1,6 +1,9 @@
 # Cross reference call list with member data to identify administrator and relevant information.
 import os
-import Load, Identify, Lookup, Write
+from Load import Load
+from Identify import Identify
+from Lookup import Lookup
+from Write import Write
 
 class Adminipy:
 
@@ -18,7 +21,14 @@ class Adminipy:
 
 
     # Do the thing
-    def Main(self):
-        print('hello?')
+    def getAdmins(self):
+        # Read files given in env
+        df_call, df_members, df_ql = Load.LoadDataFrames(self, self.call_path, self.member_data_path, self.qualifier_path)
 
-Adminipy().Main()
+        # Identify clubs that need administrators, and potential administrators for these
+        current_batch = Identify('Pulje 2')
+        current_batch.IdentifyAdmins(df_call, df_ql)
+
+
+
+Adminipy().getAdmins()
