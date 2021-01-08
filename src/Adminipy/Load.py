@@ -12,4 +12,4 @@ class Load:
         df_ql = pd.read_excel(qualifier_path, sheet_name='Tabell', usecols='A,B,H')
         df_org = pd.read_excel(path_members, sheet_name='Club info', usecols='A,B,D')
 
-        return df_call, df_data, df_ql, df_org
+        return df_call, df_data, df_ql
