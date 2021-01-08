@@ -3,8 +3,14 @@ from datetime import datetime
 # TODO: finish DOB lookup
 class Lookup:
 
+    def __init__(self):
+        self.failed = 0
+        self.success = 0
+        # Get current year to filter out children of callee with same contact information
+        self.current_year = datetime.now().year
+
     #Look up missing information based upon 
-    def getAdminInfo(self, callees, matched_indices, df, org, batch):
+    def Admin_Info(self, callees, matched_indices, df):
         missing_data = []
         for k in matched_indices:
             for info in callees[k]:
@@ -14,15 +20,12 @@ class Lookup:
         print(f'{len(missing_data)} clubs have poor data quality.\n-----')
         
         #Fill in missing names and contact info
-        callees = self.getMissingData(callees, matched_indices, df, org)
-        #Write_Temp_Contacts(callees, batch)
+        callees = self.getMissingData(callees, matched_indices, df)
 
     #TODO: do lookup in df with built in method  or
     # convert Dataframe to dict, in order to iterate through information headers as keys instead of subset of Dataframe
-    def getMissingData(self, callees, indices, df, org):
+    def getMissingData(self, callees, indices, df):
         print(f'======\nGetting missing contact information...')
-        failed = 0
-        success = 0
         for call_index in indices:
             identifier = {}
             missing = []
@@ -52,8 +55,6 @@ class Lookup:
                 j += 1
             #if missing != []:
                 #print(f'{missing} requires lookup in member registry.')
-            # Get current year to filter out children of callee with same contact information
-            current_year = datetime.now().year
             matched = False
             #look up missing information by matching identifier
             #TODO: improve lookup in member data basis to improve hit rate

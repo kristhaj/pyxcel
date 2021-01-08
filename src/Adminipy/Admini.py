@@ -27,9 +27,12 @@ class Adminipy:
 
         # Identify clubs that need administrators, and potential administrators for these
         current_batch = Identify('Pulje 2')
-        current_batch.IdentifyAdmins(df_call, df_ql)
+        callees, indices = current_batch.IdentifyAdmins(df_call, df_ql)
 
-        # TODO: fix Lookup after ooping
+        # Lookup missing information and DOB for the given admins
+        Lookup.Admin_Info(Lookup(), callees, indices, df_members)
+
+
 
 
 
