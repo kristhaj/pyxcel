@@ -20,7 +20,7 @@
                 "member_data_path": "files/admin/pulje2.xlsx",
                 // prep: remove whitespace from A
                 "qualifier_path": "files/admin/migreringsoversikt.xlsx",
-                "destination_path": "files/admin/testo.xlsx"
+                "destination_path": "files/admin/admins.xlsx"
             }
         },
         {
