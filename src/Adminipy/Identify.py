@@ -4,7 +4,7 @@ class Identify:
         self.batch = batch
 
     # Cross reference the dataframes for callees against imported clubs
-    # returns indices of people identified as admins
+    # returns callees, and indices of people identified as admins in imported clubs.
     def IdentifyAdmins(self, df_call, df_ql):
         #Identifier in col A in df_ql
         batchID = self.batch
@@ -23,7 +23,7 @@ class Identify:
                     matched_indices.append(i)
         print(f'Identified admins at indices: {matched_indices} \n\n{len(matched_indices)} in total.')
 
-        return callees, rel_clubs, matched_indices, batchID
+        return callees, matched_indices
 
     def getMatchRate(self, rel_clubs, callees, batchID):
         print('\n=====\nCalculating Match Rating....\n')
