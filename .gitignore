@@ -133,4 +133,4 @@ files/
 *.xlsx
 
 #Mail parser
-MailParser.py
+MailParser
