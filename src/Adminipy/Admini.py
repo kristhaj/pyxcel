@@ -13,13 +13,6 @@ class Adminipy:
         self.qualifier_path = os.getenv('QUALIFIER_PATH')
         self.destination_path = os.getenv('DESTINATION_PATH')
 
-    # Reads the relevant data from data file, and then appends data frame to existing xlsx file
-    # NOTE:test first in separate file to avoid breaking status
-    def setAdmins(self, indices, path, destination):
-
-        pass
-
-
     # Do the thing
     def getAdmins(self):
         # Read files given in env
@@ -30,10 +23,10 @@ class Adminipy:
         callees, indices = current_batch.IdentifyAdmins(df_call, df_ql)
 
         # Lookup missing information and DOB for the given admins
-        Lookup.Admin_Info(Lookup(), callees, indices, df_members)
+        adminable_data = Lookup.Admin_Info(Lookup(), callees, indices, df_members)
 
-
-
+        # Write data to file
+        
 
 
 Adminipy().getAdmins()
