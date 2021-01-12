@@ -20,13 +20,13 @@ class Adminipy:
 
         # Identify clubs that need administrators, and potential administrators for these
         current_batch = Identify('Pulje 2')
-        callees, indices = current_batch.IdentifyAdmins(df_call, df_ql)
+        admins, indices = current_batch.IdentifyAdmins(df_call, df_ql)
 
         # Lookup missing information and DOB for the given admins
-        adminable_data = Lookup.Admin_Info(Lookup(), callees, indices, df_members)
+        adminable_data = Lookup.Admin_Info(Lookup(), admins, indices, df_members)
 
         # Write data to file
-        
+        Write.Write_New(self, adminable_data, current_batch.batch)
 
 
 Adminipy().getAdmins()
