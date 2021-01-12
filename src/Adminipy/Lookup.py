@@ -107,6 +107,6 @@ class Lookup:
                             callees[call_index][3] == df.Mobile[callees[call_index][4]]
             # get DoB
             if len(callees[call_index]) == 5:
-                callees[call_index].append(df.Birthdate[callees[call_index][4]])
+                callees[call_index][4] = (df.Birthdate[callees[call_index][4]])
         print(f'---\nfailed lookup: {self.failed}\nsuccessful lookup: {self.success}\nrating: {round(self.success/(self.success+self.failed), 3)}\n---')
         return callees
