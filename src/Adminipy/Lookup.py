@@ -10,28 +10,29 @@ class Lookup:
         self.current_year = datetime.now().year
 
     # Look up missing information based upon 
-    def Admin_Info(self, callees, matched_indices, df):
+    def Admin_Info(self, admins, matched_indices, df):
         missing_data = []
         for k in matched_indices:
-            for info in callees[k]:
+            for info in admins[k]:
                 if type(info) is float and k not in missing_data:
                     missing_data.append(k)
-                    # print(f'{callees[k]} does not have sufficient data.')
+                    # print(f'{admins[k]} does not have sufficient data.')
         print(f'{len(missing_data)} clubs have poor data quality.\n-----')
         
         # Fill in missing names and contact info
-        callees = self.getMissingData(callees, matched_indices, df)
+        admins = self.getMissingData(admins, matched_indices, df)
+        return admins
 
     # TODO: do lookup in df with built in method  or
     # convert Dataframe to dict, in order to iterate through information headers as keys instead of subset of Dataframe
-    def getMissingData(self, callees, indices, df):
+    def getMissingData(self, admins, indices, df):
         print(f'======\nGetting missing contact information...')
-        for call_index in indices:
+        for admin_index in indices:
             identifier = {'Name': None, 'Mobile': None, 'Email': None}
             missing = []
-            # print(f'Handling {callees[call_index][0]}\n-----')
+            # print(f'Handling {admins[admin_index][0]}\n-----')
             j = 0
-            for info in callees[call_index]:
+            for info in admins[admin_index]:
                 # ignore club name
                 if j != 0:
                     # assign identifier if not assigned
@@ -61,11 +62,12 @@ class Lookup:
                 for index in range(df.shape[0]):
                     comp_name = f'{df.Firstname[index]} {df.Lastname[index]}'
                     if identifier['Name'].replace(' ', '').lower() == comp_name.replace(' ', '').lower():
-                        callees[call_index].append(index)
+                        admins[admin_index].append(index)
                     # print(f'Found match at {index} for {identifier[1]} on {comp_name}.')
                         matched = True
                         self.success += 1
                         break
+            # TODO: Lookup based on NifOrgID        
             if identifier['Mobile'] != None and matched == False:
                 # check last line in xlsx
                 for index in range(1, 1033):
@@ -78,7 +80,11 @@ class Lookup:
                             year = int(str(df.Birthdate[index]).split('.')[2])
                     # Assume that by the time they are 18 potential children of callee have input their own contact informatio
                     if str(identifier['Mobile']) == str(df.Mobile[index]) and self.current_year - year > 18:
-                        callees[call_index].append(index)
+                        a = str(identifier['Mobile'])
+                        b = str(df.Mobile[index])
+                        c = admins[admin_index]
+                        admins[admin_index].append(index)
+                        d = admins[admin_index]
                         # print(f'Found match at {index} for {identifier[1]} on {df.Mobile[index]}.')
                         matched = True
                         self.success += 1
@@ -86,27 +92,28 @@ class Lookup:
             if identifier['Email'] != None and matched == False:
                 for index in range(df.shape[0]):
                     # Assume that by the time they are 18 potential children of callee have input their own contact information
-                    if identifier['Email'] == df.Email[index] and self.current_year - int(df.Birthdate[index].split('.')[2]) > 18:
-                        callees[call_index].append(index)
+                    if identifier['Email'].lower() == str(df.Email[index]).lower() and self.current_year - int(df.Birthdate[index].split('.')[2]) > 18:
+                        admins[admin_index].append(index)
                         # print(f'Found match at {index} for {identifier[1]} on {df.Email[index]}.')
                         matched = True
                         self.success += 1
                         break
             if matched == False:
-                print(f'No match found for {identifier}, at {callees[call_index][0]} in member registry...')
+                print(f'No match found for {identifier}, at {admins[admin_index][0]} in member registry...')
                 self.failed += 1
             # actually get missing information where a match has been made
             if missing != []:
                 for category in missing:
-                    if len(callees[call_index]) == 5:
+                    if len(admins[admin_index]) == 5:
                         if category == 'Name':
-                            callees[call_index][1] == f'{df.Firstname[callees[call_index][4]]} {df.Lastname[callees[call_index][4]]}'
+                            g = f'{df.Firstname[admins[admin_index][4]]} {df.Lastname[admins[admin_index][4]]}'
+                            admins[admin_index][1] = f'{df.Firstname[admins[admin_index][4]]} {df.Lastname[admins[admin_index][4]]}'
                         elif category == 'Mobile':
-                            callees[call_index][2] == df.Mobile[callees[call_index][4]]
+                            admins[admin_index][2] = df.Mobile[admins[admin_index][4]]
                         elif category == 'Email':
-                            callees[call_index][3] == df.Mobile[callees[call_index][4]]
+                            admins[admin_index][3] = df.Mobile[admins[admin_index][4]]
             # get DoB
-            if len(callees[call_index]) == 5:
-                callees[call_index][4] = (df.Birthdate[callees[call_index][4]])
+            if len(admins[admin_index]) == 5:
+                admins[admin_index][4] = (df.Birthdate[admins[admin_index][4]])
         print(f'---\nfailed lookup: {self.failed}\nsuccessful lookup: {self.success}\nrating: {round(self.success/(self.success+self.failed), 3)}\n---')
-        return callees
+        return admins
