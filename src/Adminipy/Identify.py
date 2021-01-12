@@ -20,10 +20,11 @@ class Identify:
         for i in callee_indices:
             for j in club_indices:
                 if callees[i][0].replace(' ', '').lower() == rel_clubs[j][0].replace(' ', '').lower():
-                    matched_indices.append(i)
+                    matched_indices.append(j)
+                    rel_clubs[j] = callees[i]
         print(f'Identified admins at indices: {matched_indices} \n\n{len(matched_indices)} in total.')
 
-        return callees, matched_indices
+        return rel_clubs, matched_indices
 
     def getMatchRate(self, rel_clubs, callees, batchID):
         print('\n=====\nCalculating Match Rating....\n')
