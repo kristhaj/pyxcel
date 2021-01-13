@@ -80,11 +80,7 @@ class Lookup:
                             year = int(str(df.Birthdate[index]).split('.')[2])
                     # Assume that by the time they are 18 potential children of callee have input their own contact informatio
                     if str(identifier['Mobile']) == str(df.Mobile[index]) and self.current_year - year > 18:
-                        a = str(identifier['Mobile'])
-                        b = str(df.Mobile[index])
-                        c = admins[admin_index]
                         admins[admin_index].append(index)
-                        d = admins[admin_index]
                         # print(f'Found match at {index} for {identifier[1]} on {df.Mobile[index]}.')
                         matched = True
                         self.success += 1
@@ -106,7 +102,6 @@ class Lookup:
                 for category in missing:
                     if len(admins[admin_index]) == 5:
                         if category == 'Name':
-                            g = f'{df.Firstname[admins[admin_index][4]]} {df.Lastname[admins[admin_index][4]]}'
                             admins[admin_index][1] = f'{df.Firstname[admins[admin_index][4]]} {df.Lastname[admins[admin_index][4]]}'
                         elif category == 'Mobile':
                             admins[admin_index][2] = df.Mobile[admins[admin_index][4]]
