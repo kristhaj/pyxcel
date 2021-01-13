@@ -17,7 +17,8 @@
                 "call_path": "files/admin/ringeliste.xlsx",
                 // set for each batch to process
                 // prep: D==Firstname, E==Lastname
-                "member_data_path": "files/admin/pulje2.xlsx",
+                "member_data_path": "files/admin/pulje3.xlsx",
+                "org_path": "files/admin/pulje2.xlsx",
                 // prep: remove whitespace from A
                 "qualifier_path": "files/admin/migreringsoversikt.xlsx",
                 "destination_path": "files/admin/admins.xlsx"

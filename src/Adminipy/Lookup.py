@@ -30,7 +30,7 @@ class Lookup:
         for admin_index in indices:
             identifier = {'Name': None, 'Mobile': None, 'Email': None}
             missing = []
-            # print(f'Handling {admins[admin_index][0]}\n-----')
+            print(f'-----\nHandling {admins[admin_index][0]}')
             j = 0
             for info in admins[admin_index]:
                 # ignore club name
@@ -43,7 +43,6 @@ class Lookup:
                             identifier['Mobile'] = info
                         elif j == 3:
                             identifier['Email'] = info
-                        # print(f'Setting {identifier} as identifier.')
                     # identify which information if missing
                     else:
                         if type(info) == float:
@@ -54,6 +53,7 @@ class Lookup:
                             elif j == 3:
                                 missing.append('Email')
                 j += 1
+            print(f'Setting {identifier} as identifier.')
             # if missing != []:
                 # print(f'{missing} requires lookup in member registry.')
             matched = False
@@ -67,10 +67,10 @@ class Lookup:
                         matched = True
                         self.success += 1
                         break
-            # TODO: Lookup based on NifOrgID        
+            # TODO: Lookup based on NifOrgID
             if identifier['Mobile'] != None and matched == False:
                 # check last line in xlsx
-                for index in range(1, 1033):
+                for index in range(1, df.shape[0]):
                     if type(df.Birthdate[index]) == str:
                         year = int(df.Birthdate[index].split('.')[2])
                     elif type(df.Birthdate[index]) == datetime:
@@ -87,8 +87,15 @@ class Lookup:
                         break
             if identifier['Email'] != None and matched == False:
                 for index in range(df.shape[0]):
+                    if type(df.Birthdate[index]) == str:
+                        year = int(df.Birthdate[index].split('.')[2])
+                    elif type(df.Birthdate[index]) == datetime:
+                        year = df.Birthdate[index].year
+                    else:
+                        if df.Birthdate[index] != None:
+                            year = int(str(df.Birthdate[index]).split('.')[2])
                     # Assume that by the time they are 18 potential children of callee have input their own contact information
-                    if identifier['Email'].lower() == str(df.Email[index]).lower() and self.current_year - int(df.Birthdate[index].split('.')[2]) > 18:
+                    if identifier['Email'].lower() == str(df.Email[index]).lower() and self.current_year - year > 18:
                         admins[admin_index].append(index)
                         # print(f'Found match at {index} for {identifier[1]} on {df.Email[index]}.')
                         matched = True
@@ -99,6 +106,7 @@ class Lookup:
                 self.failed += 1
             # actually get missing information where a match has been made
             if missing != []:
+                print(f'Getting missing information from Member Data...')
                 for category in missing:
                     if len(admins[admin_index]) == 5:
                         if category == 'Name':
@@ -110,5 +118,6 @@ class Lookup:
             # get DoB
             if len(admins[admin_index]) == 5:
                 admins[admin_index][4] = (df.Birthdate[admins[admin_index][4]])
+            print(f'Done with {admins[admin_index][0]}.')
         print(f'---\nfailed lookup: {self.failed}\nsuccessful lookup: {self.success}\nrating: {round(self.success/(self.success+self.failed), 3)}\n---')
         return admins

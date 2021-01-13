@@ -5,12 +5,13 @@ class Identify:
 
     # Cross reference the dataframes for callees against imported clubs
     # returns callees, and indices of people identified as admins in imported clubs.
-    def IdentifyAdmins(self, df_call, df_ql):
+    def IdentifyAdmins(self, df_call, df_ql, df_org):
         #Identifier in col A in df_ql
         batchID = self.batch
+        batch_num = int(batchID.split(' ')[1])
         rel_clubs = self.getRelevantClubs(batchID, df_ql)
         #optimize callee dataframe, based upon given batch identifier
-        callees = self.getCallees(df_call, 2, rel_clubs)
+        callees = self.getCallees(df_call, batch_num, rel_clubs)
         #print degree of match
         self.getMatchRate(rel_clubs, callees, batchID)
 
@@ -24,7 +25,17 @@ class Identify:
                     rel_clubs[j] = callees[i]
         print(f'Identified admins at indices: {matched_indices} \n\n{len(matched_indices)} in total.')
 
+        rel_clubs = self.getOrgID(rel_clubs, df_org)
+
         return rel_clubs, matched_indices
+    
+    # Add NifOrgID to club info, to use at Lookup
+    def getOrgID(self, rel_clubs, df_org):
+        for item in rel_clubs:
+            pass
+
+
+        return rel_clubs
 
     def getMatchRate(self, rel_clubs, callees, batchID):
         print('\n=====\nCalculating Match Rating....\n')
