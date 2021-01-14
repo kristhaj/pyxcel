@@ -16,7 +16,9 @@ class Load:
         df_org = pd.read_excel(org_path, sheet_name='Club info', usecols='A,B,D')
         print('Loading Member Data...\n')
         # NOTE: set nrows for each batch
-        df_data = pd.read_excel(path_members, usecols='A,D:H,J', nrows=4761)
+        df_data = pd.read_excel(path_members, usecols='A,D:H,J', nrows=1026)
+        print('Loading Club Admin User Row')
+        df_migrated = pd.read_excel(qualifier_path, sheet_name='Tabell', usecols='H')
         
         print('Done.\n-----')
-        return df_call, df_data, df_ql, df_org
+        return df_call, df_data, df_ql, df_org, df_migrated
