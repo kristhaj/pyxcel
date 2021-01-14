@@ -6,7 +6,7 @@ Compile relevant data from a larger excel file, into a smaller, precise file
 
 - pandas
 - xlrd
-- openpyxl
+- openpyxl 3.0.4 (version 3.0.5 has an error with appending to existing excel file)
 
 # Functionality
 ## Forms Handler
