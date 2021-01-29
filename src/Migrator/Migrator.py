@@ -1,5 +1,13 @@
 # Prepare data for migration based upon given foundation for a given batch to migrate
 
+import os
+from Load import Load
+from Organization import Organization
+from Members import Members
+from Membership import Membership
+from Trainings import Trainings
+from Write import Write
+
 
 class Migrator:
 
