@@ -1,1 +1,0 @@
-# Collate data from multiple individual files into a single master file, with a given format
