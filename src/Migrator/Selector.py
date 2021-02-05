@@ -16,10 +16,14 @@ class Selector:
             for key in converted_meta['NifOrgID']:
                 if converted_meta['NifOrgID'][key] == identifier:
                     relevant_meta = {converted_meta['NifOrgID'][key]: [converted_meta['official_name'][key], converted_meta['file_path'][key]]}
+                    print(f'Matched Meta Data: {relevant_meta}\n-----')
         else:
             for key in converted_meta['official_name']:
                 if converted_meta['official_name'][key].replace(' ', '').lower() == identifier.replace(' ', '').lower():
                     relevant_meta = {converted_meta['NifOrgID'][key]: [converted_meta['official_name'][key], converted_meta['file_path'][key]]}
+                    print(f'Matched Meta Data: {relevant_meta}\n-----')
+        if relevant_meta == None:
+            print(f'Could not find Meta Data for {identifier}')
         return relevant_meta
 
     # Select meta data to handle based upon given identifies
@@ -37,7 +41,8 @@ class Selector:
                 for key in converted_meta['official_name']:
                     if converted_meta['official_name'][key].replace(' ', '').lower() == ID.replace(' ', '').lower():
                         relevant_meta.update({converted_meta['NifOrgID'][key]: [converted_meta['official_name'][key], converted_meta['file_path'][key]]})
-            return relevant_meta
+        print(f'Matched Meta Data for {len(relevant_meta.keys())} of {len(identifiers)} clubs.\n-----')
+        return relevant_meta
 
     # TODO:Select meta data for given row indexes
     def Select_Rows(self, path, identifiers, category):
