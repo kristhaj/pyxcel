@@ -20,10 +20,11 @@ class Migrator:
 
     def Migrate(self):
         print('Starting Processing of Data to Migrate\n-----')
+        ID = 21238
         # Read meta data for clubs to load
-        org_meta = Selector.Select(self, self.org_path, 21238, self.org_category)
+        org_meta = Selector.Select(self, self.org_path, ID, self.org_category)
         # TODO:Run Load for relevant files
-        
+        org_base_data = Load.One(self, self.data_dir + org_meta[ID][1])
         # TODO:Read Org data
 
         # TODO:Read and format member data
