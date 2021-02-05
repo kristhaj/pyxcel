@@ -34,7 +34,7 @@
                 // win rel path files*
                 // linux rel path pyxcel/files*
                 "org_path": "files/Birds/org_meta.xlsx",
-                "data_dir": "files/Birds/north/pulje4_ufak",
+                "data_dir": "files/Birds/north/pulje4_ufak/",
                 "destination_path": "files/Birds/south/invoiceless",
                 "org_category": "invoiceless"
                 
