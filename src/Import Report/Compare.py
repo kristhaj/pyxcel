@@ -3,6 +3,7 @@
 import os
 from Load import Load
 from Write import Write
+from Calculate import Calculate
 
 class Compare:
 
@@ -19,11 +20,18 @@ class Compare:
         original_columns = ['Etternavn', 'Fornavn', 'Fødselsdato', 'Foresatt 1', 'Foresatt 1 epost', 'Foresatt 1 telefon', 'Foresatt 2', 'Foresatt 2 epost', 'Foresatt 2 telefon']
         identifier = 24811
 
-        print(f'=====\nComparing {import_columns} for {identifier} in {self.imported_file}, to {original_columns} in {self.original_file}\n-----')
-        # imported_data = Load.Import_File(self, self.imported_file, import_columns, import_headers, identifier)
+        print(f'=====\nComparing columns {import_columns} for {identifier} \nin {self.imported_file}, \nto columns {original_columns} \nin {self.original_file}\n-----')
+        imported_data = Load.Import_File(self, self.imported_file, import_columns, import_headers, identifier)
         original_data = Load.Original_File(self, self.original_file, original_columns)
-        
+
+        # Calculate the relevant data deviation
+        # TODO: Review proper formatting
+        deviating_data = Calculate.Guardian_Discrepancy(self, imported_data, original_data)
+
+
         pass
+                            
+
 
 
 Compare().Two()

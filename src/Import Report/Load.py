@@ -23,5 +23,5 @@ class Load:
         df = pd.read_csv(path, encoding='utf-8', sep=';', usecols=columns, parse_dates=True, infer_datetime_format=True, dayfirst=True)
         data = df.to_dict()
 
-        print('Done.\n---')
+        print('Done.\n===')
         return data
