@@ -50,7 +50,8 @@
                 // win rel path files*
                 // linux rel path pyxcel/files*
                 "migration_file": "files/Comparison/GTF_import.xlsx",
-                "data_basis": "files/Comparison/bergens_tf_original_data.csv"
+                "data_basis": "files/Comparison/bergens_tf_original_data.csv",
+                "destination_path": "files/Comparison/import_report.xlsx"
                 
             }
         }
