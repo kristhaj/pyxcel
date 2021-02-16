@@ -42,8 +42,8 @@ class Calculate:
                             # add og_key to dkey 
                             dkey += og_key
                             deviation = {'Identifier': {index: dkey},
-                                        'Name': {index: original_data['Fornavn'][og_key] + original_data['Etternavn'][og_key]},
-                                        'Birthdate': {index: original_data['Fødselsdato']},
+                                        'Name': {index: original_data['Fornavn'][og_key] + ' ' + original_data['Etternavn'][og_key]},
+                                        'Birthdate': {index: original_data['Fødselsdato'][og_key]},
                                         'Og_Guardian1': {index: None},
                                         'Imported_Guardian1': {index: None},
                                         'Og_Guardian1_Mob': {index: None},
@@ -58,34 +58,34 @@ class Calculate:
                                         'Imported_Guardian2_Email': {index: None}}
                             deviating = False
                             # Compare Guardian 1 Name
-                            if imported_data['guardian1'] != original_data['Foresatt 1']:
-                                deviation['Og_Guardian1'][index] = original_data['Foresatt 1']
-                                deviation['Imported_Guardian1'][index] = imported_data['guardian1']
+                            if imported_data['guardian1'][key] != original_data['Foresatt 1'][og_key]:
+                                deviation['Og_Guardian1'][index] = original_data['Foresatt 1'][og_key]
+                                deviation['Imported_Guardian1'][index] = imported_data['guardian1'][key]
                                 deviating = True
                             # Compare Guardian 1 Mobile
-                            if imported_data['g1_mobile'] != original_data['Foresatt 1 telefon']:
-                                deviation['Og_Guardian1_Mob'][index] = original_data['Foresatt 1 telefon']
-                                deviation['Imported_Guardian1_Mob'][index] = imported_data['g1_mobile']
+                            if imported_data['g1_mobile'][key] != original_data['Foresatt 1 telefon'][og_key]:
+                                deviation['Og_Guardian1_Mob'][index] = original_data['Foresatt 1 telefon'][og_key]
+                                deviation['Imported_Guardian1_Mob'][index] = imported_data['g1_mobile'][key]
                                 deviating = True
                             # Compare Guardian 1 Email
-                            if imported_data['g1_email'] != original_data['Foresatt 1 epost']:
-                                deviation['Og_Guardian1_Email'][index] = original_data['Foresatt 1 epost']
-                                deviation['Imported_Guardian1_Email'][index] = imported_data['g1_email']
+                            if imported_data['g1_email'][key] != original_data['Foresatt 1 epost'][og_key]:
+                                deviation['Og_Guardian1_Email'][index] = original_data['Foresatt 1 epost'][og_key]
+                                deviation['Imported_Guardian1_Email'][index] = imported_data['g1_email'][key]
                                 deviating = True
                             # Compare Guardian 2 Name
-                            if imported_data['guardian2'] != original_data['Foresatt 2']:
-                                deviation['Og_Guardian2'][index] = original_data['Foresatt 2']
-                                deviation['Imported_Guardian2'][index] = imported_data['guardian2']
+                            if imported_data['guardian2'][key] != original_data['Foresatt 2'][og_key]:
+                                deviation['Og_Guardian2'][index] = original_data['Foresatt 2'][og_key]
+                                deviation['Imported_Guardian2'][index] = imported_data['guardian2'][key]
                                 deviating = True
                             # Compare Guardian 2 Mobile
-                            if imported_data['g2_mobile'] != original_data['Foresatt 2 telefon']:
-                                deviation['Og_Guardian2_Mob'][index] = original_data['Foresatt 2 telefon']
-                                deviation['Imported_Guardian2_Mob'][index] = imported_data['g2_mobile']
+                            if imported_data['g2_mobile'][key] != original_data['Foresatt 2 telefon'][og_key]:
+                                deviation['Og_Guardian2_Mob'][index] = original_data['Foresatt 2 telefon'][og_key]
+                                deviation['Imported_Guardian2_Mob'][index] = imported_data['g2_mobile'][key]
                                 deviating = True
                             # Compare Guardian 2 Email
-                            if imported_data['g2_email'] != original_data['Foresatt 2 epost']:
-                                deviation['Og_Guardian2_Email'][index] = original_data['Foresatt 2 epost']
-                                deviation['Imported_Guardian2_Email'][index] = imported_data['g2_email']
+                            if imported_data['g2_email'][key] != original_data['Foresatt 2 epost'][og_key]:
+                                deviation['Og_Guardian2_Email'][index] = original_data['Foresatt 2 epost'][og_key]
+                                deviation['Imported_Guardian2_Email'][index] = imported_data['g2_email'][key]
                                 deviating = True
                             
                             if deviating:

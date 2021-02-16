@@ -10,13 +10,14 @@ class Compare:
     def __init__(self):
         self.imported_file = os.getenv("MIGRATION_FILE")
         self.original_file = os.getenv("DATA_BASIS")
+        self.destination = os.getenv("DESTINATION_PATH")
 
 
     # TODO: Compare two files
     def Two(self):
         # Relevant columns
         import_columns = "A,D,E,J,O:T"
-        import_headers = ['NifOrgID', 'fistname', 'lastname', 'age', 'guardian1', 'g1_mobile', 'g1_email', 'guardian2', 'g2_mobile', 'g2_email']
+        import_headers = ['NifOrgID', 'fistname', 'lastname', 'age', 'guardian1', 'g1_email', 'g1_mobile', 'guardian2', 'g2_email', 'g2_mobile']
         original_columns = ['Etternavn', 'Fornavn', 'Fødselsdato', 'Foresatt 1', 'Foresatt 1 epost', 'Foresatt 1 telefon', 'Foresatt 2', 'Foresatt 2 epost', 'Foresatt 2 telefon']
         identifier = 24811
 
@@ -25,11 +26,9 @@ class Compare:
         original_data = Load.Original_File(self, self.original_file, original_columns)
 
         # Calculate the relevant data deviation
-        # TODO: Review proper formatting
         deviating_data = Calculate.Guardian_Discrepancy(self, imported_data, original_data)
 
-
-        pass
+        Write.Result(self, deviating_data, self.destination)
                             
 
 
