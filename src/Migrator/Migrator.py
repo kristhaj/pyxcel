@@ -27,8 +27,8 @@ class Migrator:
         # Run Load for relevant files
         data_basis = Load.One(self, self.data_dir, org_meta)
         template = Load.Template(self, self.template_path)
-        # TODO:Read Org data
-
+        # Read Org data
+        template['Club info'] = Organization.Get_Data(self, org_meta, template['Club info'])
         # TODO:Read and format member data
 
         # TODO:Extrapolate membership data and apply to relevant members
