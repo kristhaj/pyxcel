@@ -20,19 +20,20 @@ class Migrator:
         self.template_path = os.getenv("TEMPLATE_PATH")
 
     def Migrate(self):
-        print('Starting Processing of Data to Migrate\n-----')
+        print('\n=====\nStarting Processing of Data to Migrate\n-----')
         ID = 21238
         # Read meta data for clubs to load
         org_meta = Selector.Select(self, self.org_path, ID, self.org_category)
         # Run Load for relevant files
         data_basis = Load.One(self, self.data_dir, org_meta)
         template = Load.Template(self, self.template_path)
+        print(f'===\nBeginning to Process and Collate Migration Data from Data Base\n-----')
         # Read Org data
         template['Club info'] = Organization.Get_Data(self, org_meta, template['Club info'])
         # TODO:Read and format member data
 
-        # TODO:Extrapolate membership data and apply to relevant members
-
+        # Extrapolate membership data and TODO:apply to relevant members
+        template['Membership'], template['Membership Category'] = Membership.Get_Data(self, data_basis, template['Membership'], template['Membership Category'], org_meta)
         # TODO:Extrapolate trainings data and apply to relevat members
 
         # TODO:Write collated data to new file
