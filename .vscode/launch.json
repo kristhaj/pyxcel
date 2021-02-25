@@ -36,7 +36,8 @@
                 "org_path": "files/Birds/org_meta.xlsx",
                 "data_dir": "files/Birds/north/pulje4_ufak/",
                 "destination_path": "files/Birds/south/invoiceless",
-                "org_category": "invoiceless"
+                "org_category": "invoiceless",
+                "template_path": "files/Birds/IMS_Migration_Template.xlsx"
                 
             }
         },
