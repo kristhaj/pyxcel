@@ -22,7 +22,6 @@ class Load:
     def All(self):
         pass
 
-    # TODO:Read Migration Template
     def Template(self, path):
         print(f'Loading Migration Template from {path} ...')
         df = pd.read_excel(path, sheet_name=None)
