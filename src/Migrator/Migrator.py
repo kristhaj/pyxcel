@@ -17,14 +17,16 @@ class Migrator:
         self.data_dir = os.getenv("DATA_DIR")
         self.destination_path = os.getenv("DESTINATION_PATH")
         self.org_category = os.getenv("ORG_CATEGORY")
+        self.template_path = os.getenv("TEMPLATE_PATH")
 
     def Migrate(self):
         print('Starting Processing of Data to Migrate\n-----')
         ID = 21238
         # Read meta data for clubs to load
         org_meta = Selector.Select(self, self.org_path, ID, self.org_category)
-        # TODO:Run Load for relevant files
-        org_base_data = Load.One(self, self.data_dir + org_meta[ID][1])
+        # Run Load for relevant files
+        data_basis = Load.One(self, self.data_dir, org_meta)
+        template = Load.Template(self, self.template_path)
         # TODO:Read Org data
 
         # TODO:Read and format member data
