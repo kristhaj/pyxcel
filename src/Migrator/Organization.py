@@ -10,5 +10,5 @@ class Organization:
             sheet['Name of club'].update({len(sheet['Name of club']): data[key][0]})
             sheet['Offical name of club'].update({len(sheet['Offical name of club']): data[key][0]})
             sheet['NIF ClubID'].update({len(sheet['NIF ClubID']): key})
-        print('All relevant Club Info Processed.\n===')
+        print('All relevant Club Info Processed.\n')
         return sheet

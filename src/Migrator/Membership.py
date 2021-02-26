@@ -25,7 +25,7 @@ class Membership:
             print('Oopsie')
             pass
         
-        print(f'All relevant Membership Data Processed.')
+        print(f'All relevant Membership Data Processed.\n')
         return sheet, cat_sheet
     
     # Extrapolate Membership Category and relating data
