@@ -34,8 +34,8 @@ class Migrator:
 
         # Extrapolate membership data and TODO:apply to relevant members
         template['Membership'], template['Membership Category'] = Membership.Get_Data(self, data_basis, template['Membership'], template['Membership Category'], org_meta)
-        # TODO:Extrapolate trainings data and apply to relevat members
-
+        # Extrapolate trainings data and TODO:apply to relevat members
+        template['Training fee'], template['Grens'], template['Style'] = Trainings.Get_Data(self, data_basis, template['Training fee'], template['Grens'], template['Style'])
         # TODO:Write collated data to new file
 
 
