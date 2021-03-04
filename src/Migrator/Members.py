@@ -54,7 +54,8 @@ class Members:
                 Trainings.Apply_Product(self, 
                 data[key]['Kontraktstype'][m_key],
                 next_index, members)
-
+        
+        print(f'All Personal Member Data has been Processed and Products have been Applied.')
         return members
 
 
