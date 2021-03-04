@@ -31,7 +31,7 @@ class Migrator:
         # Read Org data
         template['Club info'] = Organization.Get_Data(self, org_meta, template['Club info'])
         # TODO:Read and format member data
-
+        template['Member'] = Members.Get_Data(self, data_basis, template['Member'])
         # Extrapolate membership data and TODO:apply to relevant members
         template['Membership'], template['Membership Category'] = Membership.Get_Data(self, data_basis, template['Membership'], template['Membership Category'], org_meta)
         # Extrapolate trainings data and TODO:apply to relevat members
