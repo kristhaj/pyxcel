@@ -30,12 +30,15 @@ class Migrator:
         print(f'===\nBeginning to Process and Collate Migration Data from Data Base\n-----')
         # Read Org data
         template['Club info'] = Organization.Get_Data(self, org_meta, template['Club info'])
-        # TODO:Read and format member data
-        template['Member'] = Members.Get_Data(self, data_basis, template['Member'])
+
         # Extrapolate membership data and TODO:apply to relevant members
         template['Membership'], template['Membership Category'] = Membership.Get_Data(self, data_basis, template['Membership'], template['Membership Category'], org_meta)
         # Extrapolate trainings data and TODO:apply to relevat members
         template['Training fee'], template['Grens'], template['Style'] = Trainings.Get_Data(self, data_basis, template['Training fee'], template['Grens'], template['Style'])
+        # Read and format member data
+        template['Member'] = Members.Get_Data(self, data_basis, template['Member'])
+        # TODO: Set start, end, and invoicing dates
+
         # TODO:Write collated data to new file
 
 

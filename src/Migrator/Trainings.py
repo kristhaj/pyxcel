@@ -67,7 +67,6 @@ class Trainings:
                 trainings['Startup package'].update({next_index: 'Nei'})
 
     # Apply the correct trainings to the correct members
-    def Apply_Products(self):
-
-
-        pass
+    def Apply_Product(self, product, index, member_sheet, onboarded=False, details=None):
+        member_sheet['Old traning fee name'].update({index: product})
+        member_sheet['Training fee name'].update({index: product})

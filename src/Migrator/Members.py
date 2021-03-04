@@ -1,12 +1,13 @@
 # Get the general memeber data from foundation of a given club, and structure in a given format
 
-
+from Membership import Membership
+from Trainings import Trainings
 
 class Members:
     
 
     # Get the relevant member data based upon clubs to migrate
-    def Get_Data(self, data, members, memberships=None, trainings=None):
+    def Get_Data(self, data, members, multi_gren_clubs=None):
         print(f'Processing Member data for:')
         for key in list(data.keys()):
             print(f'{key}....')
@@ -41,7 +42,18 @@ class Members:
                 data[key]['Foresatte nr 2'][m_key],
                 data[key]['Foresatte nr 2 mobil'][m_key],
                 next_index, members)
+                
 
+
+                # Apply Products
+                Membership.Apply_Product(self, 
+                data[key]['Kont.sats'][m_key], 
+                data[key]['Innmeldtdato'][m_key], 
+                next_index, members)
+
+                Trainings.Apply_Product(self, 
+                data[key]['Kontraktstype'][m_key],
+                next_index, members)
 
         return members
 

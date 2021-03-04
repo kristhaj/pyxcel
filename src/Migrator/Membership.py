@@ -7,13 +7,13 @@ class Membership:
 
 
     # Extrapolate membership data from data base
-    def Get_Data(self, data, sheet, cat_sheet, info):
+    def Get_Data(self, data, sheet, cat_sheet, info, member_sheet=None):
         print(f'Processing Membership Products and Categories for:')
         for key in list(data.keys()):
             c_name = info[key][0]
             print(f'{c_name}....')
             Membership.Set_Categories(self, data[key], [key, c_name], cat_sheet)
-            Membership.Set_Products(self, data[key], key, sheet)
+            Membership.Set_Products(self, data[key], key, sheet, member_sheet)
 
         # Check to make sure categories are matching
         # TODO: Remove before finishing
@@ -25,7 +25,7 @@ class Membership:
             print('Oopsie')
             pass
         
-        print(f'All relevant Membership Data Processed.\n')
+        print(f'All relevant Membership Product Data Processed.\n')
         return sheet, cat_sheet
     
     # Extrapolate Membership Category and relating data
@@ -43,11 +43,11 @@ class Membership:
                 categories['Defualt Training '].update({next_key: 'Nei'})
 
     # Extrapolate Membership Product data 
-    def Set_Products(self, data, id, memberships):
+    def Set_Products(self, data, id, memberships, member_sheet):
         processed_memberships = []
         for key in list(data['Medlemsnummer'].keys()):
             next_key = len(memberships['NIFOrgId'])
-            membership = data['Kont.sats'][key]
+            membership = data['Kont.sats'][key].replace('  ', ' ')
             if membership not in processed_memberships:
                 processed_memberships.append(membership)
                 memberships['NIFOrgId'].update({next_key: id})
@@ -61,8 +61,11 @@ class Membership:
                 memberships['Renewal'].update({next_key: 'Ja'})
                 memberships['Family membership'].update({next_key: 'Nei'})
                 memberships['Status'].update({next_key: 'Aktiv'})
-                
+        
 
     # Apply the correct memberships to the correct members
-    def Apply_Products(self):
-        pass
+    def Apply_Product(self, product, onboarded, index, member_sheet):
+
+        product = product.replace('  ', ' ')
+        member_sheet['Membership name'].update({index: product})
+        member_sheet['Membership on-boarding date'].update({index: onboarded})
