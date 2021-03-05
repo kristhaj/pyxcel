@@ -34,7 +34,7 @@ class Migrator:
         start_time = time.time()
         print('\n=====\nStarting Processing of Data to Migrate\n-----')
         
-        ID = 24568
+        #ID = 24568
 
         # Read meta data for clubs to load
         org_meta = Selector.Select_Many(self, self.org_path, self.org_category)
@@ -45,9 +45,9 @@ class Migrator:
         # Read Org data
         template['Club info'] = Organization.Get_Data(self, org_meta, template['Club info'])
 
-        # Extrapolate membership data and TODO:apply to relevant members
+        # Extrapolate membership data and apply to relevant members
         template['Membership'], template['Membership Category'] = Membership.Get_Data(self, data_basis, template['Membership'], template['Membership Category'], org_meta)
-        # Extrapolate trainings data and TODO:apply to relevat members
+        # Extrapolate trainings data and apply to relevat members
         template['Training fee'], template['Grens'], template['Style'] = Trainings.Get_Data(self, data_basis, template['Training fee'], template['Grens'], template['Style'])
         # Read and format member data
         template['Member'] = Members.Get_Data(self, data_basis, template['Member'])
