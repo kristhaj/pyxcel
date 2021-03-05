@@ -8,16 +8,26 @@ from Membership import Membership
 from Trainings import Trainings
 from Write import Write
 from Selector import Selector
+from Dates import Dates
 
 
 class Migrator:
 
     def __init__(self):
+        # Get env file paths
         self.org_path = os.getenv("ORG_PATH")
         self.data_dir = os.getenv("DATA_DIR")
         self.destination_path = os.getenv("DESTINATION_PATH")
         self.org_category = os.getenv("ORG_CATEGORY")
         self.template_path = os.getenv("TEMPLATE_PATH")
+
+        # Get env dates
+        self.membership_start_date = os.getenv("MEMBERSHIP_START_DATE")
+        self.membership_end_date = os.getenv("MEMBERSHIP_END_DATE")
+        self.membership_invoiceing_date = os.getenv("MEMBERSHIP_INVOICEING_DATE")
+        self.training_start_date = os.getenv("TRAINING_START_DATE")
+        self.training_end_date = os.getenv("TRAINING_END_DATE")
+        self.training_invoiceing_date = os.getenv("TRAINING_INVOICEING_DATE")
 
     def Migrate(self):
         print('\n=====\nStarting Processing of Data to Migrate\n-----')
@@ -37,8 +47,11 @@ class Migrator:
         template['Training fee'], template['Grens'], template['Style'] = Trainings.Get_Data(self, data_basis, template['Training fee'], template['Grens'], template['Style'])
         # Read and format member data
         template['Member'] = Members.Get_Data(self, data_basis, template['Member'])
-        # TODO: Set start, end, and invoicing dates
+        # Set start, end, and invoicing dates
+        template['Member'] = Dates.Set_Membership_Dates(self, self.membership_start_date, self.membership_end_date, self.membership_invoiceing_date, template['Member'])
+        template['Member'] = Dates.Set_Training_Dates(self, self.training_start_date, self.training_end_date, self.training_invoiceing_date, template['Member'])
 
+        print(f'All Available Data has been Processed for the given Clubs!\n====\n')
         # TODO:Write collated data to new file
 
 

@@ -37,7 +37,14 @@
                 "data_dir": "files/Birds/north/pulje4_ufak/",
                 "destination_path": "files/Birds/south/invoiceless",
                 "org_category": "invoiceless",
-                "template_path": "files/Birds/IMS_Migration_Template.xlsx"
+                "template_path": "files/Birds/IMS_Migration_Template.xlsx",
+                "membership_start_date": "01.01.2021",
+                "membership_end_date": "31.12.2021",
+                "membership_invoiceing_date": "02.01.22",
+                "training_start_date": "01.06.2021",
+                "training_end_date": "31.06.2021",
+                "training_invoiceing_date": "01.06.2021"
+
                 
             }
         },
