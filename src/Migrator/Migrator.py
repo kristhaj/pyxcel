@@ -53,8 +53,9 @@ class Migrator:
 
         print(f'All Available Data has been Processed for the given Clubs!\n====\n')
         # TODO:Write collated data to new file
+        Write.To_File(self, template, self.destination_path)
 
-
+        print('Birds have migrated South. See you next time!\n=====')
         pass
         
 
