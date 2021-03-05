@@ -14,16 +14,6 @@ class Membership:
             print(f'{c_name}....')
             Membership.Set_Categories(self, data[key], [key, c_name], cat_sheet)
             Membership.Set_Products(self, data[key], key, sheet, member_sheet)
-
-        # Check to make sure categories are matching
-        # TODO: Remove before finishing
-        cat1 = sheet['Membership Category']
-        del cat1[0]
-        cat2 = cat_sheet['Membership Category']
-        del cat2[0]
-        if cat1 != cat2:
-            print('Oopsie')
-            pass
         
         print(f'All relevant Membership Product Data Processed.\n')
         return sheet, cat_sheet
