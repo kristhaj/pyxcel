@@ -48,6 +48,7 @@ class Migrator:
         # Extrapolate membership data and apply to relevant members
         template['Membership'], template['Membership Category'] = Membership.Get_Data(self, data_basis, template['Membership'], template['Membership Category'], org_meta)
         # Extrapolate trainings data and apply to relevat members
+        # TODO: Handle clubs with more than one grens
         template['Training fee'], template['Grens'], template['Style'] = Trainings.Get_Data(self, data_basis, template['Training fee'], template['Grens'], template['Style'])
         # Read and format member data
         template['Member'] = Members.Get_Data(self, data_basis, template['Member'])
