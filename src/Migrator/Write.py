@@ -56,10 +56,3 @@ class Write:
             print(f'Migration Data was successfully written to {path} !\n---\n')
         except:
             print(f'Something went wrong while writing to file.....\n---')
-        
-
-
-
-    # Final formatting of complete file before writing
-    def Format(self, data):
-        pass

@@ -28,11 +28,6 @@ class Load:
         print(f'Finished Loading Data.\n-----')
         return data
 
-
-    # TODO:Read all files in directory
-    def All(self):
-        pass
-
     def Template(self, path):
         print(f'Loading Migration Template from {path} ...')
         df = pd.read_excel(path, sheet_name=None)
