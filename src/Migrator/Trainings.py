@@ -4,8 +4,6 @@
 
 class Trainings:
 
-
-
     # Extrapolate trainings data from data foundation
     def Get_Data(self, data, training_sheet, gren_sheet, _style_sheet):
         print(f'Processing Training Fee Data for:')

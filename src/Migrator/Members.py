@@ -93,7 +93,12 @@ class Members:
     # Migration Template does not currently handel postal_name, so arg remains unused. Hence commented out
     def Set_Location(self, address, postal_code, postal_name, index, sheet):
         sheet['Street'].update({index: address})
-        sheet['Zip code'].update({index: postal_code})
+        # Handle postal codes in Oslo
+        try:
+            p = str(int(postal_code)).rjust(4, '0')
+            sheet['Zip code'].update({index: p})
+        except:
+            print('Club is bad at inputing data')
         # sheet[''].update({index: postal_name})
 
 
