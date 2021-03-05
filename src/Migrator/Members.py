@@ -50,10 +50,18 @@ class Members:
                 data[key]['Kont.sats'][m_key], 
                 data[key]['Innmeldtdato'][m_key], 
                 next_index, members)
-
-                Trainings.Apply_Product(self, 
-                data[key]['Kontraktstype'][m_key],
-                next_index, members)
+                
+                if multi_gren_clubs != None and key in multi_gren_clubs:
+                    g_val = data[key]['Gren/Stilart/Avd/Parti - Gren/Stilart/Avd/Parti'][m_key]
+                    if type(g_val) != float:
+                        g_val = g_val.split('/')[0]
+                    Trainings.Apply_Product(self, 
+                    data[key]['Kontraktstype'][m_key],
+                    next_index, members, g_val)
+                else:
+                    Trainings.Apply_Product(self, 
+                    data[key]['Kontraktstype'][m_key],
+                    next_index, members)
         
         print(f'All Personal Member Data has been Processed and Products have been Applied.')
         return members

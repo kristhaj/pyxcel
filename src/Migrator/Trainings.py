@@ -7,13 +7,18 @@ class Trainings:
     # Extrapolate trainings data from data foundation
     def Get_Data(self, data, training_sheet, gren_sheet, _style_sheet):
         print(f'Processing Training Fee Data for:')
+        multi_gren_clubs = {'Status': False, 'Clubs': []}
         for key in list(data.keys()):
             print(f'{key}....')
             Trainings.Set_Styles(self, data[key]['Gren/Stilart/Avd/Parti - Gren/Stilart/Avd/Parti'], key, _style_sheet)
-            Trainings.Set_Grens(self, data[key]['Gren/Stilart/Avd/Parti - Gren/Stilart/Avd/Parti'], key, gren_sheet)
-            Trainings.Set_Products(self, data[key], key, gren_sheet, training_sheet)
+            Trainings.Set_Grens(self, data[key]['Gren/Stilart/Avd/Parti - Gren/Stilart/Avd/Parti'], key, gren_sheet, multi_gren_clubs)
+            
+            if multi_gren_clubs['Status'] and key in multi_gren_clubs['Clubs']:
+                Trainings.Set_Products(self, data[key], key, gren_sheet, training_sheet, True)
+            else:
+                Trainings.Set_Products(self, data[key], key, gren_sheet, training_sheet)
         print(f'All relevant Training Fee Data Processed.\n')
-        return training_sheet, gren_sheet, _style_sheet
+        return training_sheet, gren_sheet, _style_sheet, multi_gren_clubs
 
     # Extrapolate Style data
     def Set_Styles(self, data, id, styles):
@@ -32,7 +37,7 @@ class Trainings:
                     styles['Club'].update({next_index: id})
 
     # Extrapolate Gren data
-    def Set_Grens(self, data, id, grens):
+    def Set_Grens(self, data, id, grens, multi_gren_clubs):
         processed_grens = []
         for val in list(data.values()):
             if type(val) != float:
@@ -42,11 +47,14 @@ class Trainings:
                     processed_grens.append(val)
                     grens['Name of Gren'].update({next_index: val})
                     grens['ClubID'].update({next_index: id})
+                    if len(processed_grens) > 1:
+                        multi_gren_clubs['Status'] = True
+                        multi_gren_clubs['Clubs'].append(id)
         if len(processed_grens) > 1:
             print(f'WARNING: Multiple Grens Processed: {processed_grens}. Training Fee Control is Advised!')
 
     # Extrapolate Training fee data
-    def Set_Products(self, data, id, gren_sheet, trainings):
+    def Set_Products(self, data, id, gren_sheet, trainings, is_multi_gren=False):
         processed_trainings = []
         for key in list(data['Medlemsnummer'].keys()):
             val = data['Kontraktstype'][key]
@@ -55,6 +63,8 @@ class Trainings:
                 if type(g_val) != float:
                     g_val = g_val.split('/')[0]
                 next_index = len(trainings['NIFOrgId'])
+                if is_multi_gren:
+                    val = f'{val} - {g_val}'
                 if val not in processed_trainings:
                     processed_trainings.append(val)
                     trainings['NIFOrgId'].update({next_index: id})
@@ -70,6 +80,10 @@ class Trainings:
                     trainings['Startup package'].update({next_index: 'Nei'})
 
     # Apply the correct trainings to the correct members
-    def Apply_Product(self, product, index, member_sheet, onboarded=False, details=None):
+    def Apply_Product(self, product, index, member_sheet, gren=None, onboarded=None):
         member_sheet['Old traning fee name'].update({index: product})
-        member_sheet['Training fee name'].update({index: product})
+        if gren != None:
+            product = f'{product} - {gren}'
+            member_sheet['Training fee name'].update({index: product})
+        else:
+            member_sheet['Training fee name'].update({index: product})

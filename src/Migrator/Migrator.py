@@ -48,10 +48,13 @@ class Migrator:
         # Extrapolate membership data and apply to relevant members
         template['Membership'], template['Membership Category'] = Membership.Get_Data(self, data_basis, template['Membership'], template['Membership Category'], org_meta)
         # Extrapolate trainings data and apply to relevat members
-        # TODO: Handle clubs with more than one grens
-        template['Training fee'], template['Grens'], template['Style'] = Trainings.Get_Data(self, data_basis, template['Training fee'], template['Grens'], template['Style'])
+        template['Training fee'], template['Grens'], template['Style'], multi_gren_clubs = Trainings.Get_Data(self, data_basis, template['Training fee'], template['Grens'], template['Style'])
         # Read and format member data
-        template['Member'] = Members.Get_Data(self, data_basis, template['Member'])
+        if multi_gren_clubs['Status']:
+            # Handle clubs with more than one grens
+            template['Member'] = Members.Get_Data(self, data_basis, template['Member'], multi_gren_clubs['Clubs'])
+        else:
+            template['Member'] = Members.Get_Data(self, data_basis, template['Member'])
         # Set start, end, and invoicing dates
         template['Member'] = Dates.Set_Membership_Dates(self, self.membership_start_date, self.membership_end_date, self.membership_invoiceing_date, template['Member'])
         template['Member'] = Dates.Set_Training_Dates(self, self.training_start_date, self.training_end_date, self.training_invoiceing_date, template['Member'])
