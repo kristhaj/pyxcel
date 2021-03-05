@@ -15,8 +15,19 @@ class Load:
         return data
 
     # TODO:Read many specified files
-    def Many(self, paths):
-        pass
+    def Many(self, dir, meta):
+        print(f'Loading Data Basis from {len(list(meta.keys()))} clubs...')
+        data = {}
+        for key in list(meta.keys()):
+            if type(key) != int:
+                print(f'Missing, or no available, Org Data for {meta[key]}. NO DATA WILL BE READ')
+            else:
+                path = dir + meta[key][1]
+                df = pd.read_csv(path, encoding='ISO-8859-1', sep=';', parse_dates=True, infer_datetime_format=True, dayfirst=True)
+                data.update({key: df.to_dict()})
+        print(f'Finished Loading Data.\n-----')
+        return data
+
 
     # TODO:Read all files in directory
     def All(self):

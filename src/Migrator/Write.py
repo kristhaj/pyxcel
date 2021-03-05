@@ -34,7 +34,7 @@ class Write:
 
         # write each df to the respective sheet
         df_member.to_excel(writer, sheet_name='Member', index=False)
-        df_membership.to_excel(writer, sheet_name='Membership')
+        df_membership.to_excel(writer, sheet_name='Membership', index=False)
         df_membership_category.to_excel(writer, sheet_name='Membership Category', index=False)
         df_teams.to_excel(writer, sheet_name='Teams', index=False)
         df_training_fee.to_excel(writer, sheet_name='Training fee', index=False)

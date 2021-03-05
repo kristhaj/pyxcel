@@ -70,11 +70,21 @@ class Members:
     def Set_Contact_Information(self, mobile, email, phone, index, sheet):
         # Handle Type error in mobile and phone numbers, and empty cells stored as floats
         if len(str(mobile).split('.')[0]) != 3:
-            sheet['Mobile'].update({index: int(mobile)})
+            if type(mobile) == str:
+                mobile = mobile.split(' ')[0]
+            try:
+                sheet['Mobile'].update({index: int(mobile)})
+            except:
+                print('Club is bad at inputing data')
         else:     
             sheet['Mobile'].update({index: mobile})
         if len(str(phone).split('.')[0]) != 3:
-            sheet['Phone'].update({index: int(phone)})
+            if type(phone) == str:
+                phone = phone.replace(' ', '')
+            try:
+                sheet['Phone'].update({index: int(phone)})
+            except:
+                print('Club is bad at inputing data')
         else:     
             sheet['Phone'].update({index: phone})
 
@@ -94,11 +104,17 @@ class Members:
 
         # Handle Type error in mobile and phone numbers, and empty cells stored as floats
         if len(str(g1_mobile).split('.')[0]) != 3:
-            sheet['Guardian 1 mobile'].update({index: int(g1_mobile)})
+            try:
+                sheet['Guardian 1 mobile'].update({index: int(g1_mobile)})
+            except:
+                print('Club is bad at inputing data')
         else:     
             sheet['Guardian 1 mobile'].update({index: g1_mobile})
         if len(str(g2_mobile).split('.')[0]) != 3:
-            sheet['Gueardian 2 mobile'].update({index: int(g2_mobile)})
+            try:
+                sheet['Gueardian 2 mobile'].update({index: int(g2_mobile)})
+            except:
+                print('Club is bad at inputing data')
         else:     
             sheet['Gueardian 2 mobile'].update({index: g2_mobile})
 

@@ -1,6 +1,7 @@
 # Prepare data for migration based upon given foundation for a given batch to migrate
 
 import os
+import time
 from Load import Load
 from Organization import Organization
 from Members import Members
@@ -30,12 +31,15 @@ class Migrator:
         self.training_invoiceing_date = os.getenv("TRAINING_INVOICEING_DATE")
 
     def Migrate(self):
+        start_time = time.time()
         print('\n=====\nStarting Processing of Data to Migrate\n-----')
-        ID = 21238
+        
+        ID = 24568
+
         # Read meta data for clubs to load
-        org_meta = Selector.Select(self, self.org_path, ID, self.org_category)
+        org_meta = Selector.Select_Many(self, self.org_path, self.org_category)
         # Run Load for relevant files
-        data_basis = Load.One(self, self.data_dir, org_meta)
+        data_basis = Load.Many(self, self.data_dir, org_meta)
         template = Load.Template(self, self.template_path)
         print(f'===\nBeginning to Process and Collate Migration Data from Data Base\n-----')
         # Read Org data
@@ -52,11 +56,11 @@ class Migrator:
         template['Member'] = Dates.Set_Training_Dates(self, self.training_start_date, self.training_end_date, self.training_invoiceing_date, template['Member'])
 
         print(f'All Available Data has been Processed for the given Clubs!\n====\n')
-        # TODO:Write collated data to new file
+        # Write collated data to new file
         Write.To_File(self, template, self.destination_path)
 
         print('Birds have migrated South. See you next time!\n=====')
-        pass
+        print(f'\n\nElapsed Time: {time.time() - start_time} seconds.\n')
         
 
 Migrator().Migrate()

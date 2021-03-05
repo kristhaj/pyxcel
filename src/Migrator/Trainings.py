@@ -21,27 +21,29 @@ class Trainings:
     def Set_Styles(self, data, id, styles):
         processed_styles = []
         for val in list(data.values()):
-            g_val = val.split('/')[0]
-            val = val.split('/')[1]
-            next_index = len(styles['Club'])
-            if val not in processed_styles:
-                processed_styles.append(val)
-                styles['Name of style'].update({next_index: val})
-                styles['Gren'].update({next_index: g_val})
-                #styles['Start date'].update({next_index: None})
-                #styles['End date'].update({next_index: None})
-                styles['Club'].update({next_index: id})
+            if type(val) != float and '/' in val:
+                g_val = val.split('/')[0]
+                val = val.split('/')[1]
+                next_index = len(styles['Club'])
+                if val not in processed_styles:
+                    processed_styles.append(val)
+                    styles['Name of style'].update({next_index: val})
+                    styles['Gren'].update({next_index: g_val})
+                    #styles['Start date'].update({next_index: None})
+                    #styles['End date'].update({next_index: None})
+                    styles['Club'].update({next_index: id})
 
     # Extrapolate Gren data
     def Set_Grens(self, data, id, grens):
         processed_grens = []
         for val in list(data.values()):
-            val = val.split('/')[0]
-            next_index = len(grens['ClubID'])
-            if val not in processed_grens:
-                processed_grens.append(val)
-                grens['Name of Gren'].update({next_index: val})
-                grens['ClubID'].update({next_index: id})
+            if type(val) != float:
+                val = val.split('/')[0]
+                next_index = len(grens['ClubID'])
+                if val not in processed_grens:
+                    processed_grens.append(val)
+                    grens['Name of Gren'].update({next_index: val})
+                    grens['ClubID'].update({next_index: id})
         if len(processed_grens) > 1:
             print(f'WARNING: Multiple Grens Processed: {processed_grens}. Training Fee Control is Advised!')
 
@@ -50,21 +52,24 @@ class Trainings:
         processed_trainings = []
         for key in list(data['Medlemsnummer'].keys()):
             val = data['Kontraktstype'][key]
-            g_val = data['Gren/Stilart/Avd/Parti - Gren/Stilart/Avd/Parti'][key].split('/')[0]
-            next_index = len(trainings['NIFOrgId'])
-            if val not in processed_trainings:
-                processed_trainings.append(val)
-                trainings['NIFOrgId'].update({next_index: id})
-                trainings['Name traning fee'].update({next_index: val})
-                trainings['Sports'].update({next_index: g_val})
-                trainings['Membership category'].update({next_index: data['Medlemskategori navn'][key]})
-                trainings['Amount in Kr'].update({next_index: data['Kontraktsbeløp'][key]})
-                trainings['Traningsship length'].update({next_index: 1})
-                trainings['Length type'].update({next_index: 'Måned'})
-                trainings['Invoice frequence'].update({next_index: 1})
-                trainings['Invoice frequence type'].update({next_index: 'Måned'})
-                trainings['Renewal'].update({next_index: 'Ja'})
-                trainings['Startup package'].update({next_index: 'Nei'})
+            if type(val) != float:
+                g_val = data['Gren/Stilart/Avd/Parti - Gren/Stilart/Avd/Parti'][key]
+                if type(g_val) != float:
+                    g_val = g_val.split('/')[0]
+                next_index = len(trainings['NIFOrgId'])
+                if val not in processed_trainings:
+                    processed_trainings.append(val)
+                    trainings['NIFOrgId'].update({next_index: id})
+                    trainings['Name traning fee'].update({next_index: val})
+                    trainings['Sports'].update({next_index: g_val})
+                    trainings['Membership category'].update({next_index: data['Medlemskategori navn'][key]})
+                    trainings['Amount in Kr'].update({next_index: data['Kontraktsbeløp'][key]})
+                    trainings['Traningsship length'].update({next_index: 1})
+                    trainings['Length type'].update({next_index: 'Måned'})
+                    trainings['Invoice frequence'].update({next_index: 1})
+                    trainings['Invoice frequence type'].update({next_index: 'Måned'})
+                    trainings['Renewal'].update({next_index: 'Ja'})
+                    trainings['Startup package'].update({next_index: 'Nei'})
 
     # Apply the correct trainings to the correct members
     def Apply_Product(self, product, index, member_sheet, onboarded=False, details=None):
