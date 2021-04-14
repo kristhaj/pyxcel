@@ -40,6 +40,9 @@ class Migrator:
         org_meta = Selector.Select_Many(self, self.org_path, self.org_category)
         # Run Load for relevant files
         data_basis = Load.Many(self, self.data_dir, org_meta)
+
+        Write.Basis_To_File(self, data_basis, self.destination_path)
+        
         template = Load.Template(self, self.template_path)
         print(f'===\nBeginning to Process and Collate Migration Data from Data Base\n-----')
         # Read Org data
