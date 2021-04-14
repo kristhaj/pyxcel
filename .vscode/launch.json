@@ -62,6 +62,21 @@
                 "destination_path": "files/Comparison/import_report.xlsx"
                 
             }
+        },
+        {
+            "name": "Rapport",
+            "type": "python",
+            "request": "launch",
+            "program": "src/Rapporter/Rapport.py",
+            "console": "integratedTerminal",
+            "env": {
+                // win rel path files*
+                // linux rel path pyxcel/files*
+                "postal_data": "files/rapport/post_kommune.xlsx",
+                "members": "files/rapport/straen/straen_291220.xlsx",
+                "destination_path": "files/Rapport/straen/age_location.xlsx"
+                
+            }
         }
 
     ],
