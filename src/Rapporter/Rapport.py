@@ -15,7 +15,7 @@ class Rapport:
         print('Generating rapport of members with Kommune')
 
         postal_cols = ['Postnummer', 'Kommune']
-        members_cols = ['PersonID', 'FirstName', 'LastName', 'BirthDate', 'PostalCode', 'LastPaidDate', 'MembershipStatus']
+        members_cols = ['PersonID', 'FirstName', 'LastName', 'BirthDate', 'Gender', 'PostalCode', 'LastPaidDate', 'MembershipStatus']
 
         postal_data = Load.Kommuner(self, self.postal_data_path, postal_cols)
         member_data = Load.Members(self, self.data_path, members_cols)
