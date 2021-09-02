@@ -4,6 +4,7 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+        
         {
             "name": "Adminipy",
             "type": "python",
@@ -44,8 +45,6 @@
                 "training_start_date": "01.06.2021",
                 "training_end_date": "31.06.2021",
                 "training_invoiceing_date": "01.06.2021"
-
-                
             }
         },
         {
@@ -60,7 +59,6 @@
                 "migration_file": "files/Comparison/GTF_import.xlsx",
                 "data_basis": "files/Comparison/bergens_tf_original_data.csv",
                 "destination_path": "files/Comparison/import_report.xlsx"
-                
             }
         },
         {
@@ -75,10 +73,23 @@
                 "postal_data": "files/rapport/post_kommune.xlsx",
                 "members": "files/rapport/straen/straen_291220.xlsx",
                 "destination_path": "files/Rapport/straen/age_location.xlsx"
-                
+            }
+        },
+        {
+            "name": "Appendinator",
+            "type": "python",
+            "request": "launch",
+            "program": "src/Appendinator/Appendinator.py",
+            "console": "integratedTerminal",
+            "env": {
+                // win rel path files*
+                // linux rel path pyxcel/files*
+                "data_dir": "files/appendage/Pulje_1",
+                "target_path": "files/appendage/Masters/Master_Migration_File_IMS_Fall21_Batch1"
             }
         }
-
     ],
-    "python.linting.pylintArgs": ["--generate-members"]
+    "python.linting.pylintArgs": [
+        "--generate-members"
+    ]
 }
