@@ -5,22 +5,29 @@ import pandas as pd
 # Read master file
 def Load_Master(path):
 
-    df_master = pd.read_excel(path, sheet_name=0, usecols='B')
-    return df_master
+    df_master = pd.read_excel(path, sheet_name=0, usecols="A,D,E,F,G,H,J,M,V,W,AC")
+    df_club = pd.read_excel(path, sheet_name='Club info', usecols="A,D")
+    return df_master, df_club
+
+def Load_Template(path):
+    df = pd.read_excel(path, sheet_name=0, nrows=1, usecols="A:N")
+    return df
 
 
 # Parse significant data from Data Frame into dict
 def Parse_Keys(df):
 
-    values = df.KlubbID.values
+    values = df.NIFOrgId.values
     identifiers = {}
 
+    index = 0
     for i in values:
         if i not in list(identifiers.keys()):
-            identifiers[i] = None
-            print(f'Adding club ID: {i} as identifier.')
+            identifiers[i] = df.Klubbnavn.values[index]
+            print(f'Adding club ID: {i} as identifier for {df.Klubbnavn.values[index]}.')
+            index += 1
     
-    print(f'\n------\nTotal clubs identified: {len(list(identifiers.keys()))}\nExpected: 95\n------\n')
+    print(f'\n------\nTotal clubs identified: {len(list(identifiers.keys()))}\nExpected: {values.size}\n------\n')
     return identifiers
 
 
@@ -31,7 +38,7 @@ def Populate_Indices(id, df):
         indices = []
         current_index = 0
         # Row indices will be at -2 compared to row number in work book: starts at 0 and first row used as column names
-        for val in df.KlubbID.values:
+        for val in df.NIFOrgId.values:
             if val == key:
                 indices.append(current_index)
             current_index += 1
@@ -39,27 +46,47 @@ def Populate_Indices(id, df):
     return id
 
 # Iterate through keys and fetch data based on row indices
-def Make_Files(meta, path):
+def Make_Files(meta, path, df_master, club):
 
     significant_values = list(meta.keys())
-    df = pd.read_excel(path, sheet_name=0)
+
 
     print('Writing files...')
     for id in significant_values:
-        df_filtered = df.loc[meta[id]]
-        make_path = f'pyxcel/files/KA/h21_batch1/Migration File_{id}_KA.xlsx'
-        with pd.ExcelWriter(make_path, date_format='YYYY.MM.DD', datetime_format='YYYY.MM.DD') as writer:
-            df_filtered.to_excel(writer, index=False)
+        df_template = Load_Template(path).to_dict()
+        df_filtered = df_master.loc[meta[id]]
+        for row in meta[id]:
+            index = row - meta[id][0]
+            df_template['Klubb'].update({index: club[id]})
+            df_template['KlubbID'][index] = df_filtered['NIFOrgId'][row]
+            df_template['Kjønn'][index] = df_filtered['Kjønn'][row]
+            df_template['Født'][index] = df_filtered['Fødselsdato'][row]
+            df_template['Etternavn'][index] = df_filtered['Etternavn'][row]
+            df_template['Fornavn'][index] = df_filtered['Fornavn- og middelnavn'][row]
+            df_template['Gateadresse'][index] = df_filtered['Gatenavn'][row]
+            df_template['Postnr'][index] = df_filtered['Postnummer'][row]
+            df_template['Tlf privat'][index] = df_filtered['Telefon'][row]
+            df_template['Tlf mobil'][index] = df_filtered['Mobil'][row]
+            df_template['E-post'][index] = df_filtered['E-post'][row]
+            df_template['Medlem fom'][index] = df_filtered['Medlemskap registreringsdato'][row]
+
+        make_path = f'files/KA/h21_batch1/Migration File_{club[id]}_{id}_KA.xlsx'
+        df = pd.DataFrame.from_dict(df_template).copy()
+        with pd.ExcelWriter(make_path, date_format='DD.MM.YYYY', datetime_format='DD.MM.YYYY') as writer:
+            df.to_excel(writer,sheet_name='Medlemmer', index=False)
+        print(f'{club[id]} is done...')
     print('Done.')
 
 # Do the thing
 def Main():
-    master_path = 'pyxcel/files/appendage/Masters/Master_Migration_File_IMS_Fall21_Batch1.xlsx'
+    master_path = 'files/KA/h21_batch1/Master_Migration_File_IMS_Fall21_Batch1.xlsx'
+    template_path = 'files/KA/Migration File_KA_Template.xlsx'
     
-    df_master = Load_Master(master_path)
-    identifiers = Parse_Keys(df_master)
+    df_master, df_club = Load_Master(master_path)
+    identifiers = Parse_Keys(df_club)
+    club_id= identifiers.copy()
     meta_data = Populate_Indices(identifiers, df_master)
-    Make_Files(meta_data, master_path)
+    Make_Files(meta_data, template_path, df_master, club_id)
 
 
 
