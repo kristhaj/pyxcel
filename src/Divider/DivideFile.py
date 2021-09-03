@@ -54,7 +54,7 @@ def Make_Files(meta, path):
 
 # Do the thing
 def Main():
-    master_path = 'pyxcel/files/Migration File_KA_master.xlsx'
+    master_path = 'pyxcel/files/KA/h21_batch1'
     
     df_master = Load_Master(master_path)
     identifiers = Parse_Keys(df_master)
