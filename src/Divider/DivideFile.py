@@ -47,14 +47,14 @@ def Make_Files(meta, path):
     print('Writing files...')
     for id in significant_values:
         df_filtered = df.loc[meta[id]]
-        make_path = f'pyxcel/files/KA/Migration File_{id}_KA.xlsx'
+        make_path = f'pyxcel/files/KA/h21_batch1/Migration File_{id}_KA.xlsx'
         with pd.ExcelWriter(make_path, date_format='YYYY.MM.DD', datetime_format='YYYY.MM.DD') as writer:
             df_filtered.to_excel(writer, index=False)
     print('Done.')
 
 # Do the thing
 def Main():
-    master_path = 'pyxcel/files/KA/h21_batch1'
+    master_path = 'pyxcel/files/appendage/Masters/Master_Migration_File_IMS_Fall21_Batch1.xlsx'
     
     df_master = Load_Master(master_path)
     identifiers = Parse_Keys(df_master)
