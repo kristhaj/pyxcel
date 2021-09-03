@@ -4,7 +4,13 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        
+        {
+            "name": "DivideFile",
+            "type": "python",
+            "request": "launch",
+            "program": "src/Divider/DivideFile.py",
+            "console": "integratedTerminal"
+        },
         {
             "name": "Adminipy",
             "type": "python",
@@ -86,7 +92,7 @@
                 // linux rel path pyxcel/files*
                 "data_dir": "files/appendage/Pulje_1",
                 "target_path": "files/appendage/Masters/Master_Migration_File_IMS_Fall21_Batch1.xlsx",
-                "format_path":"files/appendage/Masters/IMS_Migration_Template.xlsx"
+                "format_path": "files/appendage/Masters/IMS_Migration_Template.xlsx"
             }
         }
     ],
