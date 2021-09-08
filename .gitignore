@@ -134,3 +134,6 @@ files/
 
 #Mail parser
 MailParser
+
+# launch config
+.vscode
