@@ -82,8 +82,8 @@ def Make_Files(meta, path, df_master, club):
 def Main():
 
     # Update for each batch
-    master_path = 'files/KA/h21_batch1/Master_Migration_File_IMS_Fall21_Batch2.xlsx'
-    template_path = 'files/KA/Migration File_KA_Template.xlsx'
+    master_path = 'files/KA/nkf_h21/batch3/Master_Migration_File_IMS_Fall21_Batch2.xlsx'
+    template_path = 'files/KA/Masters/Migration File_KA_Template.xlsx'
     
     df_master, df_club = Load_Master(master_path)
     identifiers = Parse_Keys(df_club)
