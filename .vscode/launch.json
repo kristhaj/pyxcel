@@ -91,7 +91,7 @@
                 // win rel path files*
                 // linux rel path pyxcel/files*
                 "data_dir": "files/appendage/Pulje_3",
-                "target_path": "files/appendage/Masters/Master_Migration_File_IMS_Fall21_Batch1.xlsx",
+                "target_path": "files/appendage/Masters/Master_Migration_File_IMS_Fall21_Batch3.xlsx",
                 "format_path": "files/appendage/Masters/IMS_Migration_Template.xlsx"
             }
         }
