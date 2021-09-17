@@ -10,16 +10,59 @@ class Appendinator:
         self.data_dir = os.getenv("DATA_DIR")
         self.target_path = os.getenv("TARGET_PATH")
         self.format_path = os.getenv("FORMAT_PATH")
+        self.kao_dir = os.getenv("KAO_DIR")
+        self.kao_meta = os.getenv("KAO_META")
+
+    def Handle_OutputIDs(self, path):
+        df = pd.read_excel(path, usecols="B,C", keep_default_na=False)
+        org_output_id = {}
+        for i in range(df.shape[0]):
+            orgID = df.Orgid.values[i]
+            outputID = df.outputID.values[i]
+            if type(outputID) == int:
+                org_output_id.update({orgID: outputID})
+            else:
+                org_output_id.update({orgID: orgID})
+        return org_output_id
+
+
+
+    # get person IDs from KA Output
+    def Get_PersonIDs(self, dir):
+        pid_dict = {}
+        files = os.listdir(dir)
+        files_handled = 0
+        for file in files:
+            path = dir + '/' + file
+            print(f'Reading PersonIDs at {path} ...')
+            df = pd.read_csv(path)
+
+            for i in df.Id.values:
+                index = i-1
+                org = df.OrgId.values[index]
+                row_pid_pairing = {index: df.PersonId.values[index]}
+                if org not in list(pid_dict.keys()):
+                    pid_dict[org]= row_pid_pairing
+                else:
+                    pid_dict[org].update(row_pid_pairing)
+
+            files_handled += 1
+            print(f'Read personID from {files_handled} of {len(files)} clubs.\n')
+
+        return pid_dict
 
     def Main(self):
-
+        output_ID = self.Handle_OutputIDs(self.kao_meta)
+        personIDs = self.Get_PersonIDs(self.kao_dir)
         df = pd.read_excel(self.format_path, sheet_name=None, skiprows=1, keep_default_na=False)
         print(f'Reading data from {self.data_dir} ...')
         files = os.listdir(self.data_dir)
         files_handled = 0
+        missing_output = []
         for f in files:
             path = f'{self.data_dir}/'+f
             data = pd.read_excel(path, sheet_name=None, skiprows=1, keep_default_na=False)
+            has_output = True
             #d_shape = data.shape
             for key in list(data.keys()):
                 last_row = 0
@@ -30,16 +73,30 @@ class Appendinator:
                     if val == '' or pd.isna(val):
                         break
                     else:
+                        
+                        if key == 'Member' and has_output == True:
+                            current_org = data[key].NIFOrgId.values[0]
+                            oid = output_ID[current_org]
+                            if oid in list(personIDs.keys()):
+                                org_data = personIDs[oid]
+                                num_pid= len(org_data)
+                                if last_row < num_pid:
+                                    data[key]['NIF ID'][last_row] = org_data[last_row]
+
+                            else:
+                                missing_output.append(current_org)
+                                has_output = False
+
                         last_row += 1
                 
                 real_data = data[key].iloc[:last_row]
                 df[key] = df[key].append(real_data, ignore_index=True)
-                print( f'{key} Shapes: processed: {df[key].shape}, raw: {data[key].shape}')
+                #print( f'{key} Shapes: processed: {df[key].shape}, raw: {data[key].shape}')
             files_handled += 1
-            print(f'\nProcessed {files_handled} out of {len(files)} files.\n---\n')
+            print(f'Processed {files_handled} out of {len(files)} files.\n')
             
-        print(f'Finished Processing All Data\n===\n')
-
+        print(f'---\nFinished Processing All Data\n===\n')
+        print(f'Missing  output for thise orgIDs: {missing_output}\n')
         print(f'Writing data to target: {self.target_path} ...')
         # Write the collated and formated data to a new file
         # Create separate DataFrames for each sheet in the Migration Template

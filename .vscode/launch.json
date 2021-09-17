@@ -92,7 +92,9 @@
                 // linux rel path pyxcel/files*
                 "data_dir": "files/appendage/Pulje_1",
                 "target_path": "files/appendage/Masters/Master_Migration_File_IMS_Fall21_Batch1.xlsx",
-                "format_path": "files/appendage/Masters/IMS_Migration_Template.xlsx"
+                "format_path": "files/appendage/Masters/IMS_Migration_Template.xlsx",
+                "kao_dir": "files/KA/h21_batch1/output",
+                "kao_meta": "files/KA/h21_batch1/kao_meta_batch1.xlsx"
             }
         }
     ],
