@@ -71,7 +71,7 @@ def Make_Files(meta, path, df_master, club):
             df_template['Medlem fom'][index] = df_filtered['Medlemskap registreringsdato'][row]
 
         # Update for each batch
-        make_path = f'files/KA/h21_batch2/Migration File_{club[id]}_{id}_KA.xlsx'
+        make_path = f'files/KA/nkf_h21/batch3/Migration File_{club[id]}_{id}_KA.xlsx'
         df = pd.DataFrame.from_dict(df_template).copy()
         with pd.ExcelWriter(make_path, date_format='DD.MM.YYYY', datetime_format='DD.MM.YYYY') as writer:
             df.to_excel(writer,sheet_name='Medlemmer', index=False)
