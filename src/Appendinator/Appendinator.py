@@ -35,7 +35,8 @@ class Appendinator:
         for file in files:
             path = dir + '/' + file
             print(f'Reading PersonIDs at {path} ...')
-            df = pd.read_csv(path)
+            #TODO: fix csv reading
+            df = pd.read_csv(path, sep=",")
 
             for i in df.Id.values:
                 index = i-1
@@ -59,33 +60,60 @@ class Appendinator:
         files = os.listdir(self.data_dir)
         files_handled = 0
         missing_output = []
+        # dict for logging clubs and areas with bad data, to be printed at the end of run
+        # format {clubID: {sheet: {column: [rows]}}}
+        bad_data = {}
         for f in files:
             path = f'{self.data_dir}/'+f
             data = pd.read_excel(path, sheet_name=None, skiprows=1, keep_default_na=False)
             has_output = True
-            #d_shape = data.shape
             for key in list(data.keys()):
                 last_row = 0
+                current_org = data[key].NIFOrgId.values[0]
                 for row in data[key].values:
                     val = row[0]
-                    #if key == 'Club info' or key == 'Grens':
-                        #print('data?')
                     if val == '' or pd.isna(val):
                         break
                     else:
-                        
-                        if key == 'Member' and has_output == True:
-                            current_org = data[key].NIFOrgId.values[0]
-                            oid = output_ID[current_org]
-                            if oid in list(personIDs.keys()):
-                                org_data = personIDs[oid]
-                                num_pid= len(org_data)
-                                if last_row < num_pid:
-                                    data[key]['NIF ID'][last_row] = org_data[last_row]
-
+                        if key == 'Member':
+                            #check for erronious last names, and attempt correction (based upon rules for last name in Folkereg.)
+                            lastname = data[key].Etternavn.values[row]
+                            surname = data[key].Fornavn.values[row]
+                            lastname_count = len(lastname.split())
+                            if lastname_count < 1:
+                                new_lastname = lastname.split()[-1]
+                                new_surname = surname
+                                for name in lastname.split():
+                                    if name != new_lastname:
+                                        new_surname = new_surname + ' ' + name
+                                data[key].Fornavn.values[row] = new_surname
+                                data[key].Etternavn.values[row] = new_lastname
+                                bad_data.update({current_org: {key: {'Etternavn': row}}})
+                            # check for missing birthdates and log if True
+                            if data[key]['Fødselsdato'][row] == '':
+                                bad_data.update({current_org: {key: {'Fødselsdato': row}}})
+                            # add PersonID to row if current_org has identifiable KA output
+                            if has_output == True:
+                                oid = output_ID[current_org]
+                                if oid in list(personIDs.keys()):
+                                    org_data = personIDs[oid]
+                                    num_pid= len(org_data)
+                                    if last_row < num_pid:
+                                        data[key]['NIF ID'][last_row] = org_data[last_row]
+                            # log clubs without indentifiable output from KA
                             else:
                                 missing_output.append(current_org)
                                 has_output = False
+                        elif key == 'Training fee':
+                            #set TF duration to 1 if missing
+                            if data[key]['Varighet (putt inn heltall)'][row] == '':
+                                data[key]['Varighet (putt inn heltall)'][row] = 1
+                        elif key == 'Membership Category':
+                            # check for missing age ranges, and set defaults if missing
+                            if data[key]['Alder fra'][row] == '':
+                                data[key]['Alder fra'][row] = 0
+                            if data[key]['Alder til'][row] == '':
+                                data[key]['Alder til'][row] = 0
 
                         last_row += 1
                 
@@ -97,6 +125,7 @@ class Appendinator:
             
         print(f'---\nFinished Processing All Data\n===\n')
         print(f'Missing  output for thise orgIDs: {missing_output}\n')
+        print(f'Registered bad data at {bad_data}')
         print(f'Writing data to target: {self.target_path} ...')
         # Write the collated and formated data to a new file
         # Create separate DataFrames for each sheet in the Migration Template
