@@ -111,6 +111,11 @@ class Appendinator:
                             if data[key]['Varighet (putt inn heltall)'][last_row] == '':
                                  #print(f'{current_org}: Missing Duration for Training Fee at {last_row}')
                                 data[key]['Varighet (putt inn heltall)'][last_row] = 1
+                            # check for missing data values, and set to defaults if True
+                            if data[key]['Automatisk fornybar'][last_row] == '':
+                                data[key]['Automatisk fornybar'][last_row] = 'Ja'
+                            if data[key]['Oppstartspakke'][last_row] == '':
+                                data[key]['Oppstartspakke'][last_row] = 'Nei'
                         elif key == 'Membership Category':
                             # check for missing age ranges, and set defaults if missing
                             if data[key]['Alder fra'][last_row] == '':
