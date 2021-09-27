@@ -45,7 +45,7 @@ class Appendinator:
             for i in df.Id.values:
                 index = i-1
                 org = df.OrgId.values[index]
-                row_pid_pairing = {index: df.PersonId.values[index]}
+                row_pid_pairing = {index: [df.PersonId.values[index], df.FirstName.values[index] ,df.LastName.values[index]]}
                 if org not in list(pid_dict.keys()):
                     pid_dict[org]= row_pid_pairing
                 else:
@@ -80,20 +80,6 @@ class Appendinator:
                         break
                     else:
                         if key == 'Member':
-                            #check for erronious last names, and attempt correction (based upon rules for last name in Folkereg.)
-                            lastname = data[key].Etternavn.values[last_row]
-                            surname = data[key]['Fornavn- og middelnavn'].values[last_row]
-                            lastname_count = len(lastname.split())
-                            if lastname_count < 1:
-                                print(f'{current_org}: Bad name at {last_row}, {lastname}')
-                                new_lastname = lastname.split()[-1]
-                                new_surname = surname
-                                for name in lastname.split():
-                                    if name != new_lastname:
-                                        new_surname = new_surname + ' ' + name
-                                data[key].Fornavn.values[last_row] = new_surname
-                                data[key].Etternavn.values[last_row] = new_lastname
-                                bad_data.update({current_org: {key: {'Etternavn': last_row}}})
                             # check for missing birthdates and log if True
                             if data[key]['Fødselsdato'][last_row] == '':
                                 print(f'{current_org}: Bad Birthdate at {last_row}, {data[key]["Fødselsdato"][last_row]}')
@@ -105,7 +91,19 @@ class Appendinator:
                                     org_data = personIDs[oid]
                                     num_pid= len(org_data)
                                     if last_row < num_pid:
-                                        data[key]['NIF ID'][last_row] = org_data[last_row]
+                                        data[key]['NIF ID'][last_row] = org_data[last_row][0]
+                                    #check for erronious last names, and attempt correction (based upon rules for last name in Folkereg.)
+                                    lastname = data[key].Etternavn.values[last_row]
+                                    lastname_count = len(lastname.split())
+                                    real_lastname = org_data[last_row][2]
+                                    real_firstname = org_data[last_row][1]
+                                    if lastname_count > 1 and lastname != real_lastname:
+                                        if current_org == 891289:
+                                            print('wat')
+                                        print(f'{current_org}: Bad name at {last_row}, old: {lastname}, new: {real_lastname}')
+                                        data[key]['Fornavn- og middelnavn'].values[last_row] = real_firstname
+                                        data[key].Etternavn.values[last_row] = real_lastname
+                                        bad_data.update({current_org: {key: {'Etternavn': last_row}}})
                             # log clubs without indentifiable output from KA
                             else:
                                 missing_output.update({current_org: last_row})
