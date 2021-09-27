@@ -105,7 +105,7 @@ class Appendinator:
                                     org_data = personIDs[oid]
                                     num_pid= len(org_data)
                                     if last_row < num_pid:
-                                        data[key]['NIF PersonId'][last_row] = org_data[last_row]
+                                        data[key]['NIF ID'][last_row] = org_data[last_row]
                             # log clubs without indentifiable output from KA
                             else:
                                 missing_output.update({current_org: last_row})
