@@ -86,6 +86,14 @@ class Appendinator:
                             if data[key]['Fødselsdato'][last_row] == '':
                                 print(f'{current_org}: Bad Birthdate at {last_row}, {data[key]["Fødselsdato"][last_row]}')
                                 bad_data_count += 1
+                            
+                            # check if new membership and Training fee has valid product names
+                            mem = data[key]['Kontingent navn'][last_row]
+                            if  mem not in list(data['Membership']['Navn på kontigent'].values):
+                                print(f'{current_org}: Bad Membership at {last_row}, product name: {mem}')
+                            tf = data[key]['Treningsavgift navn'][last_row]
+                            if tf not in list(data['Training fee']['Navn på Treningsvgift'].values):
+                                print(f'{current_org}: Bad Training Fee at {last_row}, product name: {tf}')
                             # check for existance of output data for current org
                             if current_org in list(output_ID.keys()):
                                 oid = output_ID[current_org]
@@ -128,6 +136,7 @@ class Appendinator:
                                 data[key]['Alder fra'][last_row] = 0
                             if data[key]['Alder til '][last_row] == '':
                                 data[key]['Alder til '][last_row] = 0
+
                         elif key == 'Membership':
                             # check for missing data values, and set to defaults if True
                             if data[key]['Varighet (putt inn heltall)'][last_row] == '':
@@ -138,6 +147,7 @@ class Appendinator:
                                 data[key]['Familiemedlem'][last_row] = 'Nei'
                             if data[key]['Status'][last_row] == '':
                                 data[key]['Status'][last_row] = 'Active'
+                            
                             # check for price that will not count at SR
                             if data[key]['Beløp i kroner'][last_row] < 50 or type(data[key]['Beløp i kroner'][last_row]) != int:
                                 data[key]['Beløp i kroner'][last_row] = 50
