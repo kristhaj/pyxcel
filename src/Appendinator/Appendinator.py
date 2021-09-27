@@ -99,8 +99,6 @@ class Appendinator:
                                     real_lastname = org_data[last_row][2]
                                     real_firstname = org_data[last_row][1]
                                     if lastname_count > 1 and lastname != real_lastname:
-                                        if current_org == 891289:
-                                            print('wat')
                                         print(f'{current_org}: Bad name at {last_row}, old: {lastname}, new: {real_lastname}')
                                         data[key]['Fornavn- og middelnavn'].values[last_row] = real_firstname
                                         data[key].Etternavn.values[last_row] = real_lastname
