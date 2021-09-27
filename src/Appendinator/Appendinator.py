@@ -116,6 +116,9 @@ class Appendinator:
                                 data[key]['Automatisk fornybar'][last_row] = 'Ja'
                             if data[key]['Oppstartspakke'][last_row] == '':
                                 data[key]['Oppstartspakke'][last_row] = 'Nei'
+                            # check for price that will not count at SR
+                            if data[key]['Beløp i kroner'][last_row] < 50 or type(data[key]['Beløp i kroner'][last_row]) != int:
+                                data[key]['Beløp i kroner'][last_row] = 50
                         elif key == 'Membership Category':
                             # check for missing age ranges, and set defaults if missing
                             if data[key]['Alder fra'][last_row] == '':
