@@ -72,7 +72,9 @@ class Appendinator:
             path = f'{self.data_dir}/'+f
             data = pd.read_excel(path, sheet_name=None, skiprows=1, keep_default_na=False)
             current_org = data['Member'].NIFOrgId.values[0]
+            bad_data.update({current_org: {}})
             for key in list(data.keys()):
+                bad_data_count = 0
                 last_row = 0
                 for row in data[key].values:
                     val = row[0]
@@ -83,7 +85,7 @@ class Appendinator:
                             # check for missing birthdates and log if True
                             if data[key]['Fødselsdato'][last_row] == '':
                                 print(f'{current_org}: Bad Birthdate at {last_row}, {data[key]["Fødselsdato"][last_row]}')
-                                bad_data.update({current_org: {key: {'Fødselsdato': last_row}}})
+                                bad_data_count += 1
                             # check for existance of output data for current org
                             if current_org in list(output_ID.keys()):
                                 oid = output_ID[current_org]
@@ -102,7 +104,7 @@ class Appendinator:
                                         print(f'{current_org}: Bad name at {last_row}, old: {lastname}, new: {real_lastname}')
                                         data[key]['Fornavn- og middelnavn'].values[last_row] = real_firstname
                                         data[key].Etternavn.values[last_row] = real_lastname
-                                        bad_data.update({current_org: {key: {'Etternavn': last_row}}})
+                                        bad_data_count += 1
                             # log clubs without indentifiable output from KA
                             else:
                                 missing_output.update({current_org: last_row})
@@ -116,9 +118,10 @@ class Appendinator:
                                 data[key]['Automatisk fornybar'][last_row] = 'Ja'
                             if data[key]['Oppstartspakke'][last_row] == '':
                                 data[key]['Oppstartspakke'][last_row] = 'Nei'
-                            # check for price that will not count at SR
-                            if data[key]['Beløp i kroner'][last_row] < 50 or type(data[key]['Beløp i kroner'][last_row]) != int:
-                                data[key]['Beløp i kroner'][last_row] = 50
+                            #check for invalid data types
+                            if type(data[key]['Beløp i kroner'][last_row]) != int:
+                                data[key]['Beløp i kroner'][last_row] = 0
+                                bad_data_count += 1
                         elif key == 'Membership Category':
                             # check for missing age ranges, and set defaults if missing
                             if data[key]['Alder fra'][last_row] == '':
@@ -135,8 +138,13 @@ class Appendinator:
                                 data[key]['Familiemedlem'][last_row] = 'Nei'
                             if data[key]['Status'][last_row] == '':
                                 data[key]['Status'][last_row] = 'Active'
+                            # check for price that will not count at SR
+                            if data[key]['Beløp i kroner'][last_row] < 50 or type(data[key]['Beløp i kroner'][last_row]) != int:
+                                data[key]['Beløp i kroner'][last_row] = 50
+                                bad_data_count += 1
 
                         last_row += 1
+                        bad_data[current_org].update({key: bad_data_count})
                 
                 real_data = data[key].iloc[:last_row]
                 df[key] = df[key].append(real_data, ignore_index=True)
