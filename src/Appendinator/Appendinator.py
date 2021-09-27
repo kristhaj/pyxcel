@@ -78,6 +78,7 @@ class Appendinator:
             bad_data.update({current_org: {}})
             for key in list(data.keys()):
                 bad_data_count = 0
+                bad_data_locations= []
                 last_row = 0
                 for row in data[key].values:
                     val = row[0]
@@ -89,6 +90,7 @@ class Appendinator:
                             if data[key]['Fødselsdato'][last_row] == '':
                                 print(f'{current_org}: Bad Birthdate at {last_row}, {data[key]["Fødselsdato"][last_row]}')
                                 bad_data_count += 1
+                                bad_data_locations.append('Fødselsdato')
                             
                             # check if new membership and Training fee has valid product names
                             mem = data[key]['Kontingent navn'][last_row]
@@ -127,6 +129,7 @@ class Appendinator:
                                             data[key]['Fornavn- og middelnavn'].values[last_row] = real_firstname
                                             data[key].Etternavn.values[last_row] = real_lastname
                                             bad_data_count += 1
+                                            bad_data_locations.append('Navn')
                                 # log clubs without indentifiable output from KA
                                 else:
                                     missing_output.update({current_org: last_row})
@@ -144,6 +147,7 @@ class Appendinator:
                             if type(data[key]['Beløp i kroner'][last_row]) != int:
                                 data[key]['Beløp i kroner'][last_row] = 0
                                 bad_data_count += 1
+                                bad_data_locations.append('TF Price')
                         elif key == 'Membership Category':
                             # check for missing age ranges, and set defaults if missing
                             if data[key]['Alder fra'][last_row] == '':
@@ -166,10 +170,11 @@ class Appendinator:
                             if data[key]['Beløp i kroner'][last_row] < 50 or type(data[key]['Beløp i kroner'][last_row]) != int:
                                 data[key]['Beløp i kroner'][last_row] = 50
                                 bad_data_count += 1
+                                bad_data_locations.append('Membership Price')
 
                         last_row += 1
                         if bad_data_count > 0:
-                            bad_data[current_org].update({key: bad_data_count})
+                            bad_data[current_org].update({key: [bad_data_count, bad_data_locations]})
                 
                 real_data = data[key].iloc[:last_row]
                 df[key] = df[key].append(real_data, ignore_index=True)
