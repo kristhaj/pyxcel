@@ -117,6 +117,16 @@ class Appendinator:
                                 data[key]['Alder fra'][last_row] = 0
                             if data[key]['Alder til '][last_row] == '':
                                 data[key]['Alder til '][last_row] = 0
+                        elif key == 'Membership':
+                            # check for missing data values, and set to defaults if True
+                            if data[key]['Varighet (putt inn heltall)'][last_row] == '':
+                                data[key]['Varighet (putt inn heltall)'][last_row] = 1
+                            if data[key]['Automatisk fornybar'][last_row] == '':
+                                data[key]['Automatisk fornybar'][last_row] = 'Ja'
+                            if data[key]['Familiemedlem'][last_row] == '':
+                                data[key]['Familiemedlem'][last_row] = 'Nei'
+                            if data[key]['Status'][last_row] == '':
+                                data[key]['Status'][last_row] = 'Active'
 
                         last_row += 1
                 
