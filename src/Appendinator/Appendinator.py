@@ -73,6 +73,7 @@ class Appendinator:
         for f in files:
             path = f'{self.data_dir}/'+f
             data = pd.read_excel(path, sheet_name=None, skiprows=1, keep_default_na=False)
+            data['Membership'].columns.values[18] = 'Status'
             current_org = data['Member'].NIFOrgId.values[0]
             bad_data.update({current_org: {}})
             for key in list(data.keys()):
@@ -91,11 +92,21 @@ class Appendinator:
                             
                             # check if new membership and Training fee has valid product names
                             mem = data[key]['Kontingent navn'][last_row]
-                            if  mem not in list(data['Membership']['Navn på kontigent'].values):
-                                print(f'{current_org}: Bad Membership at {last_row}, product name: {mem}')
+                            mem_list = list(data['Membership']['Navn på kontigent'].values)
+                            if  mem not in mem_list:
+                                for m_product in mem_list:
+                                    if mem.lower().replace(' ', '') == m_product.lower().replace(' ', ''):
+                                        data[key]['Kontingent navn'][last_row] = m_product
+                                        break
+                                print(f'{current_org}: Bad Membership at {last_row}, old product: "{mem}", new product: "{data[key]["Kontingent navn"][last_row]}"')
                             tf = data[key]['Treningsavgift navn'][last_row]
-                            if tf not in list(data['Training fee']['Navn på Treningsvgift'].values):
-                                print(f'{current_org}: Bad Training Fee at {last_row}, product name: {tf}')
+                            tf_list = list(data['Training fee']['Navn på Treningsvgift'].values)
+                            if tf not in tf_list:
+                                for t_product in tf_list:
+                                    if tf.lower().replace(' ', '') == t_product.lower().replace(' ', ''):
+                                        data[key]['Treningsavgift navn'][last_row] = t_product
+                                        break
+                                print(f'{current_org}: Bad Training Fee at {last_row}, old product: "{tf}", new product: "{data[key]["Treningsavgift navn"][last_row]}"')
                             if postKA:
                                 # check for existance of output data for current org
                                 if current_org in list(output_ID.keys()):
@@ -157,7 +168,8 @@ class Appendinator:
                                 bad_data_count += 1
 
                         last_row += 1
-                        bad_data[current_org].update({key: bad_data_count})
+                        if bad_data_count > 0:
+                            bad_data[current_org].update({key: bad_data_count})
                 
                 real_data = data[key].iloc[:last_row]
                 df[key] = df[key].append(real_data, ignore_index=True)
