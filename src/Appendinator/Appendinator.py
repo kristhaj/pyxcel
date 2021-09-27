@@ -66,10 +66,9 @@ class Appendinator:
         for f in files:
             path = f'{self.data_dir}/'+f
             data = pd.read_excel(path, sheet_name=None, skiprows=1, keep_default_na=False)
-            has_output = True
+            current_org = data['Member'].NIFOrgId.values[0]
             for key in list(data.keys()):
                 last_row = 0
-                current_org = data[key].NIFOrgId.values[0]
                 for row in data[key].values:
                     val = row[0]
                     if val == '' or pd.isna(val):
@@ -77,23 +76,25 @@ class Appendinator:
                     else:
                         if key == 'Member':
                             #check for erronious last names, and attempt correction (based upon rules for last name in Folkereg.)
-                            lastname = data[key].Etternavn.values[row]
-                            surname = data[key].Fornavn.values[row]
+                            lastname = data[key].Etternavn.values[last_row]
+                            surname = data[key]['Fornavn- og middelnavn'].values[last_row]
                             lastname_count = len(lastname.split())
                             if lastname_count < 1:
+                                print(f'{current_org}: Bad name at {last_row}, {lastname}')
                                 new_lastname = lastname.split()[-1]
                                 new_surname = surname
                                 for name in lastname.split():
                                     if name != new_lastname:
                                         new_surname = new_surname + ' ' + name
-                                data[key].Fornavn.values[row] = new_surname
-                                data[key].Etternavn.values[row] = new_lastname
-                                bad_data.update({current_org: {key: {'Etternavn': row}}})
+                                data[key].Fornavn.values[last_row] = new_surname
+                                data[key].Etternavn.values[last_row] = new_lastname
+                                bad_data.update({current_org: {key: {'Etternavn': last_row}}})
                             # check for missing birthdates and log if True
-                            if data[key]['Fødselsdato'][row] == '':
-                                bad_data.update({current_org: {key: {'Fødselsdato': row}}})
+                            if data[key]['Fødselsdato'][last_row] == '':
+                                print(f'{current_org}: Bad Birthdate at {last_row}, {data[key]["Fødselsdato"][last_row]}')
+                                bad_data.update({current_org: {key: {'Fødselsdato': last_row}}})
                             # add PersonID to row if current_org has identifiable KA output
-                            if has_output == True:
+                            if current_org in list(output_ID.keys()):
                                 oid = output_ID[current_org]
                                 if oid in list(personIDs.keys()):
                                     org_data = personIDs[oid]
@@ -103,17 +104,17 @@ class Appendinator:
                             # log clubs without indentifiable output from KA
                             else:
                                 missing_output.append(current_org)
-                                has_output = False
                         elif key == 'Training fee':
                             #set TF duration to 1 if missing
-                            if data[key]['Varighet (putt inn heltall)'][row] == '':
-                                data[key]['Varighet (putt inn heltall)'][row] = 1
+                            if data[key]['Varighet (putt inn heltall)'][last_row] == '':
+                                 #print(f'{current_org}: Missing Duration for Training Fee at {last_row}')
+                                data[key]['Varighet (putt inn heltall)'][last_row] = 1
                         elif key == 'Membership Category':
                             # check for missing age ranges, and set defaults if missing
-                            if data[key]['Alder fra'][row] == '':
-                                data[key]['Alder fra'][row] = 0
-                            if data[key]['Alder til'][row] == '':
-                                data[key]['Alder til'][row] = 0
+                            if data[key]['Alder fra'][last_row] == '':
+                                data[key]['Alder fra'][last_row] = 0
+                            if data[key]['Alder til '][last_row] == '':
+                                data[key]['Alder til '][last_row] = 0
 
                         last_row += 1
                 
