@@ -1,6 +1,7 @@
 # Append seperate files into a single master file
 
 import os
+import time
 import pandas as pd
 
 class Appendinator:
@@ -12,6 +13,9 @@ class Appendinator:
         self.format_path = os.getenv("FORMAT_PATH")
         self.kao_dir = os.getenv("KAO_DIR")
         self.kao_meta = os.getenv("KAO_META")
+
+        #set start time for logging run time
+        self.start_time = time.time()
 
     def Handle_OutputIDs(self, path):
         df = pd.read_excel(path, usecols="B,C", keep_default_na=False)
@@ -101,7 +105,7 @@ class Appendinator:
                                     org_data = personIDs[oid]
                                     num_pid= len(org_data)
                                     if last_row < num_pid:
-                                        data[key]['NIF ID'][last_row] = org_data[last_row]
+                                        data[key]['NIF PersonId'][last_row] = org_data[last_row]
                             # log clubs without indentifiable output from KA
                             else:
                                 missing_output.update({current_org: last_row})
@@ -177,6 +181,7 @@ class Appendinator:
             print(f'Something went wrong while writing to file.....\n---')
 
         print('DONE')
+        print(f'Elapsed time: {time.time() - self.start_time}')
         pass
 
 
