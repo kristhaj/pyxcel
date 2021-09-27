@@ -59,7 +59,8 @@ class Appendinator:
         print(f'Reading data from {self.data_dir} ...')
         files = os.listdir(self.data_dir)
         files_handled = 0
-        missing_output = []
+        # dict for logging missing personIDs, where keys are OrgID and values are indices
+        missing_output = {}
         # dict for logging clubs and areas with bad data, to be printed at the end of run
         # format {clubID: {sheet: {column: [rows]}}}
         bad_data = {}
@@ -103,7 +104,7 @@ class Appendinator:
                                         data[key]['NIF ID'][last_row] = org_data[last_row]
                             # log clubs without indentifiable output from KA
                             else:
-                                missing_output.append(current_org)
+                                missing_output.update({current_org: last_row})
                         elif key == 'Training fee':
                             #set TF duration to 1 if missing
                             if data[key]['Varighet (putt inn heltall)'][last_row] == '':
