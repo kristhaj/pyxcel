@@ -84,12 +84,13 @@ class Appendinator:
                             if data[key]['Fødselsdato'][last_row] == '':
                                 print(f'{current_org}: Bad Birthdate at {last_row}, {data[key]["Fødselsdato"][last_row]}')
                                 bad_data.update({current_org: {key: {'Fødselsdato': last_row}}})
-                            # add PersonID to row if current_org has identifiable KA output
+                            # check for existance of output data for current org
                             if current_org in list(output_ID.keys()):
                                 oid = output_ID[current_org]
                                 if oid in list(personIDs.keys()):
                                     org_data = personIDs[oid]
                                     num_pid= len(org_data)
+                                    # set PersonID for member if available in output file
                                     if last_row < num_pid:
                                         data[key]['NIF ID'][last_row] = org_data[last_row][0]
                                     #check for erronious last names, and attempt correction (based upon rules for last name in Folkereg.)
