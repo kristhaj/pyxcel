@@ -148,6 +148,14 @@ class Appendinator:
                                 data[key]['Beløp i kroner'][last_row] = 0
                                 bad_data_count += 1
                                 bad_data_locations.append('TF Price')
+                            # check for missing membershipcategories
+                            cat_list = list(data['Membership Category']['Medlemskategori'].values)
+                            tf_cat = data[key]['Medlemskategori'][last_row]
+                            if  tf_cat not in cat_list:
+                                data['Membership Category']['NIFOrgId'][len(cat_list)] = current_org
+                                data['Membership Category']['Medlemskategori'] = tf_cat
+                                bad_data_count += 1
+                                bad_data_locations.append('Membership Category')
                         elif key == 'Membership Category':
                             # check for missing age ranges, and set defaults if missing
                             if data[key]['Alder fra'][last_row] == '':
@@ -156,6 +164,15 @@ class Appendinator:
                                 data[key]['Alder til '][last_row] = 0
 
                         elif key == 'Membership':
+                            # check for missing membershipcategories
+                            cat_list = list(data['Membership Category']['Medlemskategori'].values)
+                            mem_cat = data[key]['Medlemskategori'][last_row]
+                            if  mem_cat not in cat_list:
+                                data['Membership Category']['NIFOrgId'][len(cat_list)] = current_org
+                                data['Membership Category']['Medlemskategori'] = mem_cat
+                                bad_data_count += 1
+                                bad_data_locations.append('Membership Category')
+                            
                             # check for missing data values, and set to defaults if True
                             if data[key]['Varighet (putt inn heltall)'][last_row] == '':
                                 data[key]['Varighet (putt inn heltall)'][last_row] = 1
@@ -171,6 +188,9 @@ class Appendinator:
                                 data[key]['Beløp i kroner'][last_row] = 50
                                 bad_data_count += 1
                                 bad_data_locations.append('Membership Price')
+
+                            
+                            
 
                         last_row += 1
                         if bad_data_count > 0:
