@@ -3,6 +3,7 @@
 import os
 import time
 import pandas as pd
+import numpy as np
 
 class Appendinator:
 
@@ -23,7 +24,7 @@ class Appendinator:
         for i in range(df.shape[0]):
             orgID = df.Orgid.values[i]
             outputID = df.outputID.values[i]
-            if type(outputID) == int:
+            if type(outputID) == np.int64:
                 org_output_id.update({orgID: outputID})
             else:
                 org_output_id.update({orgID: orgID})
@@ -39,8 +40,8 @@ class Appendinator:
         for file in files:
             path = dir + '/' + file
             print(f'Reading PersonIDs at {path} ...')
-            #TODO: fix csv reading
-            df = pd.read_csv(path, sep=",")
+            types = {'Id':np.int64, 'OrgId': np.int64, 'PersonId': np.int64}
+            df = pd.read_csv(path, sep=",", dtype=types)
 
             for i in df.Id.values:
                 index = i-1
@@ -57,7 +58,7 @@ class Appendinator:
         return pid_dict
 
     def Main(self):
-        postKA = False
+        postKA = True
         if postKA:
             output_ID = self.Handle_OutputIDs(self.kao_meta)
             personIDs = self.Get_PersonIDs(self.kao_dir)
