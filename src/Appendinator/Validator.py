@@ -87,12 +87,12 @@ class Validate:
                     #print(f'{current_org}: Missing Duration for Training Fee at {last_row}')
                     data[key]['Varighet (putt inn heltall)'][last_row] = 1
                     bad_data_count += 1
-                    bad_data_locations.append('Trening Varightet')
+                    bad_data_locations.append('Varightet trening')
                 # check for missing data values, and set to defaults if True
                 if data[key]['Automatisk fornybar'][last_row] == '':
                     data[key]['Automatisk fornybar'][last_row] = 'Ja'
                     bad_data_count += 1
-                    bad_data_locations.append('Automatisk Fornybar Trening')
+                    bad_data_locations.append('Autoforny Trening')
                 if data[key]['Oppstartspakke'][last_row] == '':
                     data[key]['Oppstartspakke'][last_row] = 'Nei'
                 #check for invalid data types
@@ -157,7 +157,7 @@ class Validate:
                 if data[key]['Automatisk fornybar'][last_row] == '':
                     data[key]['Automatisk fornybar'][last_row] = 'Ja'
                     bad_data_count += 1
-                    bad_data_locations.append('Fornybar Medlemskap')
+                    bad_data_locations.append('Autoforny Medlemskap')
                 if data[key]['Familiemedlem'][last_row] == '':
                     data[key]['Familiemedlem'][last_row] = 'Nei'
                 if data[key]['Status'][last_row] == '':

@@ -11,6 +11,6 @@ class Logger:
         print(f'Registered bad data at {bad_data}')
         for org in list(bad_data.keys()):
             for sheet in list(bad_data[org].keys()):
-                print(f'---\nBad data for {org} in sheet {sheet}\nTotal count: {bad_data[org][sheet][0]}\n\nData Point\t|\t\t\tBad Data Count\n--------------------------------------------------')
+                print(f'---\nBad data for {org} in sheet {sheet}\nTotal count: {bad_data[org][sheet][0]}\n\nData Point\t\t|\tBad Data Count\n--------------------------------------------------')
                 for col in list(bad_data[org][sheet][1].keys()):
-                    print(f'{col}\t|\t\t\t{bad_data[org][sheet][1][col]}')
+                    print(f'{col}\t\t|\t{bad_data[org][sheet][1][col]}')
