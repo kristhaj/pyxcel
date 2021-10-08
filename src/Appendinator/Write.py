@@ -3,7 +3,7 @@ import pandas as pd
 class Write:
 
     def Write(self, df, target_path):
-        print(f'Writing data to target: {target_path} ...')
+        print(f'\n===\nWriting data to target: {target_path} ...')
         # Write the collated and formated data to a new file
         # Create separate DataFrames for each sheet in the Migration Template
         df_member = pd.DataFrame.from_dict(df['Member'])
@@ -47,6 +47,6 @@ class Write:
         # close writer and write to file
         try:
             writer.save()
-            print(f'===\nMigration Data was successfully written to {target_path} !\n---\n')
+            print(f'\nMigration Data was successfully written to {target_path} !\n---\n')
         except:
             print(f'Something went wrong while writing to file.....\n---')

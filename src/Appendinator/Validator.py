@@ -153,11 +153,11 @@ class Validate:
                 if data[key]['Varighet (putt inn heltall)'][last_row] == '':
                     data[key]['Varighet (putt inn heltall)'][last_row] = 1
                     bad_data_count += 1
-                    bad_data_locations.append(f'Varighet medlemskap at {last_row}')
+                    bad_data_locations.append('Varighet medlemskap')
                 if data[key]['Automatisk fornybar'][last_row] == '':
                     data[key]['Automatisk fornybar'][last_row] = 'Ja'
                     bad_data_count += 1
-                    bad_data_locations.append(f'Fornybar Medlemskap at {last_row}')
+                    bad_data_locations.append('Fornybar Medlemskap')
                 if data[key]['Familiemedlem'][last_row] == '':
                     data[key]['Familiemedlem'][last_row] = 'Nei'
                 if data[key]['Status'][last_row] == '':
