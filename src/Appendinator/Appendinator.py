@@ -57,6 +57,14 @@ class Appendinator:
                     data, last_row = Validate.Membership_Category(self, data)
                 elif key == 'Membership':
                     data, last_row, bad_data_count, bad_data_locations = Validate.Membership(self, data, current_org)
+                else:
+                    for row in data[key].values:
+                        val = row[0]
+                        # exit when the last row has been reached
+                        if val == '' or pd.isna(val):
+                            break
+                        else:
+                            last_row += 1
                 if bad_data_count > 0:
                     bad_data_loc_count = {}
                     for loc in bad_data_locations:
