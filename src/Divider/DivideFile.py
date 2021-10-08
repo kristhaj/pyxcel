@@ -61,7 +61,7 @@ class Divide_File:
 
         print('Writing files...')
         for id in significant_values:
-            df_template = self.Load_Template(self, path).to_dict()
+            df_template = self.Load_Template(path).to_dict()
             df_filtered = df_master.loc[meta[id]]
             for row in meta[id]:
                 index = row - meta[id][0]
@@ -89,11 +89,11 @@ class Divide_File:
 
     # Do the thing
     def Main(self):
-        df_master, df_club = self.Load_Master(self, self.data_path)
-        identifiers = self.Parse_Keys(self, df_club)
+        df_master, df_club = self.Load_Master(self.data_path)
+        identifiers = self.Parse_Keys(df_club)
         club_id= identifiers.copy()
-        meta_data = self.Populate_Indices(self, identifiers, df_master)
-        self.Make_Files(self, meta_data, self.ka_template, df_master, club_id)
+        meta_data = self.Populate_Indices(identifiers, df_master)
+        self.Make_Files(meta_data, self.ka_template, df_master, club_id)
 
 
 Divide_File().Main()
