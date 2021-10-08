@@ -9,7 +9,12 @@
             "type": "python",
             "request": "launch",
             "program": "src/Divider/DivideFile.py",
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
+            "env": {
+                "data": "files/Appendage/Masters/Master_Migration_File_IMS_Fall21_Batch6.xlsx",
+                "ka_template": "files/KA/Migration File_KA_Template.xlsx",
+                "target_path": "files/KA/h21_batch6/Migration File_"
+            }
         },
         {
             "name": "Adminipy",
@@ -90,11 +95,11 @@
             "env": {
                 // win rel path files*
                 // linux rel path pyxcel/files*
-                "data_dir": "files/appendage/NKF_H21/Pulje_3",
-                "target_path": "files/appendage/Masters/Master_Migration_File_IMS_Fall21_Batch3.xlsx",
+                "data_dir": "files/appendage/NKF_H21/Pulje_6",
+                "target_path": "files/appendage/Masters/Master_Migration_File_IMS_Fall21_Batch6.xlsx",
                 "format_path": "files/appendage/Masters/IMS_Migration_Template.xlsx",
-                "kao_dir": "files/KA/h21_batch3/OutputKA",
-                "kao_meta": "files/KA/h21_batch3/kao_meta.xlsx"
+                "kao_dir": "files/KA/h21_batch6/OutputKA",
+                "kao_meta": "files/KA/h21_batch6/kao_meta.xlsx"
             }
         }
     ],
