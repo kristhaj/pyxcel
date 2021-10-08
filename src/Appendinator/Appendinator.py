@@ -58,7 +58,7 @@ class Appendinator:
         return pid_dict
 
     def Main(self):
-        postKA = True
+        postKA = False
         if postKA:
             output_ID = self.Handle_OutputIDs(self.kao_meta)
             personIDs = self.Get_PersonIDs(self.kao_dir)
@@ -102,6 +102,8 @@ class Appendinator:
                                         data[key]['Kontingent navn'][last_row] = m_product
                                         break
                                 print(f'{current_org}: Bad Membership at {last_row}, old product: "{mem}", new product: "{data[key]["Kontingent navn"][last_row]}"')
+                                bad_data_count += 1
+                                bad_data_locations.append('Kontingent navn')
                             tf = data[key]['Treningsavgift navn'][last_row]
                             tf_list = list(data['Training fee']['Navn på Treningsvgift'].values)
                             if tf not in tf_list:
@@ -110,6 +112,12 @@ class Appendinator:
                                         data[key]['Treningsavgift navn'][last_row] = t_product
                                         break
                                 print(f'{current_org}: Bad Training Fee at {last_row}, old product: "{tf}", new product: "{data[key]["Treningsavgift navn"][last_row]}"')
+                                bad_data_count += 1
+                                bad_data_locations.append('Treningsavgift navn')
+                            # check for missing address data and copy for street if so
+                            if data[key]['Adresse 1'][last_row] == "":
+                                data[key]['Adresse 1'][last_row] = data[key]['Gatenavn'][last_row]
+                                
                             if postKA:
                                 # check for existance of output data for current org
                                 if current_org in list(output_ID.keys()):
@@ -139,9 +147,13 @@ class Appendinator:
                             if data[key]['Varighet (putt inn heltall)'][last_row] == '':
                                  #print(f'{current_org}: Missing Duration for Training Fee at {last_row}')
                                 data[key]['Varighet (putt inn heltall)'][last_row] = 1
+                                bad_data_count += 1
+                                bad_data_locations.append('Trening Varightet')
                             # check for missing data values, and set to defaults if True
                             if data[key]['Automatisk fornybar'][last_row] == '':
                                 data[key]['Automatisk fornybar'][last_row] = 'Ja'
+                                bad_data_count += 1
+                                bad_data_locations.append('Automatisk Fornybar Trening')
                             if data[key]['Oppstartspakke'][last_row] == '':
                                 data[key]['Oppstartspakke'][last_row] = 'Nei'
                             #check for invalid data types
@@ -178,12 +190,18 @@ class Appendinator:
                             # check for missing data values, and set to defaults if True
                             if data[key]['Varighet (putt inn heltall)'][last_row] == '':
                                 data[key]['Varighet (putt inn heltall)'][last_row] = 1
+                                bad_data_count += 1
+                                bad_data_locations.append('Varighet medlemskap')
                             if data[key]['Automatisk fornybar'][last_row] == '':
                                 data[key]['Automatisk fornybar'][last_row] = 'Ja'
+                                bad_data_count += 1
+                                bad_data_locations.append('Fornybar Medlemskap')
                             if data[key]['Familiemedlem'][last_row] == '':
                                 data[key]['Familiemedlem'][last_row] = 'Nei'
                             if data[key]['Status'][last_row] == '':
                                 data[key]['Status'][last_row] = 'Active'
+                                bad_data_count += 1
+                                bad_data_locations.append('Status medlemskap')
                             
                             # check for price that will not count at SR
                             if data[key]['Beløp i kroner'][last_row] < 50 or type(data[key]['Beløp i kroner'][last_row]) != int:

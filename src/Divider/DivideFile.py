@@ -71,7 +71,7 @@ def Make_Files(meta, path, df_master, club):
             df_template['Medlem fom'][index] = df_filtered['Medlemskap registreringsdato'][row]
 
         # Update for each batch
-        make_path = f'files/KA/h21_batch3/Migration File_{club[id]}_{id}_KA.xlsx'
+        make_path = f'files/KA/h21_batch5/Migration File_{club[id]}_{id}_KA.xlsx'
         df = pd.DataFrame.from_dict(df_template).copy()
         df['Kjønn'].replace({'Mann': 'M', 'Kvinne': 'K', 'mann': 'M', 'kvinne': 'K'}, inplace=True)
         with pd.ExcelWriter(make_path, date_format='DD.MM.YYYY', datetime_format='DD.MM.YYYY') as writer:
@@ -83,7 +83,7 @@ def Make_Files(meta, path, df_master, club):
 def Main():
 
     # Update for each batch
-    master_path = 'files/Appendage/Masters/Master_Migration_File_IMS_Fall21_Batch3.xlsx'
+    master_path = 'files/Appendage/Masters/Master_Migration_File_IMS_Fall21_Batch5.xlsx'
     template_path = 'files/KA/Migration File_KA_Template.xlsx'
     
     df_master, df_club = Load_Master(master_path)
