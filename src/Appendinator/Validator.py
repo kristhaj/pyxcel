@@ -27,9 +27,13 @@ class Validate:
                         if mem.lower().replace(' ', '') == m_product.lower().replace(' ', ''):
                             data[key]['Kontingent navn'][last_row] = m_product
                             break
+                        else:
+                            print(f'{current_org}: Non existent Membership at {last_row}!')
+                            bad_data_count += 1
+                            bad_data_locations.append('Kontingent navn - BAD')
                     print(f'{current_org}: Bad Membership at {last_row}, old product: "{mem}", new product: "{data[key]["Kontingent navn"][last_row]}"')
                     bad_data_count += 1
-                    bad_data_locations.append('Kontingent navn')
+                    bad_data_locations.append('Kontingent navn - OK')
                 tf = data[key]['Treningsavgift navn'][last_row]
                 tf_list = list(data['Training fee']['Navn på Treningsvgift'].values)
                 if tf not in tf_list:
@@ -37,6 +41,10 @@ class Validate:
                         if tf.lower().replace(' ', '') == t_product.lower().replace(' ', ''):
                             data[key]['Treningsavgift navn'][last_row] = t_product
                             break
+                        else:
+                            print(f'{current_org}: Non existent Training fee at {last_row}!')
+                            bad_data_count += 1
+                            bad_data_locations.append('Treningsavgift - BAD')
                     print(f'{current_org}: Bad Training Fee at {last_row}, old product: "{tf}", new product: "{data[key]["Treningsavgift navn"][last_row]}"')
                     bad_data_count += 1
                     bad_data_locations.append('Treningsavgift')
