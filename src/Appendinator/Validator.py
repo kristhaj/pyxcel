@@ -1,4 +1,7 @@
 import pandas as pd
+import numpy as np
+pd.options.mode.chained_assignment = None
+
 
 class Validate:
 
@@ -110,8 +113,12 @@ class Validate:
                 if data[key]['Oppstartspakke'][last_row] == '':
                     data[key]['Oppstartspakke'][last_row] = 'Nei'
                 #check for invalid data types
-                if type(data[key]['Beløp i kroner'][last_row]) != int:
-                    data[key]['Beløp i kroner'][last_row] = 0
+                tf_price = data[key]['Beløp i kroner'][last_row]
+                if type(tf_price) != np.int64:
+                    if tf_price == '':
+                        data[key]['Beløp i kroner'][last_row] = 0
+                    else:
+                        print(f'{tf_price} is not an INT!')
                     bad_data_count += 1
                     bad_data_locations.append('TF Price')
                 # check for missing membershipcategories
@@ -192,7 +199,7 @@ class Validate:
                     bad_data_locations.append('Status medlemskap')
                 
                 # check for price that will not count at SR
-                if type(data[key]['Beløp i kroner'][last_row]) != int or data[key]['Beløp i kroner'][last_row] < 50:
+                if type(data[key]['Beløp i kroner'][last_row]) != np.int64 or data[key]['Beløp i kroner'][last_row] < 50:
                     data[key]['Beløp i kroner'][last_row] = 50
                     bad_data_count += 1
                     bad_data_locations.append('Membership Price')
