@@ -31,3 +31,7 @@ Validates data in the currently handled file, and performs some corrective measu
 
 ### Logger
 Logs out any occurances of bad data in the batch of files handled by Appendinator, and where these data points are located.
+
+
+# Usage
+TODO
