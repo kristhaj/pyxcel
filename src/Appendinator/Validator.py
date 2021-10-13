@@ -113,8 +113,9 @@ class Validate:
                 if data[key]['Oppstartspakke'][last_row] == '':
                     data[key]['Oppstartspakke'][last_row] = 'Nei'
                 #check for invalid data types
+                valid_types = [int, np.int64, float]
                 tf_price = data[key]['Beløp i kroner'][last_row]
-                if type(tf_price) != np.int64:
+                if type(tf_price) not in valid_types:
                     if tf_price == '':
                         data[key]['Beløp i kroner'][last_row] = 0
                     else:
@@ -199,7 +200,9 @@ class Validate:
                     bad_data_locations.append('Status medlemskap')
                 
                 # check for price that will not count at SR
-                if type(data[key]['Beløp i kroner'][last_row]) != np.int64 or data[key]['Beløp i kroner'][last_row] < 50:
+                valid_types = [int, np.int64, float]
+                mem_price = data[key]['Beløp i kroner'][last_row]
+                if type(mem_price) not in valid_types or mem_price < 50:
                     data[key]['Beløp i kroner'][last_row] = 50
                     bad_data_count += 1
                     bad_data_locations.append('Membership Price')
