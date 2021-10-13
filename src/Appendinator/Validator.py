@@ -117,10 +117,15 @@ class Validate:
                     bad_data_count += 1
                     bad_data_locations.append('Membership Category')
                     print(f'{current_org}: Added missing category, "{tf_cat}" from {key}')
+                else:
+                    if tf_cat == '':
+                        bad_data_count += 1
+                        bad_data_locations.append('Membership Category')
+                        print(f'{current_org}: Empty Training Fee Category at {last_row}!')
                 last_row += 1
         return data, last_row, bad_data_count, bad_data_locations
 
-    def Membership_Category(self, data):
+    def Membership_Category(self, data, current_org):
         key = 'Membership Category'
         last_row = 0
         for row in data[key].values:
@@ -157,6 +162,11 @@ class Validate:
                     bad_data_count += 1
                     bad_data_locations.append('Membership Category')
                     print(f'{current_org}: Added missing category, "{mem_cat}" from {key}')
+                else:
+                    if mem_cat == '':
+                        bad_data_count += 1
+                        bad_data_locations.append('Membership Category')
+                        print(f'{current_org}: Empty Training Fee Category at {last_row}!')
                 # check for missing data values, and set to defaults if True
                 if data[key]['Varighet (putt inn heltall)'][last_row] == '':
                     data[key]['Varighet (putt inn heltall)'][last_row] = 1

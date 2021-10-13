@@ -54,9 +54,9 @@ class Appendinator:
                 elif key == 'Training fee':
                     data, last_row, bad_data_count, bad_data_locations = Validate.Training_Fee(self, data, current_org)
                 elif key == 'Membership Category':
-                    data, last_row = Validate.Membership_Category(self, data)
+                    data, last_row = Validate.Membership_Category(self, data, current_org)
                 elif key == 'Membership':
-                    data, last_row, bad_data_count, bad_data_locations = Validate.Membership(self, data, current_org)
+                    data, last_row, bad_data_count, bad_data_locations = Validate.Membership(self, data)
                 else:
                     for row in data[key].values:
                         val = row[0]
