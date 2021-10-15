@@ -2,7 +2,7 @@ class Logger:
 
     def Log(self, missing_output, bad_data):
 
-        if len(list(missing_output.keys())) >= 1:
+        if len(list(missing_output.keys())) >= 0:
             print(f'Missing  output for thise orgIDs: {missing_output}\n')
             for org in list(missing_output.keys()):
                 print(f'{org}:')
