@@ -1,4 +1,7 @@
 import pandas as pd
+import numpy as np
+pd.options.mode.chained_assignment = None
+
 
 class Validate:
 
@@ -23,23 +26,35 @@ class Validate:
                 mem = data[key]['Kontingent navn'][last_row]
                 mem_list = list(data['Membership']['Navn på kontigent'].values)
                 if  mem not in mem_list:
+                    found_mem_match = False
                     for m_product in mem_list:
                         if mem.lower().replace(' ', '') == m_product.lower().replace(' ', ''):
                             data[key]['Kontingent navn'][last_row] = m_product
+                            found_mem_match = True
+                            #print(f'{current_org}: Bad Membership at {last_row}, old product: "{mem}", new product: "{data[key]["Kontingent navn"][last_row]}"')
+                            bad_data_count += 1
+                            bad_data_locations.append('Kontingent navn - OK')
                             break
-                    print(f'{current_org}: Bad Membership at {last_row}, old product: "{mem}", new product: "{data[key]["Kontingent navn"][last_row]}"')
-                    bad_data_count += 1
-                    bad_data_locations.append('Kontingent navn')
+                    if not found_mem_match:
+                        print(f'{current_org}: Non existent Membership at {last_row}! Product: "{mem}"')
+                        bad_data_count += 1
+                        bad_data_locations.append('Kontingent navn - BAD') 
                 tf = data[key]['Treningsavgift navn'][last_row]
                 tf_list = list(data['Training fee']['Navn på Treningsvgift'].values)
                 if tf not in tf_list:
+                    found_tf_match = False
                     for t_product in tf_list:
                         if tf.lower().replace(' ', '') == t_product.lower().replace(' ', ''):
                             data[key]['Treningsavgift navn'][last_row] = t_product
+                            #print(f'{current_org}: Bad Training Fee at {last_row}, old product: "{tf}", new product: "{data[key]["Treningsavgift navn"][last_row]}"')
+                            bad_data_count += 1
+                            bad_data_locations.append('Treningsavgift - OK')
+                            found_tf_match = True
                             break
-                    print(f'{current_org}: Bad Training Fee at {last_row}, old product: "{tf}", new product: "{data[key]["Treningsavgift navn"][last_row]}"')
-                    bad_data_count += 1
-                    bad_data_locations.append('Treningsavgift')
+                    if not found_tf_match:
+                        print(f'{current_org}: Non existent Training fee at {last_row}! Product "{tf}"')
+                        bad_data_count += 1
+                        bad_data_locations.append('Treningsavgift - BAD')
                 # check for missing address data and copy for street if so
                 if data[key]['Adresse 1'][last_row] == "":
                     data[key]['Adresse 1'][last_row] = data[key]['Gatenavn'][last_row]
@@ -69,6 +84,8 @@ class Validate:
                     else:
                         missing_output.update({current_org: last_row})
                 last_row += 1
+        if last_row == 0:
+            print(f'{current_org}: NO MEMBERSHIPS CONFIGURED')
         return data, last_row, bad_data_count, bad_data_locations, missing_output
         
     def Training_Fee(self, data, current_org):
@@ -96,8 +113,13 @@ class Validate:
                 if data[key]['Oppstartspakke'][last_row] == '':
                     data[key]['Oppstartspakke'][last_row] = 'Nei'
                 #check for invalid data types
-                if type(data[key]['Beløp i kroner'][last_row]) != int:
-                    data[key]['Beløp i kroner'][last_row] = 0
+                valid_types = [int, np.int64, float]
+                tf_price = data[key]['Beløp i kroner'][last_row]
+                if type(tf_price) not in valid_types:
+                    if tf_price == '':
+                        data[key]['Beløp i kroner'][last_row] = 0
+                    else:
+                        print(f'{tf_price} is not an INT!')
                     bad_data_count += 1
                     bad_data_locations.append('TF Price')
                 # check for missing membershipcategories
@@ -109,7 +131,14 @@ class Validate:
                     bad_data_count += 1
                     bad_data_locations.append('Membership Category')
                     print(f'{current_org}: Added missing category, "{tf_cat}" from {key}')
+                else:
+                    if tf_cat == '':
+                        bad_data_count += 1
+                        bad_data_locations.append('Membership Category')
+                        print(f'{current_org}: Empty Training Fee Category at {last_row}!')
                 last_row += 1
+        if last_row == 0:
+            print(f'{current_org}: NO TRANING FEES CONFIGURED')
         return data, last_row, bad_data_count, bad_data_locations
 
     def Membership_Category(self, data):
@@ -149,6 +178,11 @@ class Validate:
                     bad_data_count += 1
                     bad_data_locations.append('Membership Category')
                     print(f'{current_org}: Added missing category, "{mem_cat}" from {key}')
+                else:
+                    if mem_cat == '':
+                        bad_data_count += 1
+                        bad_data_locations.append('Membership Category')
+                        print(f'{current_org}: Empty Training Fee Category at {last_row}!')
                 # check for missing data values, and set to defaults if True
                 if data[key]['Varighet (putt inn heltall)'][last_row] == '':
                     data[key]['Varighet (putt inn heltall)'][last_row] = 1
@@ -166,7 +200,9 @@ class Validate:
                     bad_data_locations.append('Status medlemskap')
                 
                 # check for price that will not count at SR
-                if type(data[key]['Beløp i kroner'][last_row]) != int or data[key]['Beløp i kroner'][last_row] < 50:
+                valid_types = [int, np.int64, float]
+                mem_price = data[key]['Beløp i kroner'][last_row]
+                if type(mem_price) not in valid_types or mem_price < 50:
                     data[key]['Beløp i kroner'][last_row] = 50
                     bad_data_count += 1
                     bad_data_locations.append('Membership Price')

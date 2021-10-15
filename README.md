@@ -22,3 +22,16 @@ Collate data from multiple individual files into a single master file, with a gi
 
 ## Aminipy
 Cross reference call list with member data to identify administrator and relevant information.
+
+## Apendinator
+Collate data from multiple org specific files into a collective Master File
+
+### Validator
+Validates data in the currently handled file, and performs some corrective measures.
+
+### Logger
+Logs out any occurances of bad data in the batch of files handled by Appendinator, and where these data points are located.
+
+
+# Usage
+TODO
