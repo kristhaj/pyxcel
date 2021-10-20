@@ -56,7 +56,7 @@ class Trainings:
     # Extrapolate Training fee data
     def Set_Products(self, data, id, gren_sheet, trainings, is_multi_gren=False):
         processed_trainings = []
-        for key in list(data['Medlemsnummer'].keys()):
+        for key in list(data['Etternavn'].keys()):
             val = data['Kontraktstype'][key]
             if type(val) != float:
                 g_val = data['Gren/Stilart/Avd/Parti - Gren/Stilart/Avd/Parti'][key]
@@ -71,7 +71,7 @@ class Trainings:
                     trainings['Name traning fee'].update({next_index: val})
                     trainings['Sports'].update({next_index: g_val})
                     trainings['Membership category'].update({next_index: data['Medlemskategori navn'][key]})
-                    trainings['Amount in Kr'].update({next_index: data['Kontraktsbeløp'][key]})
+                    trainings['Amount in Kr'].update({next_index: data['Kontraktspris'][key]})
                     trainings['Traningsship length'].update({next_index: 1})
                     trainings['Length type'].update({next_index: 'Måned'})
                     trainings['Invoice frequence'].update({next_index: 1})

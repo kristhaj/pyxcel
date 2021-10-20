@@ -9,7 +9,7 @@ class Load:
     def One(self, _dir, meta):
         print(f'Loading Data Basis from {meta[list(meta.keys())[0]][1]}')
         path = _dir + meta[list(meta.keys())[0]][1]
-        df = pd.read_csv(path, encoding='ISO-8859-1', sep=';', parse_dates=True, infer_datetime_format=True, dayfirst=True)
+        df = pd.read_csv(path, encoding='utf-8', sep=';', parse_dates=True, infer_datetime_format=True, dayfirst=True)
         data = {list(meta.keys())[0]: df.to_dict()}
         print(f'Finished Loading Data.\n-----')
         return data
@@ -23,7 +23,7 @@ class Load:
                 print(f'Missing, or no available, Org Data for {meta[key]}. NO DATA WILL BE READ')
             else:
                 path = dir + meta[key][1]
-                df = pd.read_csv(path, encoding='ISO-8859-1', sep=';', parse_dates=True, infer_datetime_format=True, dayfirst=True)
+                df = pd.read_csv(path, encoding='utf-8', sep=';', parse_dates=True, infer_datetime_format=True, dayfirst=True)
                 data.update({key: df.to_dict()})
         print(f'Finished Loading Data.\n-----')
         return data

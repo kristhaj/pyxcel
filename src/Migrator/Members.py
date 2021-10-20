@@ -11,7 +11,7 @@ class Members:
         print(f'Processing Member data for:')
         for key in list(data.keys()):
             print(f'{key}....')
-            for m_key in list(data[key]['Medlemsnummer'].keys()):
+            for m_key in list(data[key]['Etternavn'].keys()):
                 next_index = len(members['NIFOrgId'])
                 members['NIFOrgId'].update({next_index: key})
 
@@ -19,8 +19,8 @@ class Members:
                 data[key]['Medlemsnummer'][m_key],
                 data[key]['Etternavn'][m_key], 
                 data[key]['Fornavn'][m_key], 
-                data[key]['Kjønn'][m_key], 
-                data[key]['Fødselsdato'][m_key],
+                data[key]['Gender'][m_key], 
+                data[key]['dob'][m_key],
                 next_index, members)
                 
                 Members.Set_Contact_Information(self, 

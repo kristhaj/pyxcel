@@ -15,7 +15,7 @@ class Write:
         df_membership_category = pd.DataFrame.from_dict(data['Membership Category'])
         df_teams = pd.DataFrame.from_dict(data['Teams'])
         df_training_fee = pd.DataFrame.from_dict(data['Training fee'])
-        df_training_locations = pd.DataFrame.from_dict(data['Training Locations'])
+        df_training_locations = pd.DataFrame.from_dict(data['Training locations'])
         df_department = pd.DataFrame.from_dict(data['Department info'])
         df_club = pd.DataFrame.from_dict(data['Club info'])
         df_committees = pd.DataFrame.from_dict(data['Committees'])
@@ -27,7 +27,7 @@ class Write:
         df_op_yn = pd.DataFrame.from_dict(data['Op - Yes_No'])
         df_op_gender = pd.DataFrame.from_dict(data['Op - Gender'])
 
-        path = dir + 'testing_invoiceless.xlsx'
+        path = dir + 'Migration Bjørgvin Karate.xlsx'
 
         # create writer
         writer = pd.ExcelWriter(path, engine='xlsxwriter') # pylint: disable=abstract-class-instantiated
@@ -67,7 +67,7 @@ class Write:
 
             # Make a dict of NifOrgID and row index for the current club
             org_dict = {'NifOrgID': {}}
-            for index in list(data[key]['Medlemsnummer'].keys()):
+            for index in list(data[key]['Etternavn'].keys()):
                 org_dict['NifOrgID'].update({index: key})
             current_club_data = data[key]
             # Append column with NifOrgID to data basis of current club

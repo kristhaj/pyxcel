@@ -35,7 +35,7 @@ class Membership:
     # Extrapolate Membership Product data 
     def Set_Products(self, data, id, memberships, member_sheet):
         processed_memberships = []
-        for key in list(data['Medlemsnummer'].keys()):
+        for key in list(data['Etternavn'].keys()):
             next_key = len(memberships['NIFOrgId'])
             membership = data['Kont.sats'][key].replace('  ', ' ')
             if membership not in processed_memberships:
@@ -43,7 +43,7 @@ class Membership:
                 memberships['NIFOrgId'].update({next_key: id})
                 memberships['Membership Name'].update({next_key: membership})
                 memberships['Membership Category'].update({next_key: data['Medlemskategori navn'][key]})
-                memberships['Price in NOK'].update({next_key: data['Kont.beløp'][key]})
+                memberships['Price in NOK'].update({next_key: data['Kont.pris'][key]})
                 memberships['Duration'].update({next_key: 1})
                 memberships['Duration type'].update({next_key: 'År'})
                 memberships['Invoice Duration'].update({next_key: 1})

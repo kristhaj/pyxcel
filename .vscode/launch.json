@@ -45,17 +45,17 @@
             "env": {
                 // win rel path files*
                 // linux rel path pyxcel/files*
-                "org_path": "files/Birds/org_meta.xlsx",
-                "data_dir": "files/Birds/north/pulje4_ufak/",
-                "destination_path": "files/Birds/south/invoiceless/",
-                "org_category": "invoiceless",
-                "template_path": "files/Birds/IMS_Migration_Template.xlsx",
+                "org_path": "files/Migrator/org_meta.xlsx",
+                "data_dir": "files/Migrator/north/",
+                "destination_path": "files/Migrator/south/pulje_8/",
+                "org_category": "pulje_8",
+                "template_path": "files/appendage/Masters/IMS_Migration_Template.xlsx",
                 "membership_start_date": "01.01.2021",
                 "membership_end_date": "31.12.2021",
-                "membership_invoiceing_date": "02.01.22",
-                "training_start_date": "01.06.2021",
-                "training_end_date": "31.06.2021",
-                "training_invoiceing_date": "01.06.2021"
+                "membership_invoiceing_date": "01.05.22",
+                "training_start_date": "01.10.2021",
+                "training_end_date": "",
+                "training_invoiceing_date": ""
             }
         },
         {
@@ -95,8 +95,8 @@
             "env": {
                 // win rel path files*
                 // linux rel path pyxcel/files*
-                "data_dir": "files/appendage/NKF_H21/Pulje_7",
-                "target_path": "files/appendage/Masters/Master_Migration_File_IMS_Fall21_Batch7.xlsx",
+                "data_dir": "files/appendage/NKF_H21/Pulje_8",
+                "target_path": "files/appendage/Masters/Master_Migration_File_IMS_Fall21_Batch8.xlsx",
                 "format_path": "files/appendage/Masters/IMS_Migration_Template.xlsx",
                 "kao_dir": "files/KA/h21_batch7/OutputKA",
                 "kao_meta": "files/KA/h21_batch7/kao_meta.xlsx",
