@@ -25,7 +25,7 @@ class Appendinator:
 
     def Main(self):
 
-        if self.is_post_ka:
+        if self.is_post_ka == "true":
             output_ID = Handle.OutputIDs(self, self.kao_meta)
             personIDs = Handle.PersonIDs(self, self.kao_dir)
         df = pd.read_excel(self.format_path, sheet_name=None, skiprows=1, keep_default_na=False)
@@ -48,7 +48,7 @@ class Appendinator:
                 bad_data_locations= []
                 last_row = 0
                 if key == 'Member':
-                    if self.is_post_ka:
+                    if self.is_post_ka == "true":
                         data, last_row, bad_data_count, bad_data_locations, missing_output = Validate.Member(self, data, current_org, missing_output, output_ID, personIDs)
                     else:
                         data, last_row, bad_data_count, bad_data_locations, missing_output = Validate.Member(self, data, current_org, missing_output)

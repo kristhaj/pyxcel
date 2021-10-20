@@ -100,7 +100,7 @@
                 "format_path": "files/appendage/Masters/IMS_Migration_Template.xlsx",
                 "kao_dir": "files/KA/h21_batch7/OutputKA",
                 "kao_meta": "files/KA/h21_batch7/kao_meta.xlsx",
-                "is_post_ka": true
+                "is_post_ka": "true"
             }
         }
     ],
