@@ -18,13 +18,14 @@ class Appendinator:
         self.format_path = os.getenv("FORMAT_PATH")
         self.kao_dir = os.getenv("KAO_DIR")
         self.kao_meta = os.getenv("KAO_META")
+        self.is_post_ka = os.getenv("IS_POST_KA")
 
         #set start time for logging run time
         self.start_time = time.time()
 
     def Main(self):
-        postKA = False
-        if postKA:
+
+        if self.is_post_ka:
             output_ID = Handle.OutputIDs(self, self.kao_meta)
             personIDs = Handle.PersonIDs(self, self.kao_dir)
         df = pd.read_excel(self.format_path, sheet_name=None, skiprows=1, keep_default_na=False)
