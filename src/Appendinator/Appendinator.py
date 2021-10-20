@@ -48,7 +48,7 @@ class Appendinator:
                 bad_data_locations= []
                 last_row = 0
                 if key == 'Member':
-                    if postKA:
+                    if self.is_post_ka:
                         data, last_row, bad_data_count, bad_data_locations, missing_output = Validate.Member(self, data, current_org, missing_output, output_ID, personIDs)
                     else:
                         data, last_row, bad_data_count, bad_data_locations, missing_output = Validate.Member(self, data, current_org, missing_output)
