@@ -136,4 +136,4 @@ files/
 MailParser
 
 # launch config
-.vscode\launch.json
+.vscode/launch.json
