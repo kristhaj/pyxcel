@@ -22,12 +22,18 @@ class Validate:
                     print(f'{current_org}: Bad Birthdate at {last_row}, {data[key]["Fødselsdato"][last_row]}')
                     bad_data_count += 1
                     bad_data_locations.append('Fødselsdato')
-                # Check if the member is missing membership registered date, or if this is set as an invalid value
+                # Check if the member is missing membership onboarding date, or if this is set as an invalid value
                 reg_date = data[key]['Medlemskap registreringsdato'][last_row]
                 if type(reg_date) != pd._libs.tslibs.timestamps.Timestamp:
-                    print(f'{current_org}: Missing membership registered date, or invalid data type at {last_row} for {str(reg_date)} with type {type(reg_date)}!')
+                    print(f'{current_org}: Missing membership onboarding date, or invalid data type at {last_row} for {str(reg_date)} with type {type(reg_date)}!')
                     bad_data_count += 1
                     bad_data_locations.append('Medlemskap registreringsdato')
+                # check if the member is missing training fee onboarding date
+                reg_date_tf = data[key]['Treningsavgift registreringsdato'][last_row]
+                if type(reg_date) != pd._libs.tslibs.timestamps.Timestamp:
+                    print(f'{current_org}: Missing Training Fee onboarding date, or invalid data type at {last_row} for {str(reg_date_tf)} with type {type(reg_date_tf)}!')
+                    bad_data_count += 1
+                    bad_data_locations.append('Treningsavgift registreringsdato')
                 # check if new membership and Training fee has valid product names
                 mem = data[key]['Kontingent navn'][last_row]
                 mem_list = list(data['Membership']['Navn på kontigent'].values)
