@@ -11,7 +11,8 @@ class Handle:
         for i in range(df.shape[0]):
             orgID = df.Orgid.values[i]
             outputID = df.outputID.values[i]
-            if type(outputID) == int:
+            valid_id_types = [np.int64, int]
+            if type(outputID) in valid_id_types:
                 org_output_id.update({orgID: outputID})
             else:
                 org_output_id.update({orgID: orgID})
