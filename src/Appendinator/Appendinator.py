@@ -8,6 +8,7 @@ from Validator import Validate
 from Write import Write
 from Output_Handler import Handle
 from Logger import Logger
+from Product_Generator import Product_Generator
 
 class Appendinator:
 
@@ -19,6 +20,7 @@ class Appendinator:
         self.kao_dir = os.getenv("KAO_DIR")
         self.kao_meta = os.getenv("KAO_META")
         self.is_post_ka = os.getenv("IS_POST_KA")
+        self.is_productless = os.getenv("IS_PRODUCTLESS")
 
         #set start time for logging run time
         self.start_time = time.time()
@@ -40,9 +42,15 @@ class Appendinator:
         for f in files:
             path = f'{self.data_dir}/'+f
             data = pd.read_excel(path, sheet_name=None, skiprows=1, keep_default_na=False)
+            # Handle missing column name in some data files
             data['Membership'].columns.values[18] = 'Status'
             current_org = data['Member'].NIFOrgId.values[0]
             bad_data.update({current_org: {}})
+            if self.is_productless:
+                print (f'Generating generic products for {current_org}...')
+                data['Membership Category'] = Product_Generator.Category(self, data['Membership Category'], current_org)
+                data['Membership'] = Product_Generator.Membership(self, data['Membership'], current_org)
+                data['Training fee'] = Product_Generator.Training_Fee(self, data['Training fee'], current_org)
             for key in list(data.keys()):
                 bad_data_count = 0
                 bad_data_locations= []
