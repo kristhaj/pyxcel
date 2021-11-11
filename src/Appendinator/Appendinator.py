@@ -46,20 +46,21 @@ class Appendinator:
             data['Membership'].columns.values[18] = 'Status'
             current_org = data['Member'].NIFOrgId.values[0]
             bad_data.update({current_org: {}})
-            if self.is_productless:
+            if self.is_productless == 'true':
                 print (f'Generating generic products for {current_org}...')
                 data['Membership Category'] = Product_Generator.Category(self, data['Membership Category'], current_org)
                 data['Membership'] = Product_Generator.Membership(self, data['Membership'], current_org)
                 data['Training fee'] = Product_Generator.Training_Fee(self, data['Training fee'], current_org)
+                print('Product generation complete.')
             for key in list(data.keys()):
                 bad_data_count = 0
                 bad_data_locations= []
                 last_row = 0
                 if key == 'Member':
                     if self.is_post_ka == "true":
-                        data, last_row, bad_data_count, bad_data_locations, missing_output = Validate.Member(self, data, current_org, missing_output, output_ID, personIDs)
+                        data, last_row, bad_data_count, bad_data_locations, missing_output = Validate.Member(self, data, current_org, missing_output, self.is_productless, output_ID, personIDs)
                     else:
-                        data, last_row, bad_data_count, bad_data_locations, missing_output = Validate.Member(self, data, current_org, missing_output)
+                        data, last_row, bad_data_count, bad_data_locations, missing_output = Validate.Member(self, data, current_org, missing_output, self.is_productless)
                 elif key == 'Training fee':
                     data, last_row, bad_data_count, bad_data_locations = Validate.Training_Fee(self, data, current_org)
                 elif key == 'Membership Category':

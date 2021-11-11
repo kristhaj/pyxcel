@@ -6,7 +6,7 @@ pd.options.mode.chained_assignment = None
 
 class Validate:
 
-    def Member(self, data, current_org, missing_output, output_ID = None, personIDs = None):
+    def Member(self, data, current_org, missing_output, is_productless = None, output_ID = None, personIDs = None):
         key = 'Member'
         bad_data_count = 0
         bad_data_locations= []
@@ -25,48 +25,58 @@ class Validate:
                 # Check if the member is missing membership onboarding date, or if this is set as an invalid value
                 reg_date = data[key]['Medlemskap registreringsdato'][last_row]
                 if type(reg_date) != pd._libs.tslibs.timestamps.Timestamp:
-                    print(f'{current_org}: Missing membership onboarding date, or invalid data type at {last_row} for {str(reg_date)} with type {type(reg_date)}!')
-                    bad_data_count += 1
-                    bad_data_locations.append('Medlemskap registreringsdato')
+                    if is_productless == 'true':
+                        data[key]['Medlemskap registreringsdato'][last_row] = '01.01.2021'
+                    else:
+                        print(f'{current_org}: Missing membership onboarding date, or invalid data type at {last_row} for {str(reg_date)} with type {type(reg_date)}!')
+                        bad_data_count += 1
+                        bad_data_locations.append('Medlemskap registreringsdato')
                 # check if the member is missing training fee onboarding date
                 reg_date_tf = data[key]['Treningsavgift registreringsdato'][last_row]
                 if type(reg_date) != pd._libs.tslibs.timestamps.Timestamp:
-                    print(f'{current_org}: Missing Training Fee onboarding date, or invalid data type at {last_row} for {str(reg_date_tf)} with type {type(reg_date_tf)}!')
-                    bad_data_count += 1
-                    bad_data_locations.append('Treningsavgift registreringsdato')
+                    if is_productless == 'true':
+                        data[key]['Treningsavgift registreringsdato'][last_row] = '01.01.2021'
+                    else:
+                        print(f'{current_org}: Missing Training Fee onboarding date, or invalid data type at {last_row} for {str(reg_date_tf)} with type {type(reg_date_tf)}!')
+                        bad_data_count += 1
+                        bad_data_locations.append('Treningsavgift registreringsdato')
                 # check if new membership and Training fee has valid product names
-                mem = data[key]['Kontingent navn'][last_row]
-                mem_list = list(data['Membership']['Navn på kontigent'].values)
-                if  mem not in mem_list:
-                    found_mem_match = False
-                    for m_product in mem_list:
-                        if mem.lower().replace(' ', '') == m_product.lower().replace(' ', ''):
-                            data[key]['Kontingent navn'][last_row] = m_product
-                            found_mem_match = True
-                            #print(f'{current_org}: Bad Membership at {last_row}, old product: "{mem}", new product: "{data[key]["Kontingent navn"][last_row]}"')
+                if is_productless == 'true':
+                    data[key]['Kontingent navn'][last_row] = 'Medlemskontingent'
+                    data[key]['Treningsavgift navn'][last_row] = 'Treningsavgift'
+                else:
+                    mem = data[key]['Kontingent navn'][last_row]
+                    mem_list = list(data['Membership']['Navn på kontigent'].values)
+                    if  mem not in mem_list:
+                        found_mem_match = False
+                        for m_product in mem_list:
+                            if mem.lower().replace(' ', '') == m_product.lower().replace(' ', ''):
+                                data[key]['Kontingent navn'][last_row] = m_product
+                                found_mem_match = True
+                                #print(f'{current_org}: Bad Membership at {last_row}, old product: "{mem}", new product: "{data[key]["Kontingent navn"][last_row]}"')
+                                bad_data_count += 1
+                                bad_data_locations.append('Kontingent navn - OK')
+                                break
+                        if not found_mem_match:
+                            print(f'{current_org}: Non existent Membership at {last_row}! Product: "{mem}"')
                             bad_data_count += 1
-                            bad_data_locations.append('Kontingent navn - OK')
-                            break
-                    if not found_mem_match:
-                        print(f'{current_org}: Non existent Membership at {last_row}! Product: "{mem}"')
-                        bad_data_count += 1
-                        bad_data_locations.append('Kontingent navn - BAD') 
-                tf = data[key]['Treningsavgift navn'][last_row]
-                tf_list = list(data['Training fee']['Navn på Treningsvgift'].values)
-                if tf not in tf_list:
-                    found_tf_match = False
-                    for t_product in tf_list:
-                        if tf.lower().replace(' ', '') == t_product.lower().replace(' ', ''):
-                            data[key]['Treningsavgift navn'][last_row] = t_product
-                            #print(f'{current_org}: Bad Training Fee at {last_row}, old product: "{tf}", new product: "{data[key]["Treningsavgift navn"][last_row]}"')
+                            bad_data_locations.append('Kontingent navn - BAD') 
+                    tf = data[key]['Treningsavgift navn'][last_row]
+                    tf_list = list(data['Training fee']['Navn på Treningsvgift'].values)
+                    if tf not in tf_list:
+                        found_tf_match = False
+                        for t_product in tf_list:
+                            if tf.lower().replace(' ', '') == t_product.lower().replace(' ', ''):
+                                data[key]['Treningsavgift navn'][last_row] = t_product
+                                #print(f'{current_org}: Bad Training Fee at {last_row}, old product: "{tf}", new product: "{data[key]["Treningsavgift navn"][last_row]}"')
+                                bad_data_count += 1
+                                bad_data_locations.append('Treningsavgift - OK')
+                                found_tf_match = True
+                                break
+                        if not found_tf_match:
+                            print(f'{current_org}: Non existent Training fee at {last_row}! Product "{tf}"')
                             bad_data_count += 1
-                            bad_data_locations.append('Treningsavgift - OK')
-                            found_tf_match = True
-                            break
-                    if not found_tf_match:
-                        print(f'{current_org}: Non existent Training fee at {last_row}! Product "{tf}"')
-                        bad_data_count += 1
-                        bad_data_locations.append('Treningsavgift - BAD')
+                            bad_data_locations.append('Treningsavgift - BAD')
                 # check for missing address data and copy for street if so
                 if data[key]['Adresse 1'][last_row] == "":
                     data[key]['Adresse 1'][last_row] = data[key]['Gatenavn'][last_row]
@@ -97,7 +107,7 @@ class Validate:
                         missing_output.update({current_org: last_row})
                 last_row += 1
         if last_row == 0:
-            print(f'{current_org}: NO MEMBERSHIPS CONFIGURED')
+            print(f'{current_org}: NO MEMBERS CONFIGURED')
         return data, last_row, bad_data_count, bad_data_locations, missing_output
         
     def Training_Fee(self, data, current_org):
@@ -219,4 +229,6 @@ class Validate:
                     bad_data_count += 1
                     bad_data_locations.append('Membership Price')
                 last_row += 1
+        if last_row == 0:
+            print(f'{current_org}: NO MEMBERSHIPS CONFIGURED')
         return data, last_row, bad_data_count, bad_data_locations
