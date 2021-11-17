@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import re
+import datetime
 pd.options.mode.chained_assignment = None
 
 
@@ -26,7 +27,7 @@ class Validate:
                 reg_date = data[key]['Medlemskap registreringsdato'][last_row]
                 if type(reg_date) != pd._libs.tslibs.timestamps.Timestamp:
                     if is_productless == 'true':
-                        data[key]['Medlemskap registreringsdato'][last_row] = '01.01.2021'
+                        data[key]['Medlemskap registreringsdato'][last_row] = datetime.date(datetime.date.today().year, 1, 1)
                     else:
                         print(f'{current_org}: Missing membership onboarding date, or invalid data type at {last_row} for {str(reg_date)} with type {type(reg_date)}!')
                         bad_data_count += 1
@@ -35,7 +36,7 @@ class Validate:
                 reg_date_tf = data[key]['Treningsavgift registreringsdato'][last_row]
                 if type(reg_date) != pd._libs.tslibs.timestamps.Timestamp:
                     if is_productless == 'true':
-                        data[key]['Treningsavgift registreringsdato'][last_row] = '01.01.2021'
+                        data[key]['Treningsavgift registreringsdato'][last_row] = datetime.date(datetime.date.today().year, 1, 1)
                     else:
                         print(f'{current_org}: Missing Training Fee onboarding date, or invalid data type at {last_row} for {str(reg_date_tf)} with type {type(reg_date_tf)}!')
                         bad_data_count += 1
