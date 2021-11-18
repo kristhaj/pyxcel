@@ -3,7 +3,6 @@
 import os
 import time
 import pandas as pd
-import numpy as np
 from Validator import Validate
 from Write import Write
 from Output_Handler import Handle
