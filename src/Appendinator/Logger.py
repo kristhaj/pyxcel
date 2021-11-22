@@ -4,10 +4,10 @@ class Logger:
 
         if len(list(missing_output.keys())) >= 0:
             print(f'Missing  output for thise orgIDs: {missing_output}\n')
-            for org in list(missing_output.keys()):
-                print(f'{org}:')
-                for sheet in list(org.keys()):
-                    print(f'Missing data in {sheet}:\nTotal: {sheet[0]}\nLocations: {sheet[1]}\n ---')
+            #for org in list(missing_output.keys()):
+                #print(f'{org}:')
+                #for sheet in list(org.keys()):
+                    #print(f'Missing data in {sheet}:\nTotal: {sheet[0]}\nLocations: {sheet[1]}\n ---')
         print(f'Registered bad data at {bad_data}')
         for org in list(bad_data.keys()):
             for sheet in list(bad_data[org].keys()):
