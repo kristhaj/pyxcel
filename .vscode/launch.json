@@ -11,9 +11,9 @@
             "program": "src/Divider/DivideFile.py",
             "console": "integratedTerminal",
             "env": {
-                "data": "files/Appendage/Masters/Master_Migration_File_IMS_Fall21_Batch7.xlsx",
+                "data": "files/Appendage/Masters/Master_Migration_File_IMS_Fall21_Batch9.xlsx",
                 "ka_template": "files/KA/Migration File_KA_Template.xlsx",
-                "target_path": "files/KA/h21_batch7/Migration File_"
+                "target_path": "files/KA/h21_batch9/Migration File_"
             }
         },
         {
@@ -95,12 +95,13 @@
             "env": {
                 // win rel path files*
                 // linux rel path pyxcel/files*
-                "data_dir": "files/appendage/NKF_H21/Pulje_8",
-                "target_path": "files/appendage/Masters/Master_Migration_File_IMS_Fall21_Batch8.xlsx",
+                "data_dir": "files/appendage/NKF_H21/Pulje_9",
+                "target_path": "files/appendage/Masters/Master_Migration_File_IMS_Fall21_Batch9.xlsx",
                 "format_path": "files/appendage/Masters/IMS_Migration_Template.xlsx",
-                "kao_dir": "files/KA/h21_batch7/OutputKA",
-                "kao_meta": "files/KA/h21_batch7/kao_meta.xlsx",
-                "is_post_ka": "true"
+                "kao_dir": "files/KA/h21_batch9/OutputKA",
+                "kao_meta": "files/KA/h21_batch9/kao_meta.xlsx",
+                "is_post_ka": "false",
+                "is_productless": "true" //set to true if batch is comprised of clubs with no product data
             }
         }
     ],
