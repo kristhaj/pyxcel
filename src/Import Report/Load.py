@@ -16,7 +16,6 @@ class Load:
         print('Done.\n---')
         return data
 
-    # TODO: Read the relevant data from original file
     def Original_File(self, path, columns):
         print(f'Reading relevant data from {path}...')
 
