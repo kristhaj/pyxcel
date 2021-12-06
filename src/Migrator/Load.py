@@ -23,7 +23,7 @@ class Load:
                 print(f'Missing, or no available, Org Data for {meta[key]}. NO DATA WILL BE READ')
             else:
                 path = dir + meta[key][1]
-                df = pd.read_csv(path, encoding='utf-8', sep=';', parse_dates=True, infer_datetime_format=True, dayfirst=True)
+                df = pd.read_csv(path, encoding='unicode_escape', sep=';', parse_dates=True, infer_datetime_format=True, dayfirst=True)
                 data.update({key: df.to_dict()})
         print(f'Finished Loading Data.\n-----')
         return data
