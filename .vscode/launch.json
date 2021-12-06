@@ -50,6 +50,7 @@
                 "destination_path": "files/appendage/NKF_H21/NTN/",
                 "org_category": "NTN",
                 "template_path": "files/appendage/Masters/IMS_Migration_Template.xlsx",
+                "is_productless": "true",
                 "membership_start_date": "01.01.2021",
                 "membership_end_date": "31.12.2021",
                 "membership_invoiceing_date": "01.04.22",
