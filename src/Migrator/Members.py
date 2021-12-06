@@ -7,60 +7,58 @@ class Members:
     
 
     # Get the relevant member data based upon clubs to migrate
-    def Get_Data(self, data, members, multi_gren_clubs=None):
-        print(f'Processing Member data for:')
-        for key in list(data.keys()):
-            print(f'{key}....')
-            for m_key in list(data[key]['Etternavn'].keys()):
-                next_index = len(members['NIFOrgId'])
-                members['NIFOrgId'].update({next_index: key})
-
-                Members.Set_Personalia(self, 
-                data[key]['Medlemsnummer'][m_key],
-                data[key]['Etternavn'][m_key], 
-                data[key]['Fornavn'][m_key], 
-                data[key]['Gender'][m_key], 
-                data[key]['dob'][m_key],
-                next_index, members)
+    def Get_Data(self, orgID, data, members, is_productless, multi_gren_clubs=None):
+        print(f'Processing Member data...')
+        for m_key in list(data['Etternavn'].keys()):
+            next_index = len(members['NIFOrgId'])
+            members['NIFOrgId'].update({next_index: orgID})
+            Members.Set_Personalia(self, 
+            data['Medlemsnummer'][m_key],
+            data['Etternavn'][m_key], 
+            data['Fornavn'][m_key], 
+            data['Kjønn'][m_key], 
+            data['Fødselsdato'][m_key],
+            next_index, members)
                 
-                Members.Set_Contact_Information(self, 
-                data[key]['Mobil'][m_key],
-                data[key]['Epost'][m_key],
-                data[key]['Telefon'][m_key],
-                next_index, members)
+            Members.Set_Contact_Information(self, 
+            data['Mobil'][m_key],
+            data['Epost'][m_key],
+            data['Telefon'][m_key],
+            next_index, members)
 
-                Members.Set_Location(self,
-                data[key]['Adresse 2'][m_key],
-                data[key]['Postnr'][m_key],
-                data[key]['Sted'][m_key],
-                next_index, members)
+            Members.Set_Location(self,
+            data['Adresse 2'][m_key],
+            data['Postnr'][m_key],
+            data['Sted'][m_key],
+            next_index, members)
 
-                Members.Set_Guardians(self,
-                data[key]['Foresatte'][m_key],
-                data[key]['Foresatte epost'][m_key],
-                data[key]['Foresatte mobil'][m_key],
-                data[key]['Foresatte nr 2'][m_key],
-                data[key]['Foresatte nr 2 mobil'][m_key],
-                next_index, members)
+            Members.Set_Guardians(self,
+            data['Foresatte'][m_key],
+            data['Foresatte epost'][m_key],
+            data['Foresatte mobil'][m_key],
+            data['Foresatte nr 2'][m_key],
+            data['Foresatte nr 2 mobil'][m_key],
+            next_index, members)
                 
-
+            # Check for productless import
+            if not is_productless:
 
                 # Apply Products
                 Membership.Apply_Product(self, 
-                data[key]['Kont.sats'][m_key], 
-                data[key]['Innmeldtdato'][m_key], 
+                data['Kont.sats'][m_key], 
+                data['Innmeldtdato'][m_key], 
                 next_index, members)
-                
+                    
                 if multi_gren_clubs != None and key in multi_gren_clubs:
-                    g_val = data[key]['Gren/Stilart/Avd/Parti - Gren/Stilart/Avd/Parti'][m_key]
+                    g_val = data['Gren/Stilart/Avd/Parti - Gren/Stilart/Avd/Parti'][m_key]
                     if type(g_val) != float:
                         g_val = g_val.split('/')[0]
                     Trainings.Apply_Product(self, 
-                    data[key]['Kontraktstype'][m_key],
+                    data['Kontraktstype'][m_key],
                     next_index, members, g_val)
                 else:
                     Trainings.Apply_Product(self, 
-                    data[key]['Kontraktstype'][m_key],
+                    data['Kontraktstype'][m_key],
                     next_index, members)
         
         print(f'All Personal Member Data has been Processed and Products have been Applied.')

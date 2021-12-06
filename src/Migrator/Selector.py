@@ -29,7 +29,7 @@ class Selector:
     # Select meta data to handle based upon given identifies, read the entire file if no identifiers are give
     def Select_Many(self, path, category, identifiers=False):
         print(f'Reading Meta Data...')
-        df_meta = pd.read_excel(path, sheet_name=category, usecols="A:C", keep_default_na=False)
+        df_meta = pd.read_excel(path, usecols="A:C", keep_default_na=False)
         converted_meta = df_meta.to_dict()
         relevant_meta = {}
         if identifiers:
