@@ -49,7 +49,7 @@ class Members:
                 data['Innmeldtdato'][m_key], 
                 next_index, members)
                     
-                if multi_gren_clubs != None and key in multi_gren_clubs:
+                if multi_gren_clubs != None and orgID in multi_gren_clubs:
                     g_val = data['Gren/Stilart/Avd/Parti - Gren/Stilart/Avd/Parti'][m_key]
                     if type(g_val) != float:
                         g_val = g_val.split('/')[0]
