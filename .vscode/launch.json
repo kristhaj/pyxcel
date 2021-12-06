@@ -11,9 +11,9 @@
             "program": "src/Divider/DivideFile.py",
             "console": "integratedTerminal",
             "env": {
-                "data": "files/Appendage/Masters/Master_Migration_File_IMS_Fall21_Batch9.xlsx",
+                "data": "files/Appendage/Masters/Master_Migration_File_IMS_Fall21_Batch10.xlsx",
                 "ka_template": "files/KA/Migration File_KA_Template.xlsx",
-                "target_path": "files/KA/h21_batch9/Migration File_"
+                "target_path": "files/KA/h21_batch10/Migration File_"
             }
         },
         {
@@ -45,16 +45,16 @@
             "env": {
                 // win rel path files*
                 // linux rel path pyxcel/files*
-                "org_path": "files/Migrator/org_meta.xlsx",
-                "data_dir": "files/Migrator/north/",
-                "destination_path": "files/Migrator/south/pulje_8/",
-                "org_category": "pulje_8",
+                "org_path": "files/Migrator/org_meta_ntn.xlsx",
+                "data_dir": "files/Migrator/NTN_H21/",
+                "destination_path": "files/appendage/NKF_H21/NTN/",
+                "org_category": "NTN",
                 "template_path": "files/appendage/Masters/IMS_Migration_Template.xlsx",
                 "membership_start_date": "01.01.2021",
                 "membership_end_date": "31.12.2021",
-                "membership_invoiceing_date": "01.05.22",
-                "training_start_date": "01.10.2021",
-                "training_end_date": "",
+                "membership_invoiceing_date": "01.04.22",
+                "training_start_date": "01.01.2021",
+                "training_end_date": "31.01.21",
                 "training_invoiceing_date": ""
             }
         },
@@ -95,13 +95,13 @@
             "env": {
                 // win rel path files*
                 // linux rel path pyxcel/files*
-                "data_dir": "files/appendage/NKF_H21/Pulje_9",
-                "target_path": "files/appendage/Masters/Master_Migration_File_IMS_Fall21_Batch9.xlsx",
+                "data_dir": "files/appendage/NKF_H21/Pulje_10",
+                "target_path": "files/appendage/Masters/Master_Migration_File_IMS_Fall21_Batch10.xlsx",
                 "format_path": "files/appendage/Masters/IMS_Migration_Template.xlsx",
-                "kao_dir": "files/KA/h21_batch9/OutputKA",
-                "kao_meta": "files/KA/h21_batch9/kao_meta.xlsx",
-                "is_post_ka": "false",
-                "is_productless": "true" //set to true if batch is comprised of clubs with no product data
+                "kao_dir": "files/KA/h21_batch10/OutputKA",
+                "kao_meta": "files/KA/h21_batch10/kao_meta.xlsx",
+                "is_post_ka": "true",
+                "is_productless": "false" //set to true if batch is comprised of clubs with no product data
             }
         }
     ],
