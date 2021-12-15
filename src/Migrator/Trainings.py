@@ -10,13 +10,13 @@ class Trainings:
         multi_gren_clubs = {'Status': False, 'Clubs': []}
         for key in list(data.keys()):
             print(f'{key}....')
-            Trainings.Set_Styles(self, data[key]['Gren/Stilart/Avd/Parti - Gren/Stilart/Avd/Parti'], key, _style_sheet)
-            Trainings.Set_Grens(self, data[key]['Gren/Stilart/Avd/Parti - Gren/Stilart/Avd/Parti'], key, gren_sheet, multi_gren_clubs)
+            Trainings.Set_Styles(self, data['Gren/Stilart/Avd/Parti - Gren/Stilart/Avd/Parti'], key, _style_sheet)
+            Trainings.Set_Grens(self, data['Gren/Stilart/Avd/Parti - Gren/Stilart/Avd/Parti'], key, gren_sheet, multi_gren_clubs)
             
             if multi_gren_clubs['Status'] and key in multi_gren_clubs['Clubs']:
-                Trainings.Set_Products(self, data[key], key, gren_sheet, training_sheet, True)
+                Trainings.Set_Products(self, data, key, gren_sheet, training_sheet, True)
             else:
-                Trainings.Set_Products(self, data[key], key, gren_sheet, training_sheet)
+                Trainings.Set_Products(self, data, key, gren_sheet, training_sheet)
         print(f'All relevant Training Fee Data Processed.\n')
         return training_sheet, gren_sheet, _style_sheet, multi_gren_clubs
 
@@ -71,7 +71,7 @@ class Trainings:
                     trainings['Name traning fee'].update({next_index: val})
                     trainings['Sports'].update({next_index: g_val})
                     trainings['Membership category'].update({next_index: data['Medlemskategori navn'][key]})
-                    trainings['Amount in Kr'].update({next_index: data['Kontraktspris'][key]})
+                    trainings['Amount in Kr'].update({next_index: data['Kontraktsbeløp'][key]})
                     trainings['Traningsship length'].update({next_index: 1})
                     trainings['Length type'].update({next_index: 'Måned'})
                     trainings['Invoice frequence'].update({next_index: 1})

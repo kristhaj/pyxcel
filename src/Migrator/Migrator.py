@@ -65,7 +65,8 @@ class Migrator:
                     # Handle clubs with more than one grens
                     template['Member'] = Members.Get_Data(self, data_basis[club], template['Member'], False, multi_gren_clubs['Clubs'])
                 else:
-                    template['Member'] = Members.Get_Data(self, data_basis[club], template['Member'], False)
+                    print(f'Importing Clubs without Product Data. Proceeding to Process Member Data...')
+                template['Member'] = Members.Get_Data(self, club, data_basis[club], template['Member'], False)
                 # Set start, end, and invoicing dates
                 template['Member'] = Dates.Set_Membership_Dates(self, self.membership_start_date, self.membership_end_date, self.membership_invoiceing_date, template['Member'])
                 template['Member'] = Dates.Set_Training_Dates(self, self.training_start_date, self.training_end_date, self.training_invoiceing_date, template['Member'])

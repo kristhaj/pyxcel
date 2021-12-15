@@ -10,10 +10,10 @@ class Membership:
     def Get_Data(self, data, sheet, cat_sheet, info, member_sheet=None):
         print(f'Processing Membership Products and Categories for:')
         for key in list(data.keys()):
-            c_name = info[key][0]
+            c_name = info[0]
             print(f'{c_name}....')
-            Membership.Set_Categories(self, data[key], [key, c_name], cat_sheet)
-            Membership.Set_Products(self, data[key], key, sheet, member_sheet)
+            Membership.Set_Categories(self, data, [key, c_name], cat_sheet)
+            Membership.Set_Products(self, data, key, sheet, member_sheet)
         
         print(f'All relevant Membership Product Data Processed.\n')
         return sheet, cat_sheet
@@ -43,7 +43,7 @@ class Membership:
                 memberships['NIFOrgId'].update({next_key: id})
                 memberships['Membership Name'].update({next_key: membership})
                 memberships['Membership Category'].update({next_key: data['Medlemskategori navn'][key]})
-                memberships['Price in NOK'].update({next_key: data['Kont.pris'][key]})
+                memberships['Price in NOK'].update({next_key: data['Kont.beløp'][key]})
                 memberships['Duration'].update({next_key: 1})
                 memberships['Duration type'].update({next_key: 'År'})
                 memberships['Invoice Duration'].update({next_key: 1})
