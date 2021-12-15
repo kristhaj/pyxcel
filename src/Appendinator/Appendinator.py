@@ -47,7 +47,8 @@ class Appendinator:
             bad_data.update({current_org: {}})
             if self.is_productless == 'true':
                 print (f'Generating generic products for {current_org}...')
-                data['Membership Category'] = Product_Generator.Category(self, data['Membership Category'], current_org)
+                current_org_name = data['Club info']['Klubbnavn'][0]
+                data['Membership Category'] = Product_Generator.Category(self, data['Membership Category'], current_org, current_org_name)
                 data['Membership'] = Product_Generator.Membership(self, data['Membership'], current_org)
                 data['Training fee'] = Product_Generator.Training_Fee(self, data['Training fee'], current_org)
                 print('Product generation complete.')

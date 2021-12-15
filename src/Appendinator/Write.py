@@ -11,7 +11,7 @@ class Write:
         df_membership_category = pd.DataFrame.from_dict(df['Membership Category'])
         df_teams = pd.DataFrame.from_dict(df['Teams'])
         df_training_fee = pd.DataFrame.from_dict(df['Training fee'])
-        df_training_locations = pd.DataFrame.from_dict(df['Training locations'])
+        df_training_locations = pd.DataFrame.from_dict(df['Training Locations'])
         df_department = pd.DataFrame.from_dict(df['Department info'])
         df_club = pd.DataFrame.from_dict(df['Club info'])
         df_committees = pd.DataFrame.from_dict(df['Committees'])

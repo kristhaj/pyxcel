@@ -3,11 +3,11 @@
 class Product_Generator:
 
     # Generate a generic category
-    def Category(self, data, org):
+    def Category(self, data, org, org_name):
         gen_cat = {
             'NIFOrgId': org, 
             'Medlemskategori': 'Medlem', 
-            'Navn på klubb': data['Navn på klubb'][0], 
+            'Navn på klubb': org_name, 
             'Alder fra': 0, 
             'Alder til ': 0, 
             'Status': 'Aktiv', 
@@ -25,6 +25,6 @@ class Product_Generator:
 
     # Generate a generic training fee
     def Training_Fee(self, data, org):
-        gen_training_fee = [org,'Treningsavgift','','Medlem',0,1,'Måned',1,'Måned','','','','','','','','Ja','Nei']
+        gen_training_fee = [org,'Treningsavgift','','Medlem',0,1,'Måned',1,'Måned','','','','','','','','','Ja','Nei']
         data.loc[0] = gen_training_fee
         return data
