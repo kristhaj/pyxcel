@@ -28,6 +28,8 @@ class Validate:
                 if type(reg_date) != pd._libs.tslibs.timestamps.Timestamp:
                     if is_productless == 'true':
                         data[key]['Medlemskap registreringsdato'][last_row] = datetime.date(datetime.date.today().year, 1, 1)
+                        data[key]['Kontingent startdato'][last_row] = datetime.date(datetime.date.today().year, 1, 1)
+                        data[key]['Kontingent sluttdato'][last_row] = datetime.date(datetime.date.today().year, 12, 31)
                     else:
                         print(f'{current_org}: Missing membership onboarding date, or invalid data type at {last_row} for {str(reg_date)} with type {type(reg_date)}!')
                         bad_data_count += 1
