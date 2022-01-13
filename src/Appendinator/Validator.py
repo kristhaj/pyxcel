@@ -98,7 +98,7 @@ class Validate:
                             real_lastname = org_data[last_row][2]
                             real_firstname = org_data[last_row][1]
                             if lastname_count > 1 or lastname != real_lastname:
-                                print(f'{current_org}: Bad name at {last_row},\nold: {data[key]["Fornavn- og middelnavn"].values[last_row]}, {lastname} \nnew: {real_lastname}')
+                                print(f'{current_org}: Bad name at {last_row},\nold: {data[key]["Fornavn- og middelnavn"].values[last_row]}, {lastname} \nnew: {real_firstname}, {real_lastname}')
                                 data[key]['Fornavn- og middelnavn'].values[last_row] = real_firstname
                                 data[key].Etternavn.values[last_row] = real_lastname
                                 bad_data_count += 1
