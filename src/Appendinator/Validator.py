@@ -1,3 +1,4 @@
+from sqlite3 import Timestamp
 import pandas as pd
 import numpy as np
 import re
@@ -18,18 +19,24 @@ class Validate:
             if val == '' or pd.isna(val):
                 break
             else:
-                # check for missing birthdates and log if True
-                if data[key]['Fødselsdato'][last_row] == '':
-                    print(f'{current_org}: Bad Birthdate at {last_row}, {data[key]["Fødselsdato"][last_row]}')
+                # check for missing or wrongly formated birthdates and log if True f'{dt_bdate.day}.{dt_bdate.month}.{dt_bdate.year}'
+                bdate = data[key]['Fødselsdato'][last_row]
+                if bdate == '':
+                    print(f'{current_org}: Bad Birthdate at {last_row}, {bdate}')
                     bad_data_count += 1
                     bad_data_locations.append('Fødselsdato')
+                elif type(bdate) == pd._libs.tslibs.timestamps.Timestamp:
+                    bdate = bdate.to_pydatetime().strftime('%d.%m.%Y')
+                    data[key]['Fødselsdato'][last_row] = bdate
+                elif '/' in bdate:
+                    data[key]['Fødselsdato'][last_row] = bdate.replace('/', '.')
                 # Check if the member is missing membership onboarding date, or if this is set as an invalid value
                 reg_date = data[key]['Medlemskap registreringsdato'][last_row]
                 if type(reg_date) != pd._libs.tslibs.timestamps.Timestamp:
                     if is_productless == 'true':
-                        data[key]['Medlemskap registreringsdato'][last_row] = datetime.date(datetime.date.today().year, 1, 1)
-                        data[key]['Kontingent startdato'][last_row] = datetime.date(datetime.date.today().year, 1, 1)
-                        data[key]['Kontingent sluttdato'][last_row] = datetime.date(datetime.date.today().year, 12, 31)
+                        data[key]['Medlemskap registreringsdato'][last_row] = datetime.date(datetime.date.today().year, 1, 1).strftime('%d.%m.%Y')
+                        data[key]['Kontingent startdato'][last_row] = datetime.date(datetime.date.today().year, 1, 1).strftime('%d.%m.%Y')
+                        data[key]['Kontingent sluttdato'][last_row] = datetime.date(datetime.date.today().year, 12, 31).strftime('%d.%m.%Y')
                     else:
                         print(f'{current_org}: Missing membership onboarding date, or invalid data type at {last_row} for {str(reg_date)} with type {type(reg_date)}!')
                         bad_data_count += 1
@@ -38,7 +45,7 @@ class Validate:
                 reg_date_tf = data[key]['Treningsavgift registreringsdato'][last_row]
                 if type(reg_date) != pd._libs.tslibs.timestamps.Timestamp:
                     if is_productless == 'true':
-                        data[key]['Treningsavgift registreringsdato'][last_row] = datetime.date(datetime.date.today().year, 1, 1)
+                        data[key]['Treningsavgift registreringsdato'][last_row] = datetime.date(datetime.date.today().year, 1, 1).strftime('%d.%m.%Y')
                     else:
                         print(f'{current_org}: Missing Training Fee onboarding date, or invalid data type at {last_row} for {str(reg_date_tf)} with type {type(reg_date_tf)}!')
                         bad_data_count += 1

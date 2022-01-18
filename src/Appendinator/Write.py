@@ -24,7 +24,7 @@ class Write:
         df_op_gender = pd.DataFrame.from_dict(df['Op - Gender'])
 
         # create writer
-        writer = pd.ExcelWriter(target_path, engine='xlsxwriter', date_format='YYYY.MM.DD', datetime_format='YYYY.MM.DD') # pylint: disable=abstract-class-instantiated
+        writer = pd.ExcelWriter(target_path, engine='xlsxwriter', date_format='DD.MM.YYYY', datetime_format='DD.MM.YYYY') # pylint: disable=abstract-class-instantiated
 
         # write each df to the respective sheet
         df_member.to_excel(writer, sheet_name='Member', index=False)

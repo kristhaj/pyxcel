@@ -83,7 +83,6 @@ class Appendinator:
                         else:
                             bad_data_loc_count[loc] += 1
                     bad_data[current_org].update({key: [bad_data_count, bad_data_loc_count]})
-                
                 real_data = data[key].iloc[:last_row]
                 df[key] = df[key].append(real_data, ignore_index=True)
                 #print( f'{key} Shapes: processed: {df[key].shape}, raw: {data[key].shape}')
