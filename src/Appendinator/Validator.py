@@ -28,6 +28,9 @@ class Validate:
                 elif type(bdate) == pd._libs.tslibs.timestamps.Timestamp:
                     bdate = bdate.to_pydatetime().strftime('%d.%m.%Y')
                     data[key]['Fødselsdato'][last_row] = bdate
+                elif type(bdate) == datetime.datetime:
+                    bdate = bdate.strftime('%d.%m.%Y')
+                    data[key]['Fødselsdato'][last_row] = bdate
                 elif '/' in bdate:
                     data[key]['Fødselsdato'][last_row] = bdate.replace('/', '.')
                 # Check if the member is missing membership onboarding date, or if this is set as an invalid value
