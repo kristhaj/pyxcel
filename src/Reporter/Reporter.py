@@ -5,6 +5,7 @@ from Load import Load
 from Write import Write
 from Counter import Counter
 from Processor import Processor
+from Formatter import Formatter
 
 class Reporter:
 
@@ -57,7 +58,7 @@ class Reporter:
         invoicing_data = Load.Invoices(self, self.invoice_path, invoicing_cols)
         member_data = Load.All_Members(self, self.members_path, member_cols)
 
-        paid_member_template = Load(self, self.paid_members_template)
+        paid_member_template = Load.Paid_Members_Template(self, self.paid_members_template)
 
         print('All Data Loaded.\nProceeding with processing...\n')
 
@@ -67,11 +68,13 @@ class Reporter:
 
         report = Counter.Report_Generator(self, processed_data)
 
-        print('\nReport has been Generated.\nProceeding to write file...')
+        print(f'\nReport has been Generated.\nProceeding to format the data according to {self.paid_members_template}...')
 
-        Write.Paid_Members_Report(self, self.destination_path, processed_data, report, paid_member_template)
+        report = Formatter.Paid_Member_Formatting(self, paid_member_template, report)
 
-    
+        print('\nFormatting complete.\nProceeding to Write...\n')
+
+        Write.Paid_Members_Report(self, self.destination_path, processed_data, report)
 
 
 Reporter().Paid()
