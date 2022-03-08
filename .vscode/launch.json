@@ -11,9 +11,9 @@
             "program": "src/Divider/DivideFile.py",
             "console": "integratedTerminal",
             "env": {
-                "data": "files/Appendage/Masters/Master_Migration_File_IMS_Fall21_NTN.xlsx",
+                "data": "files/Appendage/Masters/Master_Migration_File_IMS_NKF_2022_3.xlsx",
                 "ka_template": "files/KA/Migration File_KA_Template.xlsx",
-                "target_path": "files/KA/h21_NTN/Migration File_"
+                "target_path": "files/KA/NKF/2022_3/Migration File_"
             }
         },
         {
@@ -74,17 +74,19 @@
             }
         },
         {
-            "name": "Rapport",
+            "name": "Report",
             "type": "python",
             "request": "launch",
-            "program": "src/Rapporter/Rapport.py",
+            "program": "src/Reporter/Report.py",
             "console": "integratedTerminal",
             "env": {
                 // win rel path files*
                 // linux rel path pyxcel/files*
-                "postal_data": "files/rapport/post_kommune.xlsx",
-                "members": "files/rapport/straen/straen_291220.xlsx",
-                "destination_path": "files/Rapport/straen/age_location.xlsx"
+                "postal_data": "files/report/post_kommune.xlsx",
+                "members": "files/report/straen/straen_291220.xlsx",
+                "destination_path": "files/report/straen/age_location.xlsx",
+                "invoice_path":"files/report/fighter/fighter_invoicing_2021.xlsx",
+                "all_members": "files/report/fighter/fighter_ALL_members.xlsx"
             }
         },
         {
@@ -96,12 +98,12 @@
             "env": {
                 // win rel path files*
                 // linux rel path pyxcel/files*
-                "data_dir": "files/appendage/GTF/",
-                "target_path": "files/appendage/Masters/Master_Migration_File_IMS_Fall21_hokksund.xlsx",
+                "data_dir": "files/appendage/NKF/2022_3/",
+                "target_path": "files/appendage/Masters/Master_Migration_File_IMS_NKF_2022_3.xlsx",
                 "format_path": "files/appendage/Masters/IMS_Migration_Template.xlsx",
-                "kao_dir": "files/KA/hokksund/OutputKA",
-                "kao_meta": "files/KA/hokksund/kao_meta.xlsx",
-                "is_post_ka": "true",
+                "kao_dir": "files/KA/NKF/2022_3/OutputKA",
+                "kao_meta": "files/KA/NKF/2022_3/kao_meta.xlsx",
+                "is_post_ka": "false", // set to true if batch is done with KA import and personIDs are available or already set
                 "is_productless": "true" //set to true if batch is comprised of clubs with no product data
             }
         }
