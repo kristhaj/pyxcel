@@ -43,5 +43,5 @@ class Load:
         df = pd.read_excel(path, sheet_name="all_members", usecols=columns)
         data = df.to_dict()
 
-        print('Done, and converted to DIctionary')
+        print('Done, and converted to dictionary.\n')
         return data

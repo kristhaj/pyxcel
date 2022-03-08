@@ -3,6 +3,8 @@ import datetime
 import dateutil
 from Load import Load
 from Write import Write
+from Counter import Counter
+from Processor import Processor
 
 class Reporter:
 
@@ -12,6 +14,7 @@ class Reporter:
         self.destination_path = os.getenv("DESTINATION_PATH")
         self.invoice_path = os.getenv("INVOICE_PATH")
         self.members_path = os.getenv("ALL_MEMBERS")
+        self.paid_members_template = os.getenv("PAID_MEMBERS_TEMPLATE")
 
     def Kommune(self):
         print('Generating report of members with Kommune')
@@ -48,13 +51,25 @@ class Reporter:
     def Paid(self):
         print('Generating report of members per given year, with payment status')
 
-        invoicing_cols = ['PersonId', 'Medlemsnavn', 'Fakturanummer', 'Fakturadato', 'Status', 'Produkt']
+        invoicing_cols = ['PersonId', 'Medlemsnavn', 'Fakturanummer', 'Fakturadato', 'Fakturabeløp', 'Status', 'Produkt']
         member_cols = ['PersonID', 'Navn', 'År', 'Kjønn']
 
         invoicing_data = Load.Invoices(self, self.invoice_path, invoicing_cols)
         member_data = Load.All_Members(self, self.members_path, member_cols)
 
-        print('All Data Loaded.\nProceeding with processing...')
+        print('All Data Loaded.\nProceeding with processing...\n')
+
+        processed_data = Processor.Process_Paid_Memberships(invoicing_data, member_data)
+
+        print('\nData Processing complete.\nGenerating Report...\n')
+
+        report = Counter.Report_Generator(processed_data)
+
+        print('\nReport has been Generated.\nProceeding to write file...')
+
+    
+
+    
 
 
 Reporter().Paid()
