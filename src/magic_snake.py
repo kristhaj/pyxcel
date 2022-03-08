@@ -12,22 +12,21 @@ import os
 # Appendinator for control and concatination of IMS Template Files
 # Divider for creating files in the format of the KA template based on concatinated IMS file
 # Migrator to transform exported files from MySoft to IMS formatted files
-from Appendinator import Appendinator as ims_appendinator
-from Divider import DivideFile as ims_to_ka
-from Migrator import Migrator as mysoft_to_ims
+#from Appendinator import Appendinator as ims_appendinator
+#from Divider import DivideFile as ims_to_ka
+#from Migrator import Migrator as mysoft_to_ims
 
 # parser setup
 magic_snake = argparse.ArgumentParser(
     prog='magic_snake',
     description='Magic Snake that will perform wizardry to create migration files for KA and IMS',
-    epilog='The Magic Snake will pull upon Dark Magics to make your files when you are ready!'
+    epilog='The Magic Snake awaits your command!'
 )
 
 magic_snake.version = '0.0'
 
 # arguments setup
 magic_snake.add_argument(
-    'ENV_FILE',
     '-e',
     '--env_path',
     action='store',
@@ -67,7 +66,7 @@ magic_snake.add_argument(
 # execute parser
 args = magic_snake.parse_args()
 
-env_path = args.ENV_FILE
+env_path = args.env_path
 
 if not os.path.isdir(env_path):
     print('The env_path specified does not exist')
