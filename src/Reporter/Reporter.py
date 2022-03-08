@@ -59,11 +59,11 @@ class Reporter:
 
         print('All Data Loaded.\nProceeding with processing...\n')
 
-        processed_data = Processor.Process_Paid_Memberships(invoicing_data, member_data)
+        processed_data = Processor.Process_Paid_Memberships(self, invoicing_data, member_data)
 
         print('\nData Processing complete.\nGenerating Report...\n')
 
-        report = Counter.Report_Generator(processed_data)
+        report = Counter.Report_Generator(self, processed_data)
 
         print('\nReport has been Generated.\nProceeding to write file...')
 
