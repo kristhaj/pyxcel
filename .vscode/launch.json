@@ -84,9 +84,10 @@
                 // linux rel path pyxcel/files*
                 "postal_data": "files/report/post_kommune.xlsx",
                 "members": "files/report/straen/straen_291220.xlsx",
-                "destination_path": "files/report/straen/age_location.xlsx",
+                "destination_path": "files/report/fighter/Fighter_Members_2021.xlsx",
                 "invoice_path":"files/report/fighter/fighter_invoicing_2021.xlsx",
-                "all_members": "files/report/fighter/fighter_ALL_members.xlsx"
+                "all_members": "files/report/fighter/fighter_ALL_members.xlsx",
+                "paid_members_template": "files/report/templates/SR_Template.xlsx"
             }
         },
         {
