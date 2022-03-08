@@ -45,3 +45,11 @@ class Load:
 
         print('Done, and converted to dictionary.\n')
         return data
+
+    def SA_Template(self, path):
+        print(f'Loading SA template from {path}...')
+
+        df = pd.read_excel(path)
+
+        print('Done.')
+        return df

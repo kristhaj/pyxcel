@@ -57,6 +57,8 @@ class Reporter:
         invoicing_data = Load.Invoices(self, self.invoice_path, invoicing_cols)
         member_data = Load.All_Members(self, self.members_path, member_cols)
 
+        paid_member_template = Load(self, self.paid_members_template)
+
         print('All Data Loaded.\nProceeding with processing...\n')
 
         processed_data = Processor.Process_Paid_Memberships(self, invoicing_data, member_data)
@@ -67,7 +69,7 @@ class Reporter:
 
         print('\nReport has been Generated.\nProceeding to write file...')
 
-    
+        Write.Paid_Members_Report(self, self.destination_path, processed_data, report, paid_member_template)
 
     
 
