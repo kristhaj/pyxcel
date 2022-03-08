@@ -77,7 +77,7 @@
             "name": "Report",
             "type": "python",
             "request": "launch",
-            "program": "src/Reporter/Report.py",
+            "program": "src/Reporter/Reporter.py",
             "console": "integratedTerminal",
             "env": {
                 // win rel path files*
