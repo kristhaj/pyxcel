@@ -4,7 +4,7 @@ import dateutil
 from Load import Load
 from Write import Write
 
-class Rapport:
+class Reporter:
 
     def __init__(self):
         self.postal_data_path = os.getenv("POSTAL_DATA")
@@ -46,4 +46,4 @@ class Rapport:
 
 
 
-Rapport().Kommune()
+Reporter().Kommune()
