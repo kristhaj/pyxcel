@@ -10,9 +10,11 @@ class Reporter:
         self.postal_data_path = os.getenv("POSTAL_DATA")
         self.data_path = os.getenv("MEMBERS")
         self.destination_path = os.getenv("DESTINATION_PATH")
+        self.invoice_path = os.getenv("INVOICE_PATH")
+        self.members_path = os.getenv("ALL_MEMBERS")
 
     def Kommune(self):
-        print('Generating rapport of members with Kommune')
+        print('Generating report of members with Kommune')
 
         postal_cols = ['Postnummer', 'Kommune']
         members_cols = ['PersonID', 'FirstName', 'LastName', 'BirthDate', 'Gender', 'PostalCode', 'LastPaidDate', 'MembershipStatus']
@@ -43,7 +45,16 @@ class Reporter:
         Write.Kommune_Rapport(self, self.destination_path, member_data)
 
 
+    def Paid(self):
+        print('Generating report of members per given year, with payment status')
+
+        invoicing_cols = ['PersonId', 'Medlemsnavn', 'Fakturanummer', 'Fakturadato', 'Status', 'Produkt']
+        member_cols = ['PersonID', 'Navn', 'År', 'Kjønn']
+
+        invoicing_data = Load.Invoices(self, self.invoice_path, invoicing_cols)
+        member_data = Load.All_Members(self, self.members_path, member_cols)
+
+        print('All Data Loaded.\nProceeding with processing...')
 
 
-
-Reporter().Kommune()
+Reporter().Paid()

@@ -27,3 +27,21 @@ class Load:
 
         print('Done.\n')
         return data
+
+    def Invoices(self, path, columns):
+        print(f'Loading Invoicing Data from {path}....')
+
+        df = pd.read_excel(path, sheet_name="membership_invoicing", usecols=columns)
+        data = df.to_dict()
+
+        print('Done, and converted to dictionary.')
+        return data
+
+    def All_Members(self, path, columns):
+        print(f'Loading ALL members from {path}...')
+
+        df = pd.read_excel(path, sheet_name="all_members", usecols=columns)
+        data = df.to_dict()
+
+        print('Done, and converted to DIctionary')
+        return data
