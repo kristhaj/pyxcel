@@ -16,6 +16,7 @@ class Reporter:
         self.invoice_path = os.getenv("INVOICE_PATH")
         self.members_path = os.getenv("ALL_MEMBERS")
         self.paid_members_template = os.getenv("PAID_MEMBERS_TEMPLATE")
+        self.training_fees_path = os.getenv("TRAINING_FEES")
 
     def Kommune(self):
         print('Generating report of members with Kommune')
@@ -50,7 +51,7 @@ class Reporter:
 
 
     def Paid(self):
-        print('Generating report of members per given year, with payment status')
+        print('\nGenerating report of members per given year, with payment status\n')
 
         invoicing_cols = ['PersonId', 'Medlemsnavn', 'Fakturanummer', 'Fakturadato', 'Fakturabeløp', 'Status', 'Produkt']
         member_cols = ['PersonID', 'Navn', 'År', 'Kjønn']
@@ -63,6 +64,14 @@ class Reporter:
         print('All Data Loaded.\nProceeding with processing...\n')
 
         processed_data = Processor.Process_Paid_Memberships(self, invoicing_data, member_data)
+
+        if self.training_fees_path != "N/A":
+            tf_columns = ['Person ID', 'Navn treningsavgift']
+            training_fees = Load.Training_Fees(self, self.training_fees_path, tf_columns)
+            print("\nGetting Departments from Training Fees...\n")
+            processed_data = Processor.Process_Department_From_Training_Fee(self, processed_data, training_fees)
+        else:
+            processed_data['Department'].update({0: False})
 
         print('\nData Processing complete.\nGenerating Report...\n')
 

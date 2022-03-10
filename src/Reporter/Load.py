@@ -53,3 +53,12 @@ class Load:
 
         print('Done.')
         return df
+
+    def Training_Fees(self, path, columns):
+        print(f'\nLoading Training Fees from {path}...')
+
+        df = pd.read_excel(path, usecols=columns)
+        data = df.to_dict()
+
+        print('Done.')
+        return data

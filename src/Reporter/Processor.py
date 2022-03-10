@@ -11,7 +11,8 @@ class Processor:
             'IsInvoicedOn': {}, 
             'HasPaid': {},
             'PaymentStatus': {},
-            'Amount': {}
+            'Amount': {},
+            'Department': {}
             }
 
         #iterate through invoices and find matching members, finally add relevant data to processed_data
@@ -45,3 +46,29 @@ class Processor:
                 processed_data['Gender'].update({i: 'PersonMerge'})
 
         return processed_data
+
+    def Process_Department_From_Training_Fee(self, data, training_fees):
+        tf_personIDs = list(training_fees['Person ID'].values())
+        for i in list(data['PersonID'].keys()):
+            # Check for person merge
+            if data['Gender'][i] == 'PersonMerge':
+                data['Department'].update({i: 'PersonMerge'})
+                print('Cannot apply department to PersonMerge entity')
+            if data['PersonID'][i] in tf_personIDs:
+                department_key = tf_personIDs.index(data['PersonID'][i])
+                training_fee = training_fees['Navn treningsavgift'][department_key]
+                # check if training fee not empty.
+                if type(training_fee) == str:
+                    # Get suffixed department  
+                    department = training_fee.split(' ')[0]
+                    # Handle affixed departments
+                    if department in ['6', '12', 'Barn']:
+                        department = training_fee.split(' ')[-1]
+                    data['Department'].update({i: department})
+                else:
+                    data['Department'].update({i: 'Unknown'})
+                    print(f'{data["PersonID"][i]}, {data["Name"][i]}: Product name missing from export or not set.')
+            else:
+                print(f'{data["PersonID"][i]}, {data["Name"][i]}: Has, or have had, no Active or Cancelled Training Fee')
+                data['Department'].update({i: 'Unknown'})
+        return data

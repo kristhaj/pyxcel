@@ -87,7 +87,8 @@
                 "destination_path": "files/report/fighter/Fighter_Members_2021.xlsx",
                 "invoice_path":"files/report/fighter/fighter_invoicing_2021.xlsx",
                 "all_members": "files/report/fighter/fighter_ALL_members.xlsx",
-                "paid_members_template": "files/report/templates/SR_Template.xlsx"
+                "paid_members_template": "files/report/templates/SR_Template.xlsx",
+                "training_fees": "files/report/fighter/Fighter_alle_treningsavgifter.xlsx"
             }
         },
         {
