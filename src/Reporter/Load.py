@@ -31,7 +31,7 @@ class Load:
     def Invoices(self, path, columns):
         print(f'Loading Invoicing Data from {path}....')
 
-        df = pd.read_excel(path, sheet_name="membership_invoicing", usecols=columns)
+        df = pd.read_excel(path, sheet_name=0, usecols=columns)
         data = df.to_dict()
 
         print('Done, and converted to dictionary.')
@@ -40,7 +40,7 @@ class Load:
     def All_Members(self, path, columns):
         print(f'Loading ALL members from {path}...')
 
-        df = pd.read_excel(path, sheet_name="all_members", usecols=columns)
+        df = pd.read_excel(path, sheet_name=0, usecols=columns)
         data = df.to_dict()
 
         print('Done, and converted to dictionary.\n')
