@@ -84,11 +84,11 @@
                 // linux rel path pyxcel/files*
                 "postal_data": "files/report/post_kommune.xlsx",
                 "members": "files/report/straen/straen_291220.xlsx",
-                "destination_path": "files/report/fighter/Fighter_Members_2021.xlsx",
-                "invoice_path":"files/report/fighter/fighter_invoicing_2021.xlsx",
-                "all_members": "files/report/fighter/fighter_ALL_members.xlsx",
+                "destination_path": "files/report/krs_turn/krs_turn_Members_2021.xlsx",
+                "invoice_path":"files/report/krs_turn/krs_turn_invoices_2021.xlsx",
+                "all_members": "files/report/krs_turn/krs_turn_all_members.xlsx", // Update col for person ID from "NIF Nummer" to "PersonID"
                 "paid_members_template": "files/report/templates/SR_Template.xlsx",
-                "training_fees": "files/report/fighter/Fighter_alle_treningsavgifter.xlsx"
+                "training_fees": "N/A" // set to N/A when running club without departments in training fee config
             }
         },
         {
