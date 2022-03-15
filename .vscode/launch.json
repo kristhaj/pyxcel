@@ -108,6 +108,22 @@
                 "is_post_ka": "false", // set to true if batch is done with KA import and personIDs are available or already set
                 "is_productless": "true" //set to true if batch is comprised of clubs with no product data
             }
+        },
+        {
+            "name": "Vispy",
+            "type": "python",
+            "request": "launch",
+            "program": "src/Vispy/Vis.py",
+            "console": "integratedTerminal",
+            "env": {
+                // win rel path files*
+                // linux rel path pyxcel/files*
+                "data_path": "files/fedinv/NKF_Visma/data/nkf_org_group.xlsx",
+                "client_details_path": "files/fedinv/NKF_Visma/legend/client_detail.xlsx",
+                "product_details_path": "files/fedinv/NKF_Visma/legend/product_detail.xlsx",
+                "template_path": "files/fedinv/NKF_Visma/legend/visma_template.xlsx",
+                "destination_path": "files/fedinv/NKF_Visma/data/NKF_Visma_Invoicing_2021.xlsx"
+            }
         }
     ],
     "python.linting.pylintArgs": [
