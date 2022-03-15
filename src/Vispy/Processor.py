@@ -3,7 +3,7 @@
 class Processor:
 
     # Process client details from ISD dump into main data set
-    def Process_Clients(self, details):
+    def Process_Clients(self, data, details):
         
         pass
 
