@@ -60,7 +60,7 @@
             }
         },
         {
-            "name": "Compare",
+            "name": "Import Report",
             "type": "python",
             "request": "launch",
             "program": "src/Import Report/Compare.py",
