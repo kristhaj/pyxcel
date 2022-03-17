@@ -69,11 +69,12 @@ class Processor:
                     'price': details['pris'][details_index],
                     'inv_date': details['fakturadato'][details_index],
                     'due_in': details['forfallstid(dager)'][details_index],
-                    'iten_num': details['Varenummer'][details_index],
+                    'item_num': details['Varenummer'][details_index],
                     'desc': details['Transaksjonsbeskrivelse'][details_index],
                     'dim': details['Kostnadsbærer'][details_index],
                     'count': member_count,
-                    'total_amount': amount
+                    'total_amount': amount,
+                    'account': details['Kontonr'][details_index]
                 })
 
             data[org].update({'Products': org_product_data})
