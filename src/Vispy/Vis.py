@@ -48,6 +48,8 @@ class Vispy:
         processed_data = Processor.Process_Clients(self, data, client_details)
         processed_data = Processor.Process_NKF_Products(self, processed_data, product_details, gren_data)
 
+        print('All client and product data has been processed!\n Proceeding to format data based upon given template...\n')
+
         # Format data
         formatted_data = Formatter.Visma_Format(self, processed_data, template)
 
