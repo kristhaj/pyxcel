@@ -24,7 +24,7 @@ class Processor:
                     gren_id = data['OrgIdGren'][data_index]
                     org_data['gren_data'].update({
                         gren_id: {
-                            'gren_num': data['OrgNoGren'][data_index][-3:],
+                            'gren_num': int(data['OrgNoGren'][data_index][-3:]),
                             'under13': data['Under13Gren'][data_index],
                             'over13': data['Over13Gren'][data_index]
                         }
@@ -38,11 +38,13 @@ class Processor:
 
     # Process product details from federation and concat to main data set
     def Process_NKF_Products(self, data, details, gren_data):
+        product_list = list(details['produkt'].values())
         for org in list(data.keys()):
-            org_product_data = {}
+            total_over13 = 0
+            org_product_data = {'Forsikring': {}}
             for gren in list(data[org]['gren_data'].keys()):
                 product = gren_data[data[org]['gren_data'][gren]['gren_num']]
-                
+                total_over13 += data[org]['gren_data'][gren]['over13']
                 # check if club has members registered for the same product already
                 if product in list(org_product_data.keys()):
                     org_product_data[product]['under13'] = org_product_data[product]['under13'] + data[org]['gren_data'][gren]['under13']
@@ -54,5 +56,25 @@ class Processor:
                             'over13': data[org]['gren_data'][gren]['over13']
                         }
                     })
+            # process productinfo for relevant sections in club
+            for product in list(org_product_data.keys()):
+                details_index = product_list.index(product)
+                member_count = 0
+                if product == 'Forsikring':
+                    member_count = total_over13
+                else:
+                    member_count = org_product_data[product]['under13']+org_product_data[product]['over13']                
+                amount = details['pris'][details_index] * member_count
+                org_product_data[product].update({
+                    'price': details['pris'][details_index],
+                    'inv_date': details['fakturadato'][details_index],
+                    'due_in': details['forfallstid(dager)'][details_index],
+                    'iten_num': details['Varenummer'][details_index],
+                    'desc': details['Transaksjonsbeskrivelse'][details_index],
+                    'dim': details['Kostnadsbærer'][details_index],
+                    'count': member_count,
+                    'total_amount': amount
+                })
 
-        pass
+            data[org].update({'Products': org_product_data})
+        return data
