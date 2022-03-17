@@ -14,6 +14,7 @@ class Processor:
                 'client_num': details['Kundenummer'][i],
                 'client_ref': details['kund_ref'][i],
                 'ext_ref': details['ekst_ref'][i],
+                'inv_num': details['Fakturanummer'][i],
                 'gren_data': {}
                 
         

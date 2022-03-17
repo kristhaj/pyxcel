@@ -6,13 +6,11 @@ class Formatter:
     # Format data into Visma importable format
     def Visma_Format(self, data, template):
         row = 0
-        inv_num = 0
         for org in list(data.keys()):
-            inv_num += 1           
             for product in list(data[org]['Products'].keys()):
                 # set invoice details
                 template['Bilagstype'].update({row: 'Faktura'})
-                template['Fakturanr'].update({row: inv_num})
+                template['Fakturanr'].update({row: data[org]['inv_num']})
                 # set client info
                 template['Kundenummer'].update({row: data[org]['client_num']})
                 template['Kundenavn'].update({row: data[org]['name']})
