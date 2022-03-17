@@ -28,5 +28,6 @@ class Formatter:
                 # keep track of row number
                 row += 1
 
-
+            print(f'{org}, {data[org]["name"]} has been formatted.')
+        
         return template
