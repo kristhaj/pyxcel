@@ -88,7 +88,8 @@
                 "invoice_path":"files/report/krs_turn/krs_turn_invoices_2021.xlsx",
                 "all_members": "files/report/krs_turn/krs_turn_all_members.xlsx", // Update col for person ID from "NIF Nummer" to "PersonID"
                 "paid_members_template": "files/report/templates/SR_Template.xlsx",
-                "training_fees": "N/A" // set to N/A when running club without departments in training fee config
+                "training_fees": "N/A", // set to N/A when running club without departments in training fee config
+                "teams_path": "files/report/krs_turn/krs_teams2021.xlsx" // set to N/A when running club without teams as main activity
             }
         },
         {

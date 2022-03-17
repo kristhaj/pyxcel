@@ -62,3 +62,12 @@ class Load:
 
         print('Done.')
         return data
+
+    def Teams(self, path, columns):
+        print(f'\nLoading teams data from {path}...')
+
+        df = pd.read_excel(path, sheet_name=0, usecols=columns)
+        data = df.to_dict()
+
+        print('Done.')
+        return data

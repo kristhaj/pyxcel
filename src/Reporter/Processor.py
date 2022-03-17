@@ -12,7 +12,12 @@ class Processor:
             'HasPaid': {},
             'PaymentStatus': {},
             'Amount': {},
-            'Department': {}
+            'Department': {},
+            'Team': {},
+            'Team start': {},
+            'Team end': {},
+            'Team participation status': {},
+            'Team payment status': {}
             }
 
         #iterate through invoices and find matching members, finally add relevant data to processed_data
@@ -71,4 +76,28 @@ class Processor:
             else:
                 print(f'{data["PersonID"][i]}, {data["Name"][i]}: Has, or have had, no Active or Cancelled Training Fee')
                 data['Department'].update({i: 'Unknown'})
+        return data
+
+    def Process_Team_Data(self, data, teams):
+        team_personIDs = list(teams['PersonID'].values())
+        for i in list(data['PersonID'].keys()):
+            p = data['PersonID'][i]
+            # Check for person merge
+            if data['Gender'][i] == 'PersonMerge':
+                data['Team'].update({i: 'PersonMerge'})
+                print('Cannot apply Teams to PersonMerge entity')
+            if data['PersonID'][i] in team_personIDs:
+                team_key = team_personIDs.index(data['PersonID'][i])
+                data['Team'].update({i: teams['Partinavn'][team_key]})
+                data['Team start'].update({i: teams['Parti oppstartsdato'][team_key]})
+                data['Team end'].update({i: teams['Parti sluttdato'][team_key]})
+                data['Team participation status'].update({i: teams['Partimedlem status'][team_key]})
+                data['Team payment status'].update({i: teams['Partimedlem faktura status'][team_key]})
+            else:
+                print(f'{data["PersonID"][i]}, {data["Name"][i]}: Could not find Team participation in 2021 for this personID')
+                data['Team'].update({i: 'Unknown'})
+                data['Team start'].update({i: 'Unknown'})
+                data['Team end'].update({i: 'Unknown'})
+                data['Team participation status'].update({i: 'Unknown'})
+                data['Team payment status'].update({i: 'Unknown'})
         return data

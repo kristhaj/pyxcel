@@ -17,6 +17,7 @@ class Reporter:
         self.members_path = os.getenv("ALL_MEMBERS")
         self.paid_members_template = os.getenv("PAID_MEMBERS_TEMPLATE")
         self.training_fees_path = os.getenv("TRAINING_FEES")
+        self.team_path = os.getenv("TEAMS_PATH")
 
     def Kommune(self):
         print('Generating report of members with Kommune')
@@ -55,6 +56,8 @@ class Reporter:
 
         invoicing_cols = ['PersonId', 'Medlemsnavn', 'Fakturanummer', 'Fakturadato', 'Fakturabeløp', 'Status', 'Produkt']
         member_cols = ['PersonID', 'Navn', 'År', 'Kjønn']
+        
+        
 
         invoicing_data = Load.Invoices(self, self.invoice_path, invoicing_cols)
         member_data = Load.All_Members(self, self.members_path, member_cols)
@@ -72,6 +75,14 @@ class Reporter:
             processed_data = Processor.Process_Department_From_Training_Fee(self, processed_data, training_fees)
         else:
             processed_data['Department'].update({0: False})
+
+        if self.team_path != "N/A":
+            team_cols = ['Partinavn', 'Parti oppstartsdato', 'Parti sluttdato', 'PersonID', 'Partimedlem status', 'Partimedlem faktura status']
+            teams = Load.Teams(self, self.team_path, team_cols)
+            print('\nProcessing teams data per member...')
+            processed_data = Processor.Process_Team_Data(self, processed_data, teams)
+        else:
+            processed_data['Team'].update({0: False})
 
         print('\nData Processing complete.\nGenerating Report...\n')
 
