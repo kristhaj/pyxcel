@@ -53,7 +53,7 @@ class Vispy:
         # Format data
         formatted_data = Formatter.Visma_Format(self, processed_data, template)
 
-
+        print(f'Data processing and formatting is complete!\n Proceeding to Write output to {self.destination_path}...')
         # Write data
         Write.Visma_Format(self, self.destination_path, formatted_data)
 
