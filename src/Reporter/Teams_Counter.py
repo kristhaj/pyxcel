@@ -57,6 +57,10 @@ class Teams_Counter:
                                         '20-25': 0,
                                         '26-':0
                                         }
+                                },
+                                'Totals': {
+                                    'paid': 0,
+                                    'unpaid': 0
                                 }
                             }
                         })
@@ -72,6 +76,7 @@ class Teams_Counter:
                                 report[team]['Female']['Paid']['20-25'] += 1
                             elif processed_data['Age'][i] >= 26:
                                 report[team]['Female']['Paid']['26-'] += 1
+                            report[team]['Totals']['paid'] += 1
                         else:
                             if processed_data['Age'][i] in range(0,6):
                                 report[team]['Female']['Unpaid']['0-5'] += 1
@@ -83,6 +88,7 @@ class Teams_Counter:
                                 report[team]['Female']['Unpaid']['20-25'] += 1
                             elif processed_data['Age'][i] >= 26:
                                 report[team]['Female']['Unpaid']['26-'] += 1
+                            report[team]['Totals']['unpaid'] += 1
                     elif processed_data['Gender'][i] == 'Mann':
                         if processed_data['HasPaid'][i] == True:
                             if processed_data['Age'][i] in range(0,6):
@@ -95,6 +101,7 @@ class Teams_Counter:
                                 report[team]['Male']['Paid']['20-25'] += 1
                             elif processed_data['Age'][i] >= 26:
                                 report[team]['Male']['Paid']['26-'] += 1
+                            report[team]['Totals']['paid'] += 1
                         else:
                             if processed_data['Age'][i] in range(0,6):
                                 report[team]['Male']['Unpaid']['0-5'] += 1
@@ -106,6 +113,7 @@ class Teams_Counter:
                                 report[team]['Male']['Unpaid']['20-25'] += 1
                             elif processed_data['Age'][i] >= 26:
                                 report[team]['Male']['Unpaid']['26-'] += 1
+                            report[team]['Totals']['unpaid'] += 1
                     else:
                         if processed_data['HasPaid'][i] == True:
                             if processed_data['Age'][i] in range(0,6):
@@ -118,6 +126,7 @@ class Teams_Counter:
                                 report[team]['Unspecified']['Paid']['20-25'] += 1
                             elif processed_data['Age'][i] >= 26:
                                 report[team]['Unspecified']['Paid']['26-'] += 1
+                            report[team]['Totals']['paid'] += 1
                         else:
                             if processed_data['Age'][i] in range(0,6):
                                 report[team]['Unspecified']['Unpaid']['0-5'] += 1
@@ -130,6 +139,9 @@ class Teams_Counter:
                             elif processed_data['Age'][i] in range(26, 300):
                                 report[team]['Unspecified']['Unpaid']['26-'] += 1
                             else:
-                                print('Not counting PersonMerge')    
+                                print('Not counting PersonMerge')
+                                # correct count for merged entity
+                                report[team]['Totals']['unpaid'] -= 1
+                            report[team]['Totals']['unpaid'] += 1
         print(f'Teams data has been counted for {len(list(report.keys()))-4} Teams')
         return report
