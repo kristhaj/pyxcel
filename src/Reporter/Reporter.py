@@ -56,7 +56,7 @@ class Reporter:
         print('\nGenerating report of members per given year, with payment status\n')
 
         invoicing_cols = ['PersonId', 'Medlemsnavn', 'Fakturanummer', 'Fakturadato', 'Fakturabeløp', 'Status', 'Produkt']
-        member_cols = ['PersonID', 'Navn', 'År', 'Kjønn']
+        member_cols = ['NIF nummer', 'Navn', 'År', 'Kjønn']
         
         
 
