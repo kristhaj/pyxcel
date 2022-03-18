@@ -94,11 +94,14 @@ class Reporter:
 
         print(f'\nReport has been Generated.\nProceeding to format the data according to {self.paid_members_template}...')
 
-        report = Formatter.Paid_Member_Formatting(self, paid_member_template, report)
+        formatted_report = Formatter.Paid_Member_Formatting(self, paid_member_template, report)
+
+        if self.team_path != "N/A":
+            formatted_report = Formatter.Team_Statistics_formatting(self, report, formatted_report)
 
         print('\nFormatting complete.\nProceeding to Write...\n')
 
-        Write.Paid_Members_Report(self, self.destination_path, processed_data, report)
+        Write.Paid_Members_Report(self, self.destination_path, processed_data, formatted_report)
 
 
 Reporter().Paid()
