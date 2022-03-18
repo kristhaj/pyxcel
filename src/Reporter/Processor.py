@@ -13,11 +13,7 @@ class Processor:
             'PaymentStatus': {},
             'Amount': {},
             'Department': {},
-            'Team': {},
-            'Team start': {},
-            'Team end': {},
-            'Team participation status': {},
-            'Team payment status': {}
+            'Team': {}
             }
 
         #iterate through invoices and find matching members, finally add relevant data to processed_data
@@ -86,18 +82,24 @@ class Processor:
             if data['Gender'][i] == 'PersonMerge':
                 data['Team'].update({i: 'PersonMerge'})
                 print('Cannot apply Teams to PersonMerge entity')
+            # Process participation in multiple teams
+            participating_teams = ''
+            for team_key in range(0, len(team_personIDs)):
+                participant = team_personIDs[team_key]
+                if data['PersonID'][i] == participant:
+                    # check if string is empty, and handle multiple registrations to the same team
+                    if participating_teams != '':
+                        if teams["Partinavn"][team_key] in participating_teams:
+                            print(f'{data["PersonID"][i]}, {data["Name"][i]}: duplicate registration for {teams["Partinavn"][team_key]}')
+                        else:
+                            participating_teams += f'|{teams["Partinavn"][team_key]}'
+                    else:
+                        participating_teams = teams["Partinavn"][team_key]
             if data['PersonID'][i] in team_personIDs:
-                team_key = team_personIDs.index(data['PersonID'][i])
-                data['Team'].update({i: teams['Partinavn'][team_key]})
-                data['Team start'].update({i: teams['Parti oppstartsdato'][team_key]})
-                data['Team end'].update({i: teams['Parti sluttdato'][team_key]})
-                data['Team participation status'].update({i: teams['Partimedlem status'][team_key]})
-                data['Team payment status'].update({i: teams['Partimedlem faktura status'][team_key]})
+                    team_key = team_personIDs.index(participant)
+                    data['Team'].update({i: participating_teams})
             else:
                 print(f'{data["PersonID"][i]}, {data["Name"][i]}: Could not find Team participation in 2021 for this personID')
                 data['Team'].update({i: 'Unknown'})
-                data['Team start'].update({i: 'Unknown'})
-                data['Team end'].update({i: 'Unknown'})
-                data['Team participation status'].update({i: 'Unknown'})
-                data['Team payment status'].update({i: 'Unknown'})
+
         return data
