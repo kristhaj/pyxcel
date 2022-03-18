@@ -6,6 +6,7 @@ from Write import Write
 from Counter import Counter
 from Processor import Processor
 from Formatter import Formatter
+from Teams_Counter import Teams_Counter
 
 class Reporter:
 
@@ -87,6 +88,9 @@ class Reporter:
         print('\nData Processing complete.\nGenerating Report...\n')
 
         report = Counter.Report_Generator(self, processed_data)
+        if self.team_path != "N/A":
+            print('Teams data detected, counting paid member data per team')
+            report = Teams_Counter.Participation_Counter(self, processed_data, report)
 
         print(f'\nReport has been Generated.\nProceeding to format the data according to {self.paid_members_template}...')
 
