@@ -28,7 +28,7 @@ class Processor:
                 processed_data['InvoiceNum'].update({i: invoicing_data['Fakturanummer'][i]})
                 processed_data['Product'].update({i: invoicing_data['Produkt'][i]})
                 processed_data['IsInvoicedOn'].update({i: invoicing_data['Fakturadato'][i]})
-                if invoicing_data['Status'][i] == 'Betalt':
+                if invoicing_data['Status'][i] == 'Betalt' and int(invoicing_data['Fakturabeløp']) >= 50:
                     processed_data['HasPaid'].update({i: True})
                 else:
                     processed_data['HasPaid'].update({i: False})
