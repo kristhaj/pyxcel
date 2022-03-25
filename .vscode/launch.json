@@ -125,6 +125,20 @@
                 "template_path": "files/fedinv/NKF_Visma/legend/visma_template.xlsx",
                 "destination_path": "files/fedinv/NKF_Visma/data/NKF_Visma_Invoicing_2021.xlsx"
             }
+        },
+        {
+            "name": "System Check",
+            "type": "python",
+            "request": "launch",
+            "program": "src/System Check/System_Check.py",
+            "console": "integratedTerminal",
+            "env": {
+                // win rel path files*
+                // linux rel path pyxcel/files*
+                "club_path": "files/system/NTN/Liste over NTN klubber.xlsx",
+                "system_path": "files/system/NTN/NKF_systems.xlsx",
+                "destination_path": "files/system/NTN/NTN_Systems.xlsx"
+            }
         }
     ],
     "python.linting.pylintArgs": [
