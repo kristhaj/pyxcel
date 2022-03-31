@@ -123,7 +123,7 @@
                 "client_details_path": "files/fedinv/NKF_Visma/legend/client_detail.xlsx",
                 "product_details_path": "files/fedinv/NKF_Visma/legend/product_detail.xlsx",
                 "template_path": "files/fedinv/NKF_Visma/legend/visma_template.xlsx",
-                "destination_path": "files/fedinv/NKF_Visma/data/NKF_Visma_Invoicing_2021.xlsx"
+                "destination_path": "files/fedinv/NKF_Visma/data/NKF_Visma_Invoicing_april2022.xlsx"
             }
         },
         {
