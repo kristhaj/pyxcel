@@ -44,7 +44,10 @@ class Processor:
             total_over13 = 0
             org_product_data = {'Forsikring': {}}
             for gren in list(data[org]['gren_data'].keys()):
-                product = gren_data[data[org]['gren_data'][gren]['gren_num']]
+                if data[org]['gren_data'][gren]['gren_num'] in list(gren_data.values()):
+                    product = gren_data[data[org]['gren_data'][gren]['gren_num']]
+                else:
+                    product = 'Fleridretter'
                 total_over13 += data[org]['gren_data'][gren]['over13']
                 # check if club has members registered for the same product already
                 if product in list(org_product_data.keys()):
