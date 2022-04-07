@@ -144,7 +144,7 @@
             "name": "Member Listing",
             "type": "python",
             "request": "launch",
-            "program": "src/System Check/Member_Listing.py",
+            "program": "src/Member Listing/Member_Listing.py",
             "console": "integratedTerminal",
             "env": {
                 // win rel path files*
