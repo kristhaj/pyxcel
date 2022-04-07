@@ -1,5 +1,7 @@
 # Process data from given detail, and append to main data set
 
+import datetime
+
 class Processor:
 
     # Process client details from ISD dump into main data set
@@ -44,7 +46,7 @@ class Processor:
             total_over13 = 0
             org_product_data = {'Forsikring': {}}
             for gren in list(data[org]['gren_data'].keys()):
-                if data[org]['gren_data'][gren]['gren_num'] in list(gren_data.values()):
+                if data[org]['gren_data'][gren]['gren_num'] in list(gren_data.keys()):
                     product = gren_data[data[org]['gren_data'][gren]['gren_num']]
                 else:
                     product = 'Fleridretter'
@@ -72,7 +74,7 @@ class Processor:
                 org_product_data[product].update({
                     'price': details['pris'][details_index],
                     'inv_date': details['fakturadato'][details_index],
-                    'due_in': details['forfallstid(dager)'][details_index],
+                    'due_in': details['fakturadato'][details_index] + datetime.timedelta(days=details['forfallstid(dager)'][details_index]),
                     'item_num': details['Varenummer'][details_index],
                     'desc': details['Transaksjonsbeskrivelse'][details_index],
                     'dim': details['Kostnadsbærer'][details_index],
