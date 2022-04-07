@@ -139,6 +139,20 @@
                 "system_path": "files/system/NTN/NKF_systems.xlsx",
                 "destination_path": "files/system/NTN/NTN_Systems.xlsx"
             }
+        },
+        {
+            "name": "Member Listing",
+            "type": "python",
+            "request": "launch",
+            "program": "src/System Check/Member_Listing.py",
+            "console": "integratedTerminal",
+            "env": {
+                // win rel path files*
+                // linux rel path pyxcel/files*
+                "beta_data_path": "files/members_list/bergTF_members_beta.xlsx",
+                "old_data_path": "files/members_list/bergTF_members_old.xlsx",
+                "destination_path": "files/members_list/bergTF_members.xlsx"
+            }
         }
     ],
     "python.linting.pylintArgs": [
