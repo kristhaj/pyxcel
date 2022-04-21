@@ -13,7 +13,8 @@ class Processor:
             'PaymentStatus': {},
             'Amount': {},
             'Department': {},
-            'Team': {}
+            'Team': {},
+            'Findim': {}
             }
 
         #iterate through invoices and find matching members, finally add relevant data to processed_data

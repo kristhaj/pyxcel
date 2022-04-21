@@ -7,6 +7,7 @@ from Counter import Counter
 from Processor import Processor
 from Formatter import Formatter
 from Teams_Counter import Teams_Counter
+from Findim import Findim
 
 class Reporter:
 
@@ -19,6 +20,7 @@ class Reporter:
         self.paid_members_template = os.getenv("PAID_MEMBERS_TEMPLATE")
         self.training_fees_path = os.getenv("TRAINING_FEES")
         self.team_path = os.getenv("TEAMS_PATH")
+        self.findim_path = os.getenv("FINDIM_PATH")
 
     def Kommune(self):
         print('Generating report of members with Kommune')
@@ -85,6 +87,13 @@ class Reporter:
         else:
             processed_data['Team'].update({0: False})
 
+        if self.findim_path != "N/A":
+            findim_map = Load.Findims(self, self.findim_path)
+            print('Processing finim data...')
+            processed_data = Findim.Map_Findim(self, processed_data, findim_map)
+        else:
+            processed_data['Findim'].update({0: False})
+
         print('\nData Processing complete.\nGenerating Report...\n')
 
         report = Counter.Report_Generator(self, processed_data)
@@ -97,7 +106,10 @@ class Reporter:
         formatted_report = Formatter.Paid_Member_Formatting(self, paid_member_template, report)
 
         if self.team_path != "N/A":
-            formatted_report = Formatter.Team_Statistics_formatting(self, report, formatted_report)
+            if self.findim_path != "N/A":
+                formatted_report = Formatter.Team_Statistics_formatting(self, report, formatted_report, True)
+            else:
+                formatted_report = Formatter.Team_Statistics_formatting(self, report, formatted_report)
 
         print('\nFormatting complete.\nProceeding to Write...\n')
 

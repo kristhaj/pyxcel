@@ -71,3 +71,12 @@ class Load:
 
         print('Done.')
         return data
+
+    def Findims(self, path):
+        print(f'\nLoading team-findim map from {path}...')
+
+        df = pd.read_excel(path, sheet_name=0)
+        data = df.to_dict()
+
+        print('Done.')
+        return data

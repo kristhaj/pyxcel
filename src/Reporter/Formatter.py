@@ -59,13 +59,17 @@ class Formatter:
         return template
 
     # Format teams member statistics
-    def Team_Statistics_formatting(self, report, template):
+    def Team_Statistics_formatting(self, report, template, findim = False):
         template_dict = template.to_dict()
         # step to offset rows per team statistics
         step = 0
         # Format data per team into the template
-        for team_index in range(4, len(list(report.keys()))):
-            current_team = list(report.keys())[team_index]
+        for grouping_index in range(4, len(list(report.keys()))):
+            # if findim is true, use findims instead of teams to format the final report
+            if findim:
+                pass
+            else:
+                current_grouping = list(report.keys())[grouping_index]
             row = 15+step
             # Set headers for each bulk
             
@@ -93,8 +97,8 @@ class Formatter:
             template_dict['Unnamed: 20'].update({row+1: 'Totals'})
             # set left hand legend
             template_dict['Gender'].update({row+2: 'TeamName'})
-            template_dict['Gender'].update({row+3: current_team})
-            template_dict['Gender'].update({row+4: current_team})
+            template_dict['Gender'].update({row+3: current_grouping})
+            template_dict['Gender'].update({row+4: current_grouping})
             template_dict['Unnamed: 1'].update({row+2: 'InvoiceStatus'})
             template_dict['Unnamed: 1'].update({row+3: 'Paid'})
             template_dict['Unnamed: 1'].update({row+4: 'Unpaid'})
@@ -105,16 +109,16 @@ class Formatter:
 
             # set team member counts
             # Set Male Paid, Unpaid statistics
-            template_dict['Menn'].update({row+3: report[current_team]['Male']['Paid']['0-5']})
-            template_dict['Menn.1'].update({row+3: report[current_team]['Male']['Paid']['6-12']})
-            template_dict['Menn.2'].update({row+3: report[current_team]['Male']['Paid']['13-19']})
-            template_dict['Menn.3'].update({row+3: report[current_team]['Male']['Paid']['20-25']})
-            template_dict['Menn.4'].update({row+3: report[current_team]['Male']['Paid']['26-']})
-            template_dict['Menn'].update({row+4: report[current_team]['Male']['Unpaid']['0-5']})
-            template_dict['Menn.1'].update({row+4: report[current_team]['Male']['Unpaid']['6-12']})
-            template_dict['Menn.2'].update({row+4: report[current_team]['Male']['Unpaid']['13-19']})
-            template_dict['Menn.3'].update({row+4: report[current_team]['Male']['Unpaid']['20-25']})
-            template_dict['Menn.4'].update({row+4: report[current_team]['Male']['Unpaid']['26-']})
+            template_dict['Menn'].update({row+3: report[current_grouping]['Male']['Paid']['0-5']})
+            template_dict['Menn.1'].update({row+3: report[current_grouping]['Male']['Paid']['6-12']})
+            template_dict['Menn.2'].update({row+3: report[current_grouping]['Male']['Paid']['13-19']})
+            template_dict['Menn.3'].update({row+3: report[current_grouping]['Male']['Paid']['20-25']})
+            template_dict['Menn.4'].update({row+3: report[current_grouping]['Male']['Paid']['26-']})
+            template_dict['Menn'].update({row+4: report[current_grouping]['Male']['Unpaid']['0-5']})
+            template_dict['Menn.1'].update({row+4: report[current_grouping]['Male']['Unpaid']['6-12']})
+            template_dict['Menn.2'].update({row+4: report[current_grouping]['Male']['Unpaid']['13-19']})
+            template_dict['Menn.3'].update({row+4: report[current_grouping]['Male']['Unpaid']['20-25']})
+            template_dict['Menn.4'].update({row+4: report[current_grouping]['Male']['Unpaid']['26-']})
             # populate empty rows to account for DF conversion
             template_dict['Menn'].update({row+5: ''})
             template_dict['Menn.1'].update({row+5:''})
@@ -128,16 +132,16 @@ class Formatter:
             template_dict['Menn.4'].update({row+6: ''})
 
             # Set Female Paid, Unpaid Statistics
-            template_dict['Kvinner'].update({row+3: report[current_team]['Female']['Paid']['0-5']})
-            template_dict['Kvinner.1'].update({row+3: report[current_team]['Female']['Paid']['6-12']})
-            template_dict['Kvinner.2'].update({row+3: report[current_team]['Female']['Paid']['13-19']})
-            template_dict['Kvinner.3'].update({row+3: report[current_team]['Female']['Paid']['20-25']})
-            template_dict['Kvinner.4'].update({row+3: report[current_team]['Female']['Paid']['26-']})
-            template_dict['Kvinner'].update({row+4: report[current_team]['Female']['Unpaid']['0-5']})
-            template_dict['Kvinner.1'].update({row+4: report[current_team]['Female']['Unpaid']['6-12']})
-            template_dict['Kvinner.2'].update({row+4: report[current_team]['Female']['Unpaid']['13-19']})
-            template_dict['Kvinner.3'].update({row+4: report[current_team]['Female']['Unpaid']['20-25']})
-            template_dict['Kvinner.4'].update({row+4: report[current_team]['Female']['Unpaid']['26-']})
+            template_dict['Kvinner'].update({row+3: report[current_grouping]['Female']['Paid']['0-5']})
+            template_dict['Kvinner.1'].update({row+3: report[current_grouping]['Female']['Paid']['6-12']})
+            template_dict['Kvinner.2'].update({row+3: report[current_grouping]['Female']['Paid']['13-19']})
+            template_dict['Kvinner.3'].update({row+3: report[current_grouping]['Female']['Paid']['20-25']})
+            template_dict['Kvinner.4'].update({row+3: report[current_grouping]['Female']['Paid']['26-']})
+            template_dict['Kvinner'].update({row+4: report[current_grouping]['Female']['Unpaid']['0-5']})
+            template_dict['Kvinner.1'].update({row+4: report[current_grouping]['Female']['Unpaid']['6-12']})
+            template_dict['Kvinner.2'].update({row+4: report[current_grouping]['Female']['Unpaid']['13-19']})
+            template_dict['Kvinner.3'].update({row+4: report[current_grouping]['Female']['Unpaid']['20-25']})
+            template_dict['Kvinner.4'].update({row+4: report[current_grouping]['Female']['Unpaid']['26-']})
             # populate empty rows to account for DF conversion
             template_dict['Kvinner'].update({row+5: ''})
             template_dict['Kvinner.1'].update({row+5:''})
@@ -152,16 +156,16 @@ class Formatter:
 
 
             # Set Unspecified gender Paid, Unpaid Statistics
-            template_dict['Gender Not Mentioned'].update({row+3: report[current_team]['Unspecified']['Paid']['0-5']})
-            template_dict['Gender Not Mentioned.1'].update({row+3: report[current_team]['Unspecified']['Paid']['6-12']})
-            template_dict['Unnamed: 16'].update({row+3: report[current_team]['Unspecified']['Paid']['13-19']})
-            template_dict['Unnamed: 17'].update({row+3: report[current_team]['Unspecified']['Paid']['20-25']})
-            template_dict['Unnamed: 18'].update({row+3: report[current_team]['Unspecified']['Paid']['26-']})
-            template_dict['Gender Not Mentioned'].update({row+4: report[current_team]['Unspecified']['Unpaid']['0-5']})
-            template_dict['Gender Not Mentioned.1'].update({row+4: report[current_team]['Unspecified']['Unpaid']['6-12']})
-            template_dict['Unnamed: 16'].update({row+4: report[current_team]['Unspecified']['Unpaid']['13-19']})
-            template_dict['Unnamed: 17'].update({row+4: report[current_team]['Unspecified']['Unpaid']['20-25']})
-            template_dict['Unnamed: 18'].update({row+4: report[current_team]['Unspecified']['Unpaid']['26-']})
+            template_dict['Gender Not Mentioned'].update({row+3: report[current_grouping]['Unspecified']['Paid']['0-5']})
+            template_dict['Gender Not Mentioned.1'].update({row+3: report[current_grouping]['Unspecified']['Paid']['6-12']})
+            template_dict['Unnamed: 16'].update({row+3: report[current_grouping]['Unspecified']['Paid']['13-19']})
+            template_dict['Unnamed: 17'].update({row+3: report[current_grouping]['Unspecified']['Paid']['20-25']})
+            template_dict['Unnamed: 18'].update({row+3: report[current_grouping]['Unspecified']['Paid']['26-']})
+            template_dict['Gender Not Mentioned'].update({row+4: report[current_grouping]['Unspecified']['Unpaid']['0-5']})
+            template_dict['Gender Not Mentioned.1'].update({row+4: report[current_grouping]['Unspecified']['Unpaid']['6-12']})
+            template_dict['Unnamed: 16'].update({row+4: report[current_grouping]['Unspecified']['Unpaid']['13-19']})
+            template_dict['Unnamed: 17'].update({row+4: report[current_grouping]['Unspecified']['Unpaid']['20-25']})
+            template_dict['Unnamed: 18'].update({row+4: report[current_grouping]['Unspecified']['Unpaid']['26-']})
             # populate empty rows to account for DF conversion
             template_dict['Gender Not Mentioned'].update({row+5: ''})
             template_dict['Gender Not Mentioned.1'].update({row+5:''})
@@ -175,8 +179,8 @@ class Formatter:
             template_dict['Unnamed: 18'].update({row+6: ''})
 
             # set totals per team
-            template_dict['Unnamed: 20'].update({row+3: report[current_team]['Totals']['paid']})
-            template_dict['Unnamed: 20'].update({row+4: report[current_team]['Totals']['unpaid']})
+            template_dict['Unnamed: 20'].update({row+3: report[current_grouping]['Totals']['paid']})
+            template_dict['Unnamed: 20'].update({row+4: report[current_grouping]['Totals']['unpaid']})
             template_dict['Unnamed: 20'].update({row+5: ''})
             template_dict['Unnamed: 20'].update({row+6: ''})
             

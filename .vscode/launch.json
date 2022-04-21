@@ -84,12 +84,13 @@
                 // linux rel path pyxcel/files*
                 "postal_data": "files/report/post_kommune.xlsx",
                 "members": "files/report/straen/straen_291220.xlsx",
-                "destination_path": "files/report/odds_turn/odds_turn_Members_2021.xlsx",
-                "invoice_path":"files/report/odds_turn/odds_turn_membership_invoices2021.xlsx",
-                "all_members": "files/report/odds_turn/odds_turn_all_members.xlsx", // Update col for person ID from "NIF Nummer" to "PersonID"
+                "destination_path": "files/report/drammen/drammen_Members_2021.xlsx",
+                "invoice_path":"files/report/drammen/drammen_membership_invoicing2021.xlsx",
+                "all_members": "files/report/drammen/drammen_all_members.xlsx", // Update col for person ID from "NIF Nummer" to "PersonID"
                 "paid_members_template": "files/report/templates/SR_Template.xlsx",
                 "training_fees": "N/A", // set to N/A when running club without departments in training fee config
-                "teams_path": "files/report/odds_turn/odds_turn_teams2021.xlsx" // set to N/A when running club without teams as main activity
+                "teams_path": "files/report/drammen/drammen_teams2021.xlsx", // set to N/A when running club without teams as main activity
+                "findim_path": "files/report/drammen/team_findim_map.xlsx"
             }
         },
         {
