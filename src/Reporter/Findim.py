@@ -13,11 +13,15 @@ class Findim:
             #make list of teams the current member participated in by splitting on separator
             participated_in_list = members['Team'][member_index].split('|')
             # iterate though said list and match teams in the map, to get map_index
+            not_applicable_teams = ['Unknown', 'Støttemedlem 2021', 'Barnebursdag pakke 2', 'SKAL IKKE BRKES NB !!!    3101 Turn Nybegynner Strømsø 6-9 H21']
             for team in participated_in_list:
-                #TODO: Fix issue with not matching the correct team names
-                map_index = team_list.index(team)
-                if findim_list[map_index] not in  matched_findims:
-                    matched_findims += f"|{findim_list[map_index]}"
+                if team not in not_applicable_teams:
+                    map_index = team_list.index(team)
+                    if findim_list[map_index] not in  matched_findims:
+                        if matched_findims != "":
+                            matched_findims += f"|{findim_list[map_index]}"
+                        else:
+                            matched_findims += findim_list[map_index]
             
             members['Findim'].update({member_index: matched_findims})
         print('Findims have been processed.')
