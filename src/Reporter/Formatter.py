@@ -65,11 +65,7 @@ class Formatter:
         step = 0
         # Format data per team into the template
         for grouping_index in range(4, len(list(report.keys()))):
-            # if findim is true, use findims instead of teams to format the final report
-            if findim:
-                pass
-            else:
-                current_grouping = list(report.keys())[grouping_index]
+            current_grouping = list(report.keys())[grouping_index]
             row = 15+step
             # Set headers for each bulk
             

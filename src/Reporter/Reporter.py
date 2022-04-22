@@ -89,7 +89,7 @@ class Reporter:
 
         if self.findim_path != "N/A":
             findim_map = Load.Findims(self, self.findim_path)
-            print('Processing finim data...')
+            print('Processing findim data...')
             processed_data = Findim.Map_Findim(self, processed_data, findim_map)
         else:
             processed_data['Findim'].update({0: False})
