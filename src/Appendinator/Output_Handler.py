@@ -28,13 +28,13 @@ class Handle:
         for file in files:
             path = dir + '/' + file
             print(f'Reading PersonIDs at {path} ...')
-            types = {'Id':np.int64, 'OrgId': np.int64, 'PersonId': np.int64}
+            types = {'Id':np.int64, 'OrgId': np.int64, 'PersonId': np.int64, 'BirthDate': str}
             df = pd.read_csv(path, sep=",", dtype=types)
 
             for i in df.Id.values:
                 index = i-1
                 org = df.OrgId.values[index]
-                row_pid_pairing = {index: [df.PersonId.values[index], df.FirstName.values[index] ,df.LastName.values[index]]}
+                row_pid_pairing = {index: [df.PersonId.values[index], df.FirstName.values[index] ,df.LastName.values[index], df.Gender.values[index], df.BirthDate.values[index]]}
                 if org not in list(pid_dict.keys()):
                     pid_dict[org]= row_pid_pairing
                 else:

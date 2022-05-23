@@ -102,12 +102,12 @@
             "env": {
                 // win rel path files*
                 // linux rel path pyxcel/files*
-                "data_dir": "files/appendage/NKF/2022_4/",
+                "data_dir": "files/appendage/NKF/2022_4",
                 "target_path": "files/appendage/Masters/Master_Migration_File_IMS_NKF_2022_4.xlsx",
                 "format_path": "files/appendage/Masters/IMS_Migration_Template.xlsx",
                 "kao_dir": "files/KA/NKF/2022_4/OutputKA",
                 "kao_meta": "files/KA/NKF/2022_4/kao_meta.xlsx",
-                "is_post_ka": "false", // set to true if batch is done with KA import and personIDs are available or already set
+                "is_post_ka": "true", // set to true if batch is done with KA import and personIDs are available or already set
                 "is_productless": "false" //set to true if batch is comprised of clubs with no product data
             }
         },

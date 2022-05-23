@@ -101,20 +101,49 @@ class Validate:
                         if oid in list(personIDs.keys()):
                             org_data = personIDs[oid]
                             num_pid= len(org_data)
-                            # set PersonID for member if available in output file
-                            if last_row < num_pid:
-                                data[key]['NIF ID'][last_row] = org_data[last_row][0]
-                            #check for erronious last names, and attempt correction (based upon rules for last name in Folkereg.)
-                            lastname = data[key].Etternavn.values[last_row]
-                            lastname_count = len(lastname.split())
-                            real_lastname = org_data[last_row][2]
-                            real_firstname = org_data[last_row][1]
-                            if lastname_count > 1 or lastname != real_lastname:
-                                print(f'{current_org}: Bad name at {last_row},\nold: {data[key]["Fornavn- og middelnavn"].values[last_row]}, {lastname} \nnew: {real_firstname}, {real_lastname}')
-                                data[key]['Fornavn- og middelnavn'].values[last_row] = real_firstname
-                                data[key].Etternavn.values[last_row] = real_lastname
+                            output_index = last_row
+                            if type(org_data[output_index][3]) == float or type(org_data[output_index][4]) == float:
+                                print(f'\n{current_org}: Missing data at output_index: {output_index}\nMember Data at line {last_row} need manual matching!')
                                 bad_data_count += 1
-                                bad_data_locations.append('Navn')
+                                bad_data_locations.append('OUTPUT')
+                            else:
+                                # set PersonID for member if available in output file
+                                match = False
+                                if last_row < num_pid:
+                                    comparative_birthdate = bdate.replace('.', '')[:4] + bdate.replace('.', '')[-2:]
+                                    gender_char = data[key]['Kjønn'][last_row][0]
+                                    if gender_char != org_data[output_index][3] or comparative_birthdate != org_data[output_index][4]:
+                                        print(f'Gender {gender_char} / {org_data[output_index][3]} or Birthdate {comparative_birthdate} / {org_data[output_index][4]} not matching')
+                                        for i in list(org_data.keys()):
+                                            o_gender = org_data[i][3]
+                                            o_bdate = org_data[i][4]
+                                            if gender_char == o_gender and comparative_birthdate == o_bdate:
+                                                output_index = i
+                                                print(f'Match found at {output_index} for G:{gender_char}/{o_gender} and BD:{comparative_birthdate}/{o_bdate}')
+                                                match = True
+                                                break
+                                            else:
+                                                i += 1
+                                    else:
+                                        match = True
+                                if match:
+                                    data[key]['NIF ID'][last_row] = org_data[output_index][0]
+                                    #check for erronious last names, and attempt correction (based upon rules for last name in Folkereg.)
+                                    lastname = data[key].Etternavn.values[last_row]
+                                    lastname_count = len(lastname.split())
+                                    real_lastname = org_data[output_index][2]
+                                    real_firstname = org_data[output_index][1]
+                                    if lastname_count > 1 or lastname != real_lastname:
+                                        print(f'{current_org}: Bad name at {last_row},\nold: {data[key]["Fornavn- og middelnavn"].values[last_row]}, {lastname} \nnew: {real_firstname}, {real_lastname}')
+                                        data[key]['Fornavn- og middelnavn'].values[last_row] = real_firstname
+                                        data[key].Etternavn.values[last_row] = real_lastname
+                                        bad_data_count += 1
+                                        bad_data_locations.append('Navn')
+                                else:
+                                    print(f'\nNo match could be found for line {last_row}\nName:{data[key]["Fornavn- og middelnavn"].values[last_row]}, {data[key].Etternavn.values[last_row]}\nGender:{gender_char}\nBDate:{bdate}')
+                                    bad_data_count += 1
+                                    bad_data_locations.append('OUTPUT')
+                                    print()
                     # log clubs without indentifiable output from KA
                     else:
                         missing_output.update({current_org: last_row})
