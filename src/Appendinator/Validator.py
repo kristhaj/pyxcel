@@ -106,6 +106,7 @@ class Validate:
                                 print(f'\n{current_org}: Missing data at output_index: {output_index}\nMember Data at line {last_row} need manual matching!')
                                 bad_data_count += 1
                                 bad_data_locations.append('OUTPUT')
+                                pass
                             else:
                                 # set PersonID for member if available in output file
                                 match = False

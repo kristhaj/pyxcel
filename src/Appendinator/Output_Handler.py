@@ -30,7 +30,6 @@ class Handle:
             print(f'Reading PersonIDs at {path} ...')
             types = {'Id':np.int64, 'OrgId': np.int64, 'PersonId': np.int64, 'BirthDate': str}
             df = pd.read_csv(path, sep=",", dtype=types)
-
             for i in df.Id.values:
                 index = i-1
                 org = df.OrgId.values[index]
