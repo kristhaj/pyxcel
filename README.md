@@ -75,7 +75,9 @@ Logs out any occurances of bad data in the batch of files handled by Appendinato
 ## File Structure
 
 In order to keep track of all your files, and to make it easier to update the launch.json configurations, you can follow the below suggested file structure:
-[img]
+
+![2022-06-27-15-19-06](https://user-images.githubusercontent.com/9265818/175952666-74eee10c-0fa4-40ef-ab8d-dbf6b5f5be05.png)
+
 
 Here all the different Modules have their own folder, with _appendage_ being used as the folder for Appendinator, and _KA_ being used as the folder for DivideFile.
 
