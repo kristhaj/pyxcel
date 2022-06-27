@@ -78,6 +78,9 @@ The easiest way to use as of now is to run via the debug mode in VSCode
 
 Select the Debug tab in the left hand menu, select Appendinator as the configuration to run an simply hit the run-button
 
+![2022-06-27-15-11-35](https://user-images.githubusercontent.com/9265818/175949709-5f5418bc-808b-4870-a1d0-c1f76f97de21.gif)
+
+
 All the necessary congifurations are done made in the launch.json file, as described below and in the file with comments
 
 ![2022-06-27-14-46-58](https://user-images.githubusercontent.com/9265818/175949164-99dec2b5-22cb-454f-a0e9-b27ca629405e.png)
@@ -102,6 +105,9 @@ All the necessary congifurations are done made in the launch.json file, as descr
 ## DivideFile (KA Import Formatting)
 
 This script can be run the same way as Apendindinator, via the Debug mode in VSCode:
+
+![2022-06-27-15-12-12](https://user-images.githubusercontent.com/9265818/175949838-969ed7ba-ec5a-429a-a194-5ec15bded061.gif)
+
 
 All the necessary congifurations are done made in the launch.json file, as described below and in the file with comments
 
