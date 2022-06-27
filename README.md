@@ -72,6 +72,17 @@ Logs out any occurances of bad data in the batch of files handled by Appendinato
 
 # Usage
 
+## File Structure
+
+In order to keep track of all your files, and to make it easier to update the launch.json configurations, you can follow the below suggested file structure:
+[img]
+
+Here all the different Modules have their own folder, with _appendage_ being used as the folder for Appendinator, and _KA_ being used as the folder for DivideFile.
+
+In each folder the individual files are structured by federation and batch number to easily find back to in case of import issues.
+
+NOTE: In case you decide upon a different file structure the launch.json config needs to be updated accordingly.
+
 ## Apendinator (IMS Import processing)
 
 The easiest way to use as of now is to run via the debug mode in VSCode
@@ -100,7 +111,7 @@ All the necessary congifurations are done made in the launch.json file, as descr
 
 - is_productless: set to true if batch is comprised of clubs with no product data
 
-
+All of the file paths need only the relative path, ie where the file is in relation to the _pyxcel_ folder.
 
 ## DivideFile (KA Import Formatting)
 
@@ -118,3 +129,6 @@ All the necessary congifurations are done made in the launch.json file, as descr
 - ka_template:  File Path to the KA Import Template
 
 - target_path: Path to the output folder, and name prefix of KA import files.
+
+
+All of the file paths need only the relative path, ie where the file is in relation to the _pyxcel_ folder.
