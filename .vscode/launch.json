@@ -102,13 +102,13 @@
             "env": {
                 // win rel path files*
                 // linux rel path pyxcel/files*
-                "data_dir": "files/appendage/NKF/2022_4",
-                "target_path": "files/appendage/Masters/Master_Migration_File_IMS_NKF_2022_4.xlsx",
-                "format_path": "files/appendage/Masters/IMS_Migration_Template.xlsx",
-                "kao_dir": "files/KA/NKF/2022_4/OutputKA",
-                "kao_meta": "files/KA/NKF/2022_4/kao_meta.xlsx",
-                "is_post_ka": "true", // set to true if batch is done with KA import and personIDs are available or already set
-                "is_productless": "false" //set to true if batch is comprised of clubs with no product data
+                "data_dir": "files/appendage/Dans/", // Folder with all member and club data to be imported
+                "target_path": "files/appendage/Masters/Master_Migration_File_IMS_Dans_2022_2.xlsx", // File path and name of the resulting file, that is written after the script has run
+                "format_path": "files/appendage/Masters/IMS_Migration_Template.xlsx", // IMS Template to format the data by NOTE: the sheet and column names must be exact matches to the files in data_dir
+                "kao_dir": "files/KA/Dans/2022_4/OutputKA", // Folder with output data, if files have undergone KA import and need to be matched for PersonID
+                "kao_meta": "files/KA/Dans/2022_4/kao_meta.xlsx", // Folder with meta data from the KA import, such as OrgID of club and Gren
+                "is_post_ka": "N/A", // set to true if batch is done with KA import and personIDs are available or already set
+                "is_productless": "true" //set to true if batch is comprised of clubs with no product data
             }
         },
         {
