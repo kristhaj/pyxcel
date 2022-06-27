@@ -19,8 +19,7 @@ With Git installed, it is recommended to use Git Bash or Git Powershell, navigat
 For example:
 
 #### Step 1:
-Create a folder named IMS Import, and open Git Bash here
-[gif]
+Create a folder named IMS Import, open it, and right click to open Git Bash here
 
 #### Step 2:
 Clone the repo into this folder with the following command in Git Bash
@@ -78,7 +77,6 @@ Logs out any occurances of bad data in the batch of files handled by Appendinato
 The easiest way to use as of now is to run via the debug mode in VSCode
 
 Select the Debug tab in the left hand menu, select Appendinator as the configuration to run an simply hit the run-button
-[gif]
 
 All the necessary congifurations are done made in the launch.json file, as described below and in the file with comments
 [img]
@@ -102,7 +100,6 @@ All the necessary congifurations are done made in the launch.json file, as descr
 ## DivideFile (KA Import Formatting)
 
 This script can be run the same way as Apendindinator, via the Debug mode in VSCode:
-[gif]
 
 All the necessary congifurations are done made in the launch.json file, as described below and in the file with comments
 
