@@ -79,7 +79,9 @@ The easiest way to use as of now is to run via the debug mode in VSCode
 Select the Debug tab in the left hand menu, select Appendinator as the configuration to run an simply hit the run-button
 
 All the necessary congifurations are done made in the launch.json file, as described below and in the file with comments
-[img]
+
+![2022-06-27-14-46-58](https://user-images.githubusercontent.com/9265818/175949164-99dec2b5-22cb-454f-a0e9-b27ca629405e.png)
+
 
 - data_dir: Folder with all member and club data to be imported
 
@@ -102,6 +104,8 @@ All the necessary congifurations are done made in the launch.json file, as descr
 This script can be run the same way as Apendindinator, via the Debug mode in VSCode:
 
 All the necessary congifurations are done made in the launch.json file, as described below and in the file with comments
+
+![2022-06-27-14-57-19](https://user-images.githubusercontent.com/9265818/175949306-f594bbfb-8ce3-484c-b507-ebb8b24e34bf.png)
 
 - data: Master File outputted from Apendinator to be used for KA import
 
