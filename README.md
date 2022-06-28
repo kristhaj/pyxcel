@@ -57,7 +57,7 @@ Make individual files from a larger master file, based on given indentifier.
 ## Migrator
 Collate data from multiple individual files into a single master file, with a given format, to prepare migration
 
-## Aminipy
+## Adminipy
 Cross reference call list with member data to identify administrator and relevant information.
 
 ## Appendinator
@@ -113,7 +113,7 @@ All the necessary congifurations are done made in the launch.json file, as descr
 
 All of the file paths need only the relative path, ie where the file is in relation to the _pyxcel_ folder.
 
-## DivideFile (KA Import Formatting)
+## Divider (KA Import Formatting)
 
 This script can be run the same way as Apendindinator, via the Debug mode in VSCode:
 
