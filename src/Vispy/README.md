@@ -14,7 +14,8 @@ Last ned og installer VScode fra https://code.visualstudio.com/download
 
 ### Steg 2
 Åpne VSCode og installer Python-utvidelse
-[gif1]
+<img width="727" alt="2022-10-19-09-41-49" src="https://user-images.githubusercontent.com/9265818/196627959-b735aaa0-749d-463e-9e44-f81c038775b1.png">
+
 
 ## Git
 Installer Git for Windows for å hente koden fra Github
@@ -27,7 +28,8 @@ For alle valgene om dukker opp i installasjonsprosessen er det bare å velge sta
 ### Steg 1
 Når Git er installert lager du en mappe der du ønsker at koden skal ligge, og åpner Git Bash (verktøy for å  bruke git) her:
 
-[gif2]
+<img width="727" alt="2022-10-19-09-42-27" src="https://user-images.githubusercontent.com/9265818/196627986-cd036ad8-e86a-4770-9bf9-95c117178bde.png">
+
 
 ### Steg 2
 
@@ -61,7 +63,8 @@ Denne modulen brukes til å samle og formatere data til faktureringsgrunnlag som
 
 ## Filstruktur
 For at koden skal vite hvor filene med importgrunnlag ligger, så må den få beskjed om dette. Filstien er definert i filen launch.json
-[bilde1]
+<img width="727" alt="2022-10-19-09-32-22" src="https://user-images.githubusercontent.com/9265818/196627491-bfa3847e-42f9-4b0a-a9a5-02ea660c3813.png">
+
 
 data_path: refererer til hovedfilen med data fra ISD om klubb, gruppe og gren
 
