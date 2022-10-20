@@ -78,4 +78,6 @@ destination_path: plassering og filnavn for den ferdige filen som blir laget.
 
 ## Kjøring av kode.
 
-For å kjøre koden åpner man filen Vis.py, og deretter kjører man den i Debug-modus, som vist i gifen under. Dette kan også gjøres ved å trykke på F5
+For å kjøre koden åpner man filen Vis.py, og deretter kjører man den i Debug-modus, som vist i bildet under. Dette kan også gjøres ved å trykke på F5
+<img width="1122" alt="2022-10-20-09-16-34" src="https://user-images.githubusercontent.com/9265818/196881710-3e936dee-c5ee-4793-b904-130e13a304b4.png">
+
