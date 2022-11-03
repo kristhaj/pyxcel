@@ -120,7 +120,8 @@
             "env": {
                 // win rel path files*
                 // linux rel path pyxcel/files*
-                "data_path": "files/fedinv/data/nkf_org_group.xlsx",
+                "old_data_path": "files/fedinv/data/nkf_org_group.xlsx",
+                "new_data_path": "files/fedinv/data/NKF_Orgliste ou13 2020501.xlsx",
                 "client_details_path": "files/fedinv/legend/client_detail.xlsx",
                 "product_details_path": "files/fedinv/legend/product_detail.xlsx",
                 "template_path": "files/fedinv/legend/visma_template.xlsx",

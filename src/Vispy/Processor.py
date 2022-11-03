@@ -80,7 +80,7 @@ class Processor:
                     'dim': details['Kostnadsbærer'][details_index],
                     'count': member_count,
                     'total_amount': amount,
-                    'account': details['Kontonr'][details_index]
+                    'account': details['Varenummer'][details_index]
                 })
 
             data[org].update({'Products': org_product_data})
