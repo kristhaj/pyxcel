@@ -35,7 +35,7 @@ class Vispy:
             524: 'Taekwondo ITF'
         }
         # set relevant columns
-        data_columns = ['OrgIdClub', 'ClubName', 'OrgIdGroup', 'GroupName', 'OrgIdGren', 'OrgNoGren', 'Under13Gren', 'Over13Gren']
+        data_columns = ['OrgIdClub', 'ClubName', 'OrgIdGroup', 'GroupName', 'OrgIdGren', 'OrgNoGren', 'GrenName', 'Under13Gren', 'Over13Gren']
 
         # Load necessary data
         print('Reading files....')
