@@ -1,6 +1,6 @@
 # Process data from given detail, and append to main data set
 
-import datetime
+from datetime import datetime, timedelta
 
 class Processor:
 
@@ -74,7 +74,7 @@ class Processor:
                 org_product_data[product].update({
                     'price': details['pris'][details_index],
                     'inv_date': details['fakturadato'][details_index],
-                    'due_in': details['fakturadato'][details_index] + datetime.timedelta(days=details['forfallstid(dager)'][details_index]),
+                    'due_in': datetime.strptime(details['fakturadato'][details_index], '%d.%m.%y') + timedelta(days=details['forfallstid(dager)'][details_index]),
                     'item_num': details['Varenummer'][details_index],
                     'desc': details['Transaksjonsbeskrivelse'][details_index],
                     'dim': details['Kostnadsbærer'][details_index],

@@ -12,6 +12,7 @@ class Vispy:
 
 
     def __init__(self):
+        self.data_dir = os.getenv("DATA_DIR")
         self.old_data_path = os.getenv("OLD_DATA_PATH")
         self.new_data_path = os.getenv("NEW_DATA_PATH")
         self.client_path = os.getenv("CLIENT_DETAILS_PATH")
@@ -40,7 +41,10 @@ class Vispy:
         # Load necessary data
         print('Reading files....')
         data = Load.Data_Basis(self, self.old_data_path, data_columns)
-        new_data = Load.Data_Basis(self, self.new_data_path, data_columns)
+        if self.new_data_path in os.listdir(self.data_dir):
+            new_data = Load.Data_Basis(self, self.new_data_path, data_columns)
+        else:
+            new_data = False
         client_details = Load.Client_Details(self, self.client_path)
         product_details = Load.Product_Details(self, self.product_path)
         template = Load.Template(self, self.template_path)
@@ -48,11 +52,15 @@ class Vispy:
         print('All files have been read.\nProceeding with data processing...\n')
 
         #Calculate delta
-        delta = Delta.Get_Delta(self, data, new_data)
-        # Process data
-        processed_data = Processor.Process_Clients(self, delta, client_details)
-        processed_data = Processor.Process_NKF_Products(self, processed_data, product_details, gren_data)
-
+        if new_data:
+            delta = Delta.Get_Delta(self, data, new_data)
+            # Process data
+            processed_data = Processor.Process_Clients(self, delta, client_details)
+            processed_data = Processor.Process_NKF_Products(self, processed_data, product_details, gren_data)
+        else:
+            # Process data
+            processed_data = Processor.Process_Clients(self, data, client_details)
+            processed_data = Processor.Process_NKF_Products(self, processed_data, product_details, gren_data)
         print('All client and product data has been processed!\n Proceeding to format data based upon given template...\n')
 
         # Format data

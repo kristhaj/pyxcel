@@ -120,12 +120,13 @@
             "env": {
                 // win rel path files*
                 // linux rel path pyxcel/files*
-                "old_data_path": "files/fedinv/data/nkf_org_group.xlsx",
-                "new_data_path": "files/fedinv/data/NKF_Orgliste ou13 2020501.xlsx",
-                "client_details_path": "files/fedinv/legend/client_detail.xlsx",
-                "product_details_path": "files/fedinv/legend/product_detail.xlsx",
-                "template_path": "files/fedinv/legend/visma_template.xlsx",
-                "destination_path": "files/fedinv/data/NKF_Visma_Invoicing_Høst2022.xlsx"
+                "data_dir": "files/NKF_Visma/data/",
+                "old_data_path": "files/NKF_Visma/data/nkf_org_group.xlsx",
+                "new_data_path": "files/NKF_Visma/data/NKF_Orgliste ou13 2020501.xlsx",
+                "client_details_path": "files/NKF_Visma/legend/client_detail.xlsx",
+                "product_details_path": "files/NKF_Visma/legend/product_detail.xlsx",
+                "template_path": "files/NKF_Visma/legend/visma_template.xlsx",
+                "destination_path": "files/NKF_Visma/data/NKF_Visma_Invoicing_Vår2023.xlsx"
             }
         },
         {
