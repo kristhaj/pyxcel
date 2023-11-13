@@ -36,5 +36,8 @@ class Formatter:
                     print(f"{org}, {data[org]['name']}: No qualifying members registered in ISD for {product}")
 
             # print(f'{org}, {data[org]["name"]} has been formatted.')
-
+        # Cleanup duplicate keys
+        for col in list(template.keys()):
+            if template[col] == {}:
+                template.pop(col)
         return template

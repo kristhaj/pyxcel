@@ -10,7 +10,6 @@ class Processor:
         org_list = list(data['OrgIdClub'].values())
         for i in list(details['NIFOrgID'].keys()):
             current_org = details['NIFOrgID'][i]
-
             org_data = {
                 'name': details['Kundenavn'][i],
                 'client_num': details['Kundenummer'][i],
@@ -18,8 +17,6 @@ class Processor:
                 'ext_ref': details['ekst_ref'][i],
                 'inv_num': details['Fakturanummer'][i],
                 'gren_data': {}
-                
-        
             }
             # iterate thorugh and process gren data
             for data_index in range(0, len(org_list)):
@@ -32,12 +29,8 @@ class Processor:
                             'over13': data['Over13Gren'][data_index]
                         }
                     })
-            
             processed_data.update({current_org: org_data})
-
         return processed_data
-
-        
 
     # Process product details from federation and concat to main data set
     def Process_NKF_Products(self, data, details, gren_data):
@@ -82,6 +75,5 @@ class Processor:
                     'total_amount': amount,
                     'account': details['Varenummer'][details_index]
                 })
-
             data[org].update({'Products': org_product_data})
         return data

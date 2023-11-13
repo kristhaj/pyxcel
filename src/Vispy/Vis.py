@@ -41,7 +41,7 @@ class Vispy:
         # Load necessary data
         print('Reading files....')
         data = Load.Data_Basis(self, self.old_data_path, data_columns)
-        if self.new_data_path in os.listdir(self.data_dir):
+        if self.new_data_path.split('/')[-1] in os.listdir(self.data_dir):
             new_data = Load.Data_Basis(self, self.new_data_path, data_columns)
         else:
             new_data = False
